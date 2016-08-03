@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="hexo,deploy," />
+  <meta name="keywords" content="hexo,github," />
 
 
 
@@ -84,34 +84,19 @@
 
 
 
-<meta name="description" content="hexo部署说明
-首先是要完成基本的hexo框架的搭建，可以参考这里hexo搭建，这里不再多说，主要说一下部署过程。
-将自己的hexo博客部署到Github，就要用到git shell，这里提醒一下本地使用的是Github for windows客户端，就不能直接git到博客的根目录去提交，这样有三个坏处：    
-
-因为这里包含主题目录，文件相对较大，提交这些文件上去，没有太大的用处；
-很可能造">
+<meta name="description" content="Hexo-GitHub-Gitcafe搭建个人静态博客Hexo操作命令：
+1、新建 hexo new “文件名”2、编译 hexo generate（也可以简写hexo g）3、开启本地服务 hexo server（也可以简写hexo s）4、当修改source文件后，应清空public，重新编译 hexo clean5、部署到GitHub或Gitcafe（访问速度快）hexo deploy（也可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo-Deploy部署篇">
-<meta property="og:url" content="https://luisstruggle.github.io/2016/07/28/hexoDeploy/index.html">
+<meta property="og:title" content="Hexo搭建">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/hexoBuilding.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="hexo部署说明
-首先是要完成基本的hexo框架的搭建，可以参考这里hexo搭建，这里不再多说，主要说一下部署过程。
-将自己的hexo博客部署到Github，就要用到git shell，这里提醒一下本地使用的是Github for windows客户端，就不能直接git到博客的根目录去提交，这样有三个坏处：    
-
-因为这里包含主题目录，文件相对较大，提交这些文件上去，没有太大的用处；
-很可能造">
-<meta property="og:image" content="https://luisstruggle.github.io/images/hexoDeploy1.jpg">
-<meta property="og:image" content="https://luisstruggle.github.io/images/hexoDeploy2.jpg">
-<meta property="og:updated_time" content="2016-07-28T07:26:47.384Z">
+<meta property="og:description" content="Hexo-GitHub-Gitcafe搭建个人静态博客Hexo操作命令：
+1、新建 hexo new “文件名”2、编译 hexo generate（也可以简写hexo g）3、开启本地服务 hexo server（也可以简写hexo s）4、当修改source文件后，应清空public，重新编译 hexo clean5、部署到GitHub或Gitcafe（访问速度快）hexo deploy（也可">
+<meta property="og:updated_time" content="2016-07-28T09:30:09.334Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo-Deploy部署篇">
-<meta name="twitter:description" content="hexo部署说明
-首先是要完成基本的hexo框架的搭建，可以参考这里hexo搭建，这里不再多说，主要说一下部署过程。
-将自己的hexo博客部署到Github，就要用到git shell，这里提醒一下本地使用的是Github for windows客户端，就不能直接git到博客的根目录去提交，这样有三个坏处：    
-
-因为这里包含主题目录，文件相对较大，提交这些文件上去，没有太大的用处；
-很可能造">
-<meta name="twitter:image" content="https://luisstruggle.github.io/images/hexoDeploy1.jpg">
+<meta name="twitter:title" content="Hexo搭建">
+<meta name="twitter:description" content="Hexo-GitHub-Gitcafe搭建个人静态博客Hexo操作命令：
+1、新建 hexo new “文件名”2、编译 hexo generate（也可以简写hexo g）3、开启本地服务 hexo server（也可以简写hexo s）4、当修改source文件后，应清空public，重新编译 hexo clean5、部署到GitHub或Gitcafe（访问速度快）hexo deploy（也可">
 
 
 
@@ -132,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/2016/07/28/hexoDeploy/"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/hexoBuilding.html"/>
 
-  <title> Hexo-Deploy部署篇 | 奋斗的青春 </title>
+  <title> Hexo搭建 | 奋斗的青春 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -274,7 +259,7 @@
             
             
               
-                Hexo-Deploy部署篇
+                Hexo搭建
               
             
           </h1>
@@ -286,8 +271,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-28T14:28:08+08:00" content="2016-07-28">
-              2016-07-28
+            <time itemprop="dateCreated" datetime="2016-07-27T08:43:21+08:00" content="2016-07-27">
+              2016-07-27
             </time>
           </span>
 
@@ -316,8 +301,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/07/28/hexoDeploy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/28/hexoDeploy/" itemprop="commentsCount"></span>
+                <a href="/blog/hexoBuilding.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="blog/hexoBuilding.html" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -327,7 +312,7 @@
 
           
           
-             <span id="/2016/07/28/hexoDeploy/" class="leancloud_visitors" data-flag-title="Hexo-Deploy部署篇">
+             <span id="/blog/hexoBuilding.html" class="leancloud_visitors" data-flag-title="Hexo搭建">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,52 +334,21 @@
       
 
       
-        <h3 id="hexo部署说明"><a href="#hexo部署说明" class="headerlink" title="hexo部署说明"></a>hexo部署说明</h3><blockquote>
-<p>首先是要完成基本的hexo框架的搭建，可以参考这里<a href="https://luisstruggle.github.io/2016/07/27/hexoBuilding/">hexo搭建</a>，这里不再多说，主要说一下部署过程。</p>
-<p>将自己的hexo博客部署到Github，就要用到git shell，这里提醒一下本地使用的是<code>Github for windows</code>客户端，就不能直接git到博客的根目录去提交，这样有三个坏处：    </p>
-<ol>
-<li>因为这里包含主题目录，文件相对较大，提交这些文件上去，没有太大的用处；</li>
-<li>很可能造成hexo博客文件上传失败；</li>
-<li>如果这样提交，也很可能造成博客运行不起来；</li>
-</ol>
+        <h2 id="Hexo-GitHub-Gitcafe搭建个人静态博客"><a href="#Hexo-GitHub-Gitcafe搭建个人静态博客" class="headerlink" title="Hexo-GitHub-Gitcafe搭建个人静态博客"></a>Hexo-GitHub-Gitcafe搭建个人静态博客</h2><h3 id="Hexo操作命令："><a href="#Hexo操作命令：" class="headerlink" title="Hexo操作命令："></a>Hexo操作命令：</h3><blockquote>
+<p>1、新建 hexo new “文件名”<br>2、编译 hexo generate（也可以简写hexo g）<br>3、开启本地服务 hexo server（也可以简写hexo s）<br>4、当修改source文件后，应清空public，重新编译 hexo clean<br>5、部署到GitHub或Gitcafe（访问速度快）hexo deploy（也可以简写hexo d）    </p>
 </blockquote>
-<hr>
 <a id="more"></a>
-<h3 id="搭建username-github-io仓库"><a href="#搭建username-github-io仓库" class="headerlink" title="搭建username.github.io仓库"></a>搭建<code>username.github.io</code>仓库</h3><blockquote>
-<p>通过浏览器进入 <a href="https://github.com" target="_blank" rel="external">https://github.com</a> ，登录你注册好的账号。<br>新建仓库『New Repository』，名字为<code>username.github.io</code>。username就是你之前注册账号时用的名字。<br>一般新建仓库都很快，但这个是一个特殊的仓库。仓库的settings里有一个可供打开github pages的功能，但如果你起的仓库名是这个特殊的格式，审核通过了就会自动把这个功能打开。</p>
+<h3 id="搭建Hexo的过程"><a href="#搭建Hexo的过程" class="headerlink" title="搭建Hexo的过程"></a>搭建Hexo的过程</h3><blockquote>
+<p>因为Hexo是一款基于Node.js的静态博客框架，所以我们还需要安装好它：<br>下载 Github for windows 和 node.js<br>打开Git的命令行窗口（先清理npm的缓存，防止安装失败），（npm cache clean）<br>执行（npm install hexo-cli -g）安装hexo插件<br>测试是否安装成功（hexo -v），如果出现hexo的版本信息，则说明安装成功<br>接下来建立一个博客文件目录，并初始化博客目录：<br>执行（cd e:blog） 和 （hexo init）这两条命令<br>等命令行安装完成后，有一段提示大致意思是，可以开始使用hexo，则到此安装成功<br><a href="http://www.jianshu.com/p/b06222fbc135" target="_blank" rel="external">参考这里</a>    </p>
 </blockquote>
-<h3 id="开始安装hexo-deploy"><a href="#开始安装hexo-deploy" class="headerlink" title="开始安装hexo-deploy"></a>开始安装hexo-deploy</h3><blockquote>
-<p>使用git shell上传hexo到Github需要安装hexo-deploy的插件，安装的命令和说明如下：</p>
+<h3 id="同时搭建Github和GitCafe"><a href="#同时搭建Github和GitCafe" class="headerlink" title="同时搭建Github和GitCafe"></a>同时搭建Github和GitCafe</h3><blockquote>
+<p><a href="http://www.tuicool.com/articles/QFzUbm" target="_blank" rel="external">搭建教程</a><br>因为Github在国内服务器响应慢，为了不抛弃Github，但同时想提高访问速度，就可以同时在Github和Gitcafe上同时发布<br>配置如下：    </p>
 </blockquote>
-<p><img src="/images/hexoDeploy1.jpg" alt="hexoDeploy1"></p>
-<hr>
-<h3 id="配置hexo和Github之间的连接"><a href="#配置hexo和Github之间的连接" class="headerlink" title="配置hexo和Github之间的连接"></a>配置hexo和Github之间的连接</h3><ul>
-<li>这种建博客的核心就是：用hexo搭好本地博客，然后用github传到网上。所以现在要做的就是告诉hexo，本地博客要传到github上。</li>
-<li>用来建立连接的就是blog文件中的_config.yml文件，用任何一个文本编辑器打开它。（这个文件用来配置博客的基本功能）</li>
-</ul>
-<blockquote>
-<p>配置如下，注意路径和配置的过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  message: <span class="string">""</span></div><div class="line">  repo: </div><div class="line">    github: git@github.com:huangjunhui/huangjunhui.github.io.git,master</div><div class="line">    gitcafe: git@gitcafe.com:huangjunhui/huangjunhui.git,gitcafe-pages</div></pre></td></tr></table></figure>
+<h3 id="Hexo的主题设置"><a href="#Hexo的主题设置" class="headerlink" title="Hexo的主题设置"></a>Hexo的主题设置</h3><blockquote>
+<p>推荐使用NexT主题<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">点击这里</a><br>安装：在Git命令窗口中进入本地Hexo站点目录下，输入（git clone <a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next</a> themes/next）<br>等命令窗口安装成功后，（Hexo clean）清理站点，重启服务（最好debug模式，查看加载过程是否报错），如果正常，可打开浏览器查看<br>该主题的详细配置<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">点击这里</a></p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">     <span class="built_in">type</span>: git</div><div class="line">     repo: git@github.com:username/username.github.io.git</div><div class="line">     branch: master</div></pre></td></tr></table></figure>
-<blockquote>
-<p>这段代码的大致意思是使用git类型提交代码到资源库<code>git@github.com:username/username.github.io.git</code>，其中的usernmae改成你的Github的用户名即可，代码提交到master的主分支上</p>
-</blockquote>
-<hr>
-<h3 id="最终的部署操作"><a href="#最终的部署操作" class="headerlink" title="最终的部署操作"></a>最终的部署操作</h3><blockquote>
-<p>首先要清理一下hexo缓存，无论任何一次提交都要这样做，否则可能有些更新改变不过来。</p>
-<p><code>hexo clean</code></p>
-<p>解析我们自己创作的markdown文档，生成public文件夹和文件，这个文件夹就是我们真正要部署到Github上的</p>
-<p><code>hexo g</code></p>
-<p>开启服务在本地先查看一下我们的文章格式是否符合自己的要求，访问地址：http:localhost:4000</p>
-<p><code>hexo s</code></p>
-<p>如果文章在本地没有任何的问题，那么可以真正开始部署了，安装命令行提示关掉本地服务，部署项目</p>
-<p>‘hexo d’</p>
-<p>查看整个命令行是否有重大错误出现，如果没有，就可以通过<code>https://username.github.io/</code>访问到我们搭建的博客了</p>
-<p>最后也可以去我们创建的<code>username.github.io</code>这个仓库去查看我们上传的文件目录</p>
-<p>如下图所示：</p>
-</blockquote>
-<p><img src="/images/hexoDeploy2.jpg" alt="hexoDeploy2"></p>
-<h4 id="参考来源：http-www-jianshu-com-p-f078e697594d"><a href="#参考来源：http-www-jianshu-com-p-f078e697594d" class="headerlink" title="参考来源：http://www.jianshu.com/p/f078e697594d"></a>参考来源：<a href="http://www.jianshu.com/p/f078e697594d" target="_blank" rel="external">http://www.jianshu.com/p/f078e697594d</a></h4>
+
       
     </div>
 
@@ -418,7 +372,7 @@
           
             <a href="/tags/hexo/" rel="tag">#hexo</a>
           
-            <a href="/tags/deploy/" rel="tag">#deploy</a>
+            <a href="/tags/github/" rel="tag">#github</a>
           
         </div>
       
@@ -427,16 +381,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/27/hexoBuilding/" rel="next" title="Hexo搭建">
-                <i class="fa fa-chevron-left"></i> Hexo搭建
+              <a href="/blog/hello-world.html" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/28/hexoCenterquote/" rel="prev" title="用新的NexT标签写几句励志的话">
-                用新的NexT标签写几句励志的话 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/hexoDeploy.html" rel="prev" title="Hexo-Deploy部署篇">
+                Hexo-Deploy部署篇 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -452,10 +406,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/07/28/hexoDeploy/"
-     data-title="Hexo-Deploy部署篇"
+        <div class="ds-share flat" data-thread-key="blog/hexoBuilding.html"
+     data-title="Hexo搭建"
      data-content=""
-     data-url="https://luisstruggle.github.io/2016/07/28/hexoDeploy/">
+     data-url="https://luisstruggle.github.io/blog/hexoBuilding.html">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -483,8 +437,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/07/28/hexoDeploy/"
-           data-title="Hexo-Deploy部署篇" data-url="https://luisstruggle.github.io/2016/07/28/hexoDeploy/">
+      <div class="ds-thread" data-thread-key="blog/hexoBuilding.html"
+           data-title="Hexo搭建" data-url="https://luisstruggle.github.io/blog/hexoBuilding.html">
       </div>
     
   </div>
@@ -613,7 +567,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo部署说明"><span class="nav-number">1.</span> <span class="nav-text">hexo部署说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建username-github-io仓库"><span class="nav-number">2.</span> <span class="nav-text">搭建username.github.io仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始安装hexo-deploy"><span class="nav-number">3.</span> <span class="nav-text">开始安装hexo-deploy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置hexo和Github之间的连接"><span class="nav-number">4.</span> <span class="nav-text">配置hexo和Github之间的连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终的部署操作"><span class="nav-number">5.</span> <span class="nav-text">最终的部署操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考来源：http-www-jianshu-com-p-f078e697594d"><span class="nav-number">5.1.</span> <span class="nav-text">参考来源：http://www.jianshu.com/p/f078e697594d</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-GitHub-Gitcafe搭建个人静态博客"><span class="nav-number">1.</span> <span class="nav-text">Hexo-GitHub-Gitcafe搭建个人静态博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo操作命令："><span class="nav-number">1.1.</span> <span class="nav-text">Hexo操作命令：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建Hexo的过程"><span class="nav-number">1.2.</span> <span class="nav-text">搭建Hexo的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同时搭建Github和GitCafe"><span class="nav-number">1.3.</span> <span class="nav-text">同时搭建Github和GitCafe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo的主题设置"><span class="nav-number">1.4.</span> <span class="nav-text">Hexo的主题设置</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
