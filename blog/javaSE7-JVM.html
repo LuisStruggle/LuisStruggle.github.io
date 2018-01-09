@@ -1,0 +1,792 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,JVM,虚拟机,操作码,助记符," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在Class文件中，Java方法里的方法体，也就是代表着一个Java源码程序中程序的部分存储在方法表集合的Code属性中。存储在Code属性中的是字节码，也就是编译后的程序。Java虚拟机的指令由两部分组成，首先是一个字节长度、代表某种含义的数字（即操作码），在操作码后面跟着零个或多个代表这个操作所需的参数（即操作数）。由于Java虚拟机采用的是面向操作数栈而不是寄存器的架构，所以大多数指令不包含">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java SE7 虚拟机指令操作码助记符">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/javaSE7-JVM.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="在Class文件中，Java方法里的方法体，也就是代表着一个Java源码程序中程序的部分存储在方法表集合的Code属性中。存储在Code属性中的是字节码，也就是编译后的程序。Java虚拟机的指令由两部分组成，首先是一个字节长度、代表某种含义的数字（即操作码），在操作码后面跟着零个或多个代表这个操作所需的参数（即操作数）。由于Java虚拟机采用的是面向操作数栈而不是寄存器的架构，所以大多数指令不包含">
+<meta property="og:updated_time" content="2018-01-09T06:23:11.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java SE7 虚拟机指令操作码助记符">
+<meta name="twitter:description" content="在Class文件中，Java方法里的方法体，也就是代表着一个Java源码程序中程序的部分存储在方法表集合的Code属性中。存储在Code属性中的是字节码，也就是编译后的程序。Java虚拟机的指令由两部分组成，首先是一个字节长度、代表某种含义的数字（即操作码），在操作码后面跟着零个或多个代表这个操作所需的参数（即操作数）。由于Java虚拟机采用的是面向操作数栈而不是寄存器的架构，所以大多数指令不包含">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/javaSE7-JVM.html"/>
+
+  <title> Java SE7 虚拟机指令操作码助记符 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">宝剑锋从磨砺出，梅花香自苦寒来！</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java SE7 虚拟机指令操作码助记符
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-02T16:11:11+08:00" content="2017-12-02">
+              2017-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/javaSE7-JVM.html" class="leancloud_visitors" data-flag-title="Java SE7 虚拟机指令操作码助记符">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在Class文件中，Java方法里的方法体，也就是代表着一个Java源码程序中程序的部分存储在方法表集合的Code属性中。存储在Code属性中的是字节码，也就是编译后的程序。Java虚拟机的指令由两部分组成，首先是一个字节长度、代表某种含义的数字（即操作码），在操作码后面跟着零个或多个代表这个操作所需的参数（即操作数）。由于Java虚拟机采用的是面向操作数栈而不是寄存器的架构，所以大多数指令不包含操作数，只有一个操作码。</p>
+<a id="more"></a>
+<p>操作码的长度只有一个字节，这就限制了操作码的个数不超过256个。同时，Class文件格式放弃了编译后代码的操作数长度对齐，这就意味着虚拟机处理那些超过一个字节的数据时，不得不在运行时从字节中重建出具体数据的结构。比如，如果要将一个两个字节长的无符号整数使用两个无符号字节存储起来分别是byte1和byte2，那么就需要这样构造出原始的无符号整数：</p>
+<p>(byte1&lt;&lt;8) | byte2</p>
+<p>这样会在某种程度上导致执行字节码时损失一些性能。但这样做也有好处，那就是由于不需要对齐，省去了中间的填充与间隔符号；用一个字节来表示操作码，也是为了获得短小的编译代码。这样就尽可能的减少了编译后的代码的长度，非常适合网络传输。</p>
+<p>如果不考虑异常处理的话，那么Java虚拟机的解释器可以使用下面的伪代码作为基本的执行模型来理解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">do&#123;</div><div class="line">    自动计算PC寄存器的值加<span class="number">1</span>;</div><div class="line">    根据PC寄存器的指示位置，从字节码流中取出操作码;</div><div class="line">    <span class="keyword">if</span>(字节码存在操作数) 从字节码流中取出操作数;</div><div class="line">    执行操作码所定义的操作;</div><div class="line">&#125;<span class="keyword">while</span>(字节码长度&gt;<span class="number">0</span>);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>操作码，助记符表</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div></pre></td><td class="code"><pre><div class="line">字节码 助记符 指令含义   </div><div class="line"><span class="number">0x00</span> nop 什么都不做。   </div><div class="line"><span class="number">0x01</span> aconst_null 将<span class="keyword">null</span>推送至栈顶。   </div><div class="line"><span class="number">0x02</span> iconst_m1 将<span class="keyword">int</span>型-<span class="number">1</span>推送至栈顶。   </div><div class="line"><span class="number">0x03</span> iconst_0 将<span class="keyword">int</span>型<span class="number">0</span>推送至栈顶。   </div><div class="line"><span class="number">0x04</span> iconst_1 将<span class="keyword">int</span>型<span class="number">1</span>推送至栈顶。   </div><div class="line"><span class="number">0x05</span> iconst_2 将<span class="keyword">int</span>型<span class="number">2</span>推送至栈顶。   </div><div class="line"><span class="number">0x06</span> iconst_3 将<span class="keyword">int</span>型<span class="number">3</span>推送至栈顶。   </div><div class="line"><span class="number">0x07</span> iconst_4 将<span class="keyword">int</span>型<span class="number">4</span>推送至栈顶。   </div><div class="line"><span class="number">0x08</span> iconst_5 将<span class="keyword">int</span>型<span class="number">5</span>推送至栈顶。   </div><div class="line"><span class="number">0x09</span> lconst_0 将<span class="keyword">long</span>型<span class="number">0</span>推送至栈顶。   </div><div class="line"><span class="number">0x0a</span> lconst_1 将<span class="keyword">long</span>型<span class="number">1</span>推送至栈顶。   </div><div class="line"><span class="number">0x0b</span> fconst_0 将<span class="keyword">float</span>型<span class="number">0</span>推送至栈顶。   </div><div class="line"><span class="number">0x0c</span> fconst_1 将<span class="keyword">float</span>型<span class="number">1</span>推送至栈顶。   </div><div class="line"><span class="number">0x0d</span> fconst_2 将<span class="keyword">float</span>型<span class="number">2</span>推送至栈顶。   </div><div class="line"><span class="number">0x0e</span> dconst_0 将<span class="keyword">double</span>型<span class="number">0</span>推送至栈顶。   </div><div class="line"><span class="number">0x0f</span> dconst_1 将<span class="keyword">double</span>型<span class="number">1</span>推送至栈顶。</div><div class="line"><span class="number">0x10</span> bipush 将单字节的常量值（-<span class="number">128</span>~<span class="number">127</span>）推送至栈顶。   </div><div class="line"><span class="number">0x11</span> sipush 将一个短整型常量值（-<span class="number">32768</span>~<span class="number">32767</span>）推送至栈顶。   </div><div class="line"><span class="number">0x12</span> ldc 将<span class="keyword">int</span>，<span class="keyword">float</span>或String型常量值从常量池中推送至栈顶。   </div><div class="line"><span class="number">0x13</span> ldc_w 将<span class="keyword">int</span>，<span class="keyword">float</span>或String型常量值从常量池中推送至栈顶（宽索引）。  </div><div class="line"><span class="number">0x14</span> ldc2_w 将<span class="keyword">long</span>或<span class="keyword">double</span>型常量值从常量池中推送至栈顶（宽索引）。   </div><div class="line"><span class="number">0x15</span> iload 将指定的<span class="keyword">int</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x16</span> lload 将指定的<span class="keyword">long</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x17</span> fload 将指定的<span class="keyword">float</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x18</span> dload 将指定的<span class="keyword">double</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x19</span> aload 将指定的引用类型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x1a</span> iload_0 将第一个<span class="keyword">int</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x1b</span> iload_1 将第二个<span class="keyword">int</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x1c</span> iload_2 将第三个<span class="keyword">int</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x1d</span> iload_3 将第四个<span class="keyword">int</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x1e</span> lload_0 将第一个<span class="keyword">long</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x1f</span> lload_1 将第二个<span class="keyword">long</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x20</span> lload_2 将第三个<span class="keyword">long</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x21</span> lload_3 将第四个<span class="keyword">long</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x22</span> fload_0 将第一个<span class="keyword">float</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x23</span> fload_1 将第二个<span class="keyword">float</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x24</span> fload_2 将第三个<span class="keyword">float</span>型局部变量推送至栈顶   </div><div class="line"><span class="number">0x25</span> fload_3 将第四个<span class="keyword">float</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x26</span> dload_0 将第一个<span class="keyword">double</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x27</span> dload_1 将第二个<span class="keyword">double</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x28</span> dload_2 将第三个<span class="keyword">double</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x29</span> dload_3 将第四个<span class="keyword">double</span>型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x2a</span> aload_0 将第一个引用类型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x2b</span> aload_1 将第二个引用类型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x2c</span> aload_2 将第三个引用类型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x2d</span> aload_3 将第四个引用类型局部变量推送至栈顶。   </div><div class="line"><span class="number">0x2e</span> iaload 将<span class="keyword">int</span>型数组指定索引的值推送至栈顶。   </div><div class="line"><span class="number">0x2f</span> laload 将<span class="keyword">long</span>型数组指定索引的值推送至栈顶。  </div><div class="line"><span class="number">0x30</span> faload 将<span class="keyword">float</span>型数组指定索引的值推送至栈顶。   </div><div class="line"><span class="number">0x31</span> daload 将<span class="keyword">double</span>型数组指定索引的值推送至栈顶。   </div><div class="line"><span class="number">0x32</span> aaload 将引用型数组指定索引的值推送至栈顶。   </div><div class="line"><span class="number">0x33</span> baload 将<span class="keyword">boolean</span>或<span class="keyword">byte</span>型数组指定索引的值推送至栈顶。   </div><div class="line"><span class="number">0x34</span> caload 将<span class="keyword">char</span>型数组指定索引的值推送至栈顶。   </div><div class="line"><span class="number">0x35</span> saload 将<span class="keyword">short</span>型数组指定索引的值推送至栈顶。   </div><div class="line"><span class="number">0x36</span> istore 将栈顶<span class="keyword">int</span>型数值存入指定局部变量。   </div><div class="line"><span class="number">0x37</span> lstore 将栈顶<span class="keyword">long</span>型数值存入指定局部变量。   </div><div class="line"><span class="number">0x38</span> fstore 将栈顶<span class="keyword">float</span>型数值存入指定局部变量。   </div><div class="line"><span class="number">0x39</span> dstore 将栈顶<span class="keyword">double</span>型数值存入指定局部变量。   </div><div class="line"><span class="number">0x3a</span> astore 将栈顶引用型数值存入指定局部变量。   </div><div class="line"><span class="number">0x3b</span> istore_0 将栈顶<span class="keyword">int</span>型数值存入第一个局部变量。   </div><div class="line"><span class="number">0x3c</span> istore_1 将栈顶<span class="keyword">int</span>型数值存入第二个局部变量。   </div><div class="line"><span class="number">0x3d</span> istore_2 将栈顶<span class="keyword">int</span>型数值存入第三个局部变量。   </div><div class="line"><span class="number">0x3e</span> istore_3 将栈顶<span class="keyword">int</span>型数值存入第四个局部变量。   </div><div class="line"><span class="number">0x3f</span> lstore_0 将栈顶<span class="keyword">long</span>型数值存入第一个局部变量。   </div><div class="line"><span class="number">0x40</span> lstore_1 将栈顶<span class="keyword">long</span>型数值存入第二个局部变量。   </div><div class="line"><span class="number">0x41</span> lstore_2 将栈顶<span class="keyword">long</span>型数值存入第三个局部变量。   </div><div class="line"><span class="number">0x42</span> lstore_3 将栈顶<span class="keyword">long</span>型数值存入第四个局部变量。   </div><div class="line"><span class="number">0x43</span> fstore_0 将栈顶<span class="keyword">float</span>型数值存入第一个局部变量。   </div><div class="line"><span class="number">0x44</span> fstore_1 将栈顶<span class="keyword">float</span>型数值存入第二个局部变量。   </div><div class="line"><span class="number">0x45</span> fstore_2 将栈顶<span class="keyword">float</span>型数值存入第三个局部变量。   </div><div class="line"><span class="number">0x46</span> fstore_3 将栈顶<span class="keyword">float</span>型数值存入第四个局部变量。   </div><div class="line"><span class="number">0x47</span> dstore_0 将栈顶<span class="keyword">double</span>型数值存入第一个局部变量。   </div><div class="line"><span class="number">0x48</span> dstore_1 将栈顶<span class="keyword">double</span>型数值存入第二个局部变量。   </div><div class="line"><span class="number">0x49</span> dstore_2 将栈顶<span class="keyword">double</span>型数值存入第三个局部变量。   </div><div class="line"><span class="number">0x4a</span> dstore_3 将栈顶<span class="keyword">double</span>型数值存入第四个局部变量。   </div><div class="line"><span class="number">0x4b</span> astore_0 将栈顶引用型数值存入第一个局部变量。  </div><div class="line"><span class="number">0x4c</span> astore_1 将栈顶引用型数值存入第二个局部变量。   </div><div class="line"><span class="number">0x4d</span> astore_2 将栈顶引用型数值存入第三个局部变量   </div><div class="line"><span class="number">0x4e</span> astore_3 将栈顶引用型数值存入第四个局部变量。   </div><div class="line"><span class="number">0x4f</span> iastore 将栈顶<span class="keyword">int</span>型数值存入指定数组的指定索引位置   </div><div class="line"><span class="number">0x50</span> lastore 将栈顶<span class="keyword">long</span>型数值存入指定数组的指定索引位置。   </div><div class="line"><span class="number">0x51</span> fastore 将栈顶<span class="keyword">float</span>型数值存入指定数组的指定索引位置。   </div><div class="line"><span class="number">0x52</span> dastore 将栈顶<span class="keyword">double</span>型数值存入指定数组的指定索引位置。   </div><div class="line"><span class="number">0x53</span> aastore 将栈顶引用型数值存入指定数组的指定索引位置。   </div><div class="line"><span class="number">0x54</span> bastore 将栈顶<span class="keyword">boolean</span>或<span class="keyword">byte</span>型数值存入指定数组的指定索引位置。   </div><div class="line"><span class="number">0x55</span> castore 将栈顶<span class="keyword">char</span>型数值存入指定数组的指定索引位置   </div><div class="line"><span class="number">0x56</span> sastore 将栈顶<span class="keyword">short</span>型数值存入指定数组的指定索引位置。   </div><div class="line"><span class="number">0x57</span> pop 将栈顶数值弹出（数值不能是<span class="keyword">long</span>或<span class="keyword">double</span>类型的）。   </div><div class="line"><span class="number">0x58</span> pop2 将栈顶的一个（<span class="keyword">long</span>或<span class="keyword">double</span>类型的）或两个数值弹出（其它）。   </div><div class="line"><span class="number">0x59</span> dup 复制栈顶数值并将复制值压入栈顶。   </div><div class="line"><span class="number">0x5a</span> dup_x1 复制栈顶数值并将两个复制值压入栈顶。   </div><div class="line"><span class="number">0x5b</span> dup_x2 复制栈顶数值并将三个（或两个）复制值压入栈顶。   </div><div class="line"><span class="number">0x5c</span> dup2 复制栈顶一个（<span class="keyword">long</span>或<span class="keyword">double</span>类型的)或两个（其它）数值并将复制值压入栈顶。   </div><div class="line"><span class="number">0x5d</span> dup2_x1 dup_x1指令的双倍版本。   </div><div class="line"><span class="number">0x5e</span> dup2_x2 dup_x2指令的双倍版本。   </div><div class="line"><span class="number">0x5f</span> swap 将栈最顶端的两个数值互换（数值不能是<span class="keyword">long</span>或<span class="keyword">double</span>类型的）。   </div><div class="line"><span class="number">0x60</span> iadd 将栈顶两<span class="keyword">int</span>型数值相加并将结果压入栈顶。   </div><div class="line"><span class="number">0x61</span> ladd 将栈顶两<span class="keyword">long</span>型数值相加并将结果压入栈顶。   </div><div class="line"><span class="number">0x62</span> fadd 将栈顶两<span class="keyword">float</span>型数值相加并将结果压入栈顶。   </div><div class="line"><span class="number">0x63</span> dadd 将栈顶两<span class="keyword">double</span>型数值相加并将结果压入栈顶。   </div><div class="line"><span class="number">0x64</span> isub 将栈顶两<span class="keyword">int</span>型数值相减并将结果压入栈顶。  </div><div class="line"><span class="number">0x65</span> lsub 将栈顶两<span class="keyword">long</span>型数值相减并将结果压入栈顶。   </div><div class="line"><span class="number">0x66</span> fsub 将栈顶两<span class="keyword">float</span>型数值相减并将结果压入栈顶。   </div><div class="line"><span class="number">0x67</span> dsub 将栈顶两<span class="keyword">double</span>型数值相减并将结果压入栈顶。   </div><div class="line"><span class="number">0x68</span> imul 将栈顶两<span class="keyword">int</span>型数值相乘并将结果压入栈顶。。   </div><div class="line"><span class="number">0x69</span> lmul 将栈顶两<span class="keyword">long</span>型数值相乘并将结果压入栈顶。   </div><div class="line"><span class="number">0x6a</span> fmul 将栈顶两<span class="keyword">float</span>型数值相乘并将结果压入栈顶。   </div><div class="line"><span class="number">0x6b</span> dmul 将栈顶两<span class="keyword">double</span>型数值相乘并将结果压入栈顶。   </div><div class="line"><span class="number">0x6c</span> idiv 将栈顶两<span class="keyword">int</span>型数值相除并将结果压入栈顶。   </div><div class="line"><span class="number">0x6d</span> ldiv 将栈顶两<span class="keyword">long</span>型数值相除并将结果压入栈顶。   </div><div class="line"><span class="number">0x6e</span> fdiv 将栈顶两<span class="keyword">float</span>型数值相除并将结果压入栈顶。   </div><div class="line"><span class="number">0x6f</span> ddiv 将栈顶两<span class="keyword">double</span>型数值相除并将结果压入栈顶。   </div><div class="line"><span class="number">0x70</span> irem 将栈顶两<span class="keyword">int</span>型数值作取模运算并将结果压入栈顶。   </div><div class="line"><span class="number">0x71</span> lrem 将栈顶两<span class="keyword">long</span>型数值作取模运算并将结果压入栈顶。   </div><div class="line"><span class="number">0x72</span> frem 将栈顶两<span class="keyword">float</span>型数值作取模运算并将结果压入栈顶。   </div><div class="line"><span class="number">0x73</span> drem 将栈顶两<span class="keyword">double</span>型数值作取模运算并将结果压入栈顶。   </div><div class="line"><span class="number">0x74</span> ineg 将栈顶<span class="keyword">int</span>型数值取负并将结果压入栈顶。   </div><div class="line"><span class="number">0x75</span> lneg 将栈顶<span class="keyword">long</span>型数值取负并将结果压入栈顶。   </div><div class="line"><span class="number">0x76</span> fneg 将栈顶<span class="keyword">float</span>型数值取负并将结果压入栈顶。   </div><div class="line"><span class="number">0x77</span> dneg 将栈顶<span class="keyword">double</span>型数值取负并将结果压入栈顶。   </div><div class="line"><span class="number">0x78</span> ishl 将<span class="keyword">int</span>型数值左移位指定位数并将结果压入栈顶。   </div><div class="line"><span class="number">0x79</span> lshl 将<span class="keyword">long</span>型数值左移位指定位数并将结果压入栈顶。   </div><div class="line"><span class="number">0x7a</span> ishr 将<span class="keyword">int</span>型数值右（有符号）移位指定位数并将结果压入栈顶。   </div><div class="line"><span class="number">0x7b</span> lshr 将<span class="keyword">long</span>型数值右（有符号）移位指定位数并将结果压入栈顶。   </div><div class="line"><span class="number">0x7c</span> iushr 将<span class="keyword">int</span>型数值右（无符号）移位指定位数并将结果压入栈顶。   </div><div class="line"><span class="number">0x7d</span> lushr 将<span class="keyword">long</span>型数值右（无符号）移位指定位数并将结果压入栈顶。   </div><div class="line"><span class="number">0x7e</span> iand 将栈顶两<span class="keyword">int</span>型数值作“按位与”并将结果压入栈顶。   </div><div class="line"><span class="number">0x7f</span> land 将栈顶两<span class="keyword">long</span>型数值作“按位与”并将结果压入栈顶。   </div><div class="line"><span class="number">0x80</span> ior 将栈顶两<span class="keyword">int</span>型数值作“按位或”并将结果压入栈顶。  </div><div class="line"><span class="number">0x81</span> lor 将栈顶两<span class="keyword">long</span>型数值作“按位或”并将结果压入栈顶。   </div><div class="line"><span class="number">0x82</span> ixor 将栈顶两<span class="keyword">int</span>型数值作“按位异或”并将结果压入栈顶。   </div><div class="line"><span class="number">0x83</span> lxor 将栈顶两<span class="keyword">long</span>型数值作“按位异或”并将结果压入栈顶。   </div><div class="line"><span class="number">0x84</span> iinc 将指定<span class="keyword">int</span>型变量增加指定值。   </div><div class="line"><span class="number">0x85</span> i2l 将栈顶<span class="keyword">int</span>型数值强制转换成<span class="keyword">long</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x86</span> i2f 将栈顶<span class="keyword">int</span>型数值强制转换成<span class="keyword">float</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x87</span> i2d 将栈顶<span class="keyword">int</span>型数值强制转换成<span class="keyword">double</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x88</span> l2i 将栈顶<span class="keyword">long</span>型数值强制转换成<span class="keyword">int</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x89</span> l2f 将栈顶<span class="keyword">long</span>型数值强制转换成<span class="keyword">float</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x8a</span> l2d 将栈顶<span class="keyword">long</span>型数值强制转换成<span class="keyword">double</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x8b</span> f2i 将栈顶<span class="keyword">float</span>型数值强制转换成<span class="keyword">int</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x8c</span> f2l 将栈顶<span class="keyword">float</span>型数值强制转换成<span class="keyword">long</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x8d</span> f2d 将栈顶<span class="keyword">float</span>型数值强制转换成<span class="keyword">double</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x8e</span> d2i 将栈顶<span class="keyword">double</span>型数值强制转换成<span class="keyword">int</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x8f</span> d2l 将栈顶<span class="keyword">double</span>型数值强制转换成<span class="keyword">long</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x90</span> d2f 将栈顶<span class="keyword">double</span>型数值强制转换成<span class="keyword">float</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x91</span> i2b 将栈顶<span class="keyword">int</span>型数值强制转换成<span class="keyword">byte</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x92</span> i2c 将栈顶<span class="keyword">int</span>型数值强制转换成<span class="keyword">char</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x93</span> i2s 将栈顶<span class="keyword">int</span>型数值强制转换成<span class="keyword">short</span>型数值并将结果压入栈顶。   </div><div class="line"><span class="number">0x94</span> lcmp 比较栈顶两<span class="keyword">long</span>型数值大小，并将结果（<span class="number">1</span>，<span class="number">0</span>，-<span class="number">1</span>）压入栈顶。  </div><div class="line"><span class="number">0x95</span> fcmpl 比较栈顶两<span class="keyword">float</span>型数值大小，并将结果（<span class="number">1</span>，<span class="number">0</span>，-<span class="number">1</span>）压入栈顶；当其中一个数值为“NaN”时，将-<span class="number">1</span>压入栈顶。   </div><div class="line"><span class="number">0x96</span> fcmpg 比较栈顶两<span class="keyword">float</span>型数值大小，并将结果（<span class="number">1</span>，<span class="number">0</span>，-<span class="number">1</span>）压入栈顶；当其中一个数值为“NaN”时，将<span class="number">1</span>压入栈顶。   </div><div class="line"><span class="number">0x97</span> dcmpl 比较栈顶两<span class="keyword">double</span>型数值大小，并将结果（<span class="number">1</span>，<span class="number">0</span>，-<span class="number">1</span>）压入栈顶；当其中一个数值为“NaN”时，将-<span class="number">1</span>压入栈顶。   </div><div class="line"><span class="number">0x98</span> dcmpg 比较栈顶两<span class="keyword">double</span>型数值大小，并将结果（<span class="number">1</span>，<span class="number">0</span>，-<span class="number">1</span>）压入栈顶；当其中一个数值为“NaN”时，将<span class="number">1</span>压入栈顶。   </div><div class="line"><span class="number">0x99</span> ifeq 当栈顶<span class="keyword">int</span>型数值等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0x9a</span> ifne 当栈顶<span class="keyword">int</span>型数值不等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0x9b</span> iflt 当栈顶<span class="keyword">int</span>型数值小于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0x9c</span> ifge 当栈顶<span class="keyword">int</span>型数值大于等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0x9d</span> ifgt 当栈顶<span class="keyword">int</span>型数值大于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0x9e</span> ifle 当栈顶<span class="keyword">int</span>型数值小于等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0x9f</span> if_icmpeq 比较栈顶两<span class="keyword">int</span>型数值大小，当结果等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0xa0</span> if_icmpne 比较栈顶两<span class="keyword">int</span>型数值大小，当结果不等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0xa1</span> if_icmplt 比较栈顶两<span class="keyword">int</span>型数值大小，当结果小于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0xa2</span> if_icmpge 比较栈顶两<span class="keyword">int</span>型数值大小，当结果大于等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0xa3</span> if_icmpgt 比较栈顶两<span class="keyword">int</span>型数值大小，当结果大于<span class="number">0</span>时跳转   </div><div class="line"><span class="number">0xa4</span> if_icmple 比较栈顶两<span class="keyword">int</span>型数值大小，当结果小于等于<span class="number">0</span>时跳转。   </div><div class="line"><span class="number">0xa5</span> if_acmpeq 比较栈顶两引用型数值，当结果相等时跳转。   </div><div class="line"><span class="number">0xa6</span> if_acmpne 比较栈顶两引用型数值，当结果不相等时跳转。   </div><div class="line"><span class="number">0xa7</span> goto 无条件跳转。   </div><div class="line"><span class="number">0xa8</span> jsr 跳转至指定<span class="number">16</span>位offset位置，并将jsr下一条指令地址压入栈顶。   </div><div class="line"><span class="number">0xa9</span> ret 返回至局部变量指定的index的指令位置（一般与jsr，jsr_w联合使用）。   </div><div class="line"><span class="number">0xaa</span> tableswitch 用于<span class="keyword">switch</span>条件跳转，<span class="keyword">case</span>值连续（可变长度指令）。  </div><div class="line"><span class="number">0xab</span> lookupswitch 用于<span class="keyword">switch</span>条件跳转，<span class="keyword">case</span>值不连续（可变长度指令）。   </div><div class="line"><span class="number">0xac</span> ireturn 从当前方法返回<span class="keyword">int</span>。   </div><div class="line"><span class="number">0xad</span> lreturn 从当前方法返回<span class="keyword">long</span>。   </div><div class="line"><span class="number">0xae</span> freturn 从当前方法返回<span class="keyword">float</span>。   </div><div class="line"><span class="number">0xaf</span> dreturn 从当前方法返回<span class="keyword">double</span>。   </div><div class="line"><span class="number">0xb0</span> areturn 从当前方法返回对象引用。   </div><div class="line"><span class="number">0xb1</span> <span class="keyword">return</span> 从当前方法返回<span class="keyword">void</span>。   </div><div class="line"><span class="number">0xb2</span> getstatic 获取指定类的静态域，并将其值压入栈顶。   </div><div class="line"><span class="number">0xb3</span> putstatic 为指定的类的静态域赋值。   </div><div class="line"><span class="number">0xb4</span> getfield 获取指定类的实例域，并将其值压入栈顶。   </div><div class="line"><span class="number">0xb5</span> putfield 为指定的类的实例域赋值。   </div><div class="line"><span class="number">0xb6</span> invokevirtual 调用实例方法。   </div><div class="line"><span class="number">0xb7</span> invokespecial 调用超类构造方法，实例初始化方法，私有方法。   </div><div class="line"><span class="number">0xb8</span> invokestatic 调用静态方法。   </div><div class="line"><span class="number">0xb9</span> invokeinterface 调用接口方法。   </div><div class="line"><span class="number">0xba</span> invokedynamic 调用动态链接方法①。   </div><div class="line"><span class="number">0xbb</span> <span class="keyword">new</span> 创建一个对象，并将其引用值压入栈顶。   </div><div class="line"><span class="number">0xbc</span> newarray 创建一个指定原始类型（如<span class="keyword">int</span>、<span class="keyword">float</span>、<span class="keyword">char</span>??）的数组，并将其引用值压入栈顶。   </div><div class="line"><span class="number">0xbd</span> anewarray 创建一个引用型（如类，接口，数组）的数组，并将其引用值压入栈顶。   </div><div class="line"><span class="number">0xbe</span> arraylength 获得数组的长度值并压入栈顶。   </div><div class="line"><span class="number">0xbf</span> athrow 将栈顶的异常抛出。   </div><div class="line"><span class="number">0xc0</span> checkcast 检验类型转换，检验未通过将抛出ClassCastException。   </div><div class="line"><span class="number">0xc1</span> <span class="keyword">instanceof</span> 检验对象是否是指定的类的实例，如果是将<span class="number">1</span>压入栈顶，否则将<span class="number">0</span>压入栈顶。  </div><div class="line"><span class="number">0xc2</span> monitorenter 获得对象的monitor，用于同步方法或同步块。   </div><div class="line"><span class="number">0xc3</span> monitorexit 释放对象的monitor，用于同步方法或同步块。   </div><div class="line"><span class="number">0xc4</span> wide 扩展访问局部变量表的索引宽度。   </div><div class="line"><span class="number">0xc5</span> multianewarray 创建指定类型和指定维度的多维数组（执行该指令时，操作栈中必须包含各维度的长度值），并将其引用值压入栈顶。   </div><div class="line"><span class="number">0xc6</span> ifnull 为<span class="keyword">null</span>时跳转。   </div><div class="line"><span class="number">0xc7</span> ifnonnull 不为<span class="keyword">null</span>时跳转。   </div><div class="line"><span class="number">0xc8</span> goto_w 无条件跳转（宽索引）。   </div><div class="line"><span class="number">0xc9</span> jsr_w 跳转至指定<span class="number">32</span>位地址偏移量位置，并将jsr_w下一条指令地址压入栈顶。  </div><div class="line">  </div><div class="line">保留指令   </div><div class="line"><span class="number">0xca</span> breakpoint 调试时的断点标志。   </div><div class="line"><span class="number">0xfe</span> impdep1 用于在特定硬件中使用的语言后门。   </div><div class="line"><span class="number">0xff</span> impdep1 用于在特定硬件中使用的语言后门。</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/JVM/" rel="tag">#JVM</a>
+          
+            <a href="/tags/虚拟机/" rel="tag">#虚拟机</a>
+          
+            <a href="/tags/操作码/" rel="tag">#操作码</a>
+          
+            <a href="/tags/助记符/" rel="tag">#助记符</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/webservice.html" rel="next" title="webservice的两种方式soap和rest比较">
+                <i class="fa fa-chevron-left"></i> webservice的两种方式soap和rest比较
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/webservice-soap.html" rel="prev" title="webservice的默认实现">
+                webservice的默认实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
