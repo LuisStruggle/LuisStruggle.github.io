@@ -86,16 +86,14 @@
 
 <meta name="description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
 
-从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。
-BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra">
+从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GBDT详解">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/GBDT-theory.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
 
-从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。
-BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra">
+从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/927391/201607/927391-20160717135005498-1140287801.jpg">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503195611626?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
@@ -121,13 +119,12 @@ BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra"
 <meta property="og:image" content="https://img-blog.csdn.net/20170503231945499?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503232105319?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503233147438?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-08-02T06:19:22.214Z">
+<meta property="og:updated_time" content="2018-08-02T06:24:31.678Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GBDT详解">
 <meta name="twitter:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
 
-从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。
-BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra">
+从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -362,8 +359,8 @@ BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra"
         <p>GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。</p>
 <hr>
 <h1 id="从Ensemble说起"><a href="#从Ensemble说起" class="headerlink" title="从Ensemble说起"></a>从Ensemble说起</h1><p>Bagging，Boosting和Stacking是集成学习的三种主要的形式。</p>
-<h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><p><code>Bagging=Bootstrap Aggregating</code>，是 <strong>model averaging</strong> 的策略。<br><code>bootstrap</code>是一种有放回的抽样，那么bagging就是使用bootstrap抽样来进行模型平均(vote)。<br>从训练集从进行子抽样组成每个基模型所需要的子训练集，对所有基模型预测的结果进行综合产生最终的预测结果。</p>
 <a id="more"></a>
+<h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><p><code>Bagging=Bootstrap Aggregating</code>，是 <strong>model averaging</strong> 的策略。<br><code>bootstrap</code>是一种有放回的抽样，那么bagging就是使用bootstrap抽样来进行模型平均(vote)。<br>从训练集从进行子抽样组成每个基模型所需要的子训练集，对所有基模型预测的结果进行综合产生最终的预测结果。</p>
 <p>比如: <code>Random Forest</code>就是使用bagging的思想<br>(1) bootstrap抽样产生样本集M<br>(2) 从原始的K个特征中选择k(logK)个随机特征作为特征集F<br>(3) 对样本集M在特征集F上建立决策树(CART)<br>(4) 重复(1)-(3)产生多个决策树<br>(5) 投票(average)</p>
 <p><img src="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="bagging"></p>
 <p>这里借鉴别人的一张图：<br><img src="http://images2015.cnblogs.com/blog/927391/201607/927391-20160717135005498-1140287801.jpg" alt="bagging"></p>
