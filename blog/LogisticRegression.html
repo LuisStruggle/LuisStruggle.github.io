@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-3bfd150af7a9a7af.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-37246c59f26c3809.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-f1d5050ff60d9e51.png">
-<meta property="og:updated_time" content="2018-08-02T06:52:37.327Z">
+<meta property="og:updated_time" content="2018-08-02T07:05:43.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归原理">
 <meta name="twitter:description" content="一. 前言逻辑（Logistic）回归是分类算法中最基础也是最重要的手段，因此，掌握其内在原理是非常必要的。逻辑回归虽然名字里带“回归”，但是它实际上是一种分类方法，主要用于两分问题 （即结果要么是0，要么是1）。在介绍逻辑回归之前，我们需要回顾一些数学基础内容。">
@@ -349,13 +349,9 @@
       
         <h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p>逻辑（Logistic）回归是分类算法中最基础也是最重要的手段，因此，掌握其内在原理是非常必要的。逻辑回归虽然名字里带“回归”，但是它实际上是一种分类方法，主要用于<strong>两分问题</strong> （即结果要么是0，要么是1）。<br>在介绍逻辑回归之前，我们需要回顾一些数学基础内容。</p>
 <a id="more"></a>
-<h5 id="1-最大似然估计"><a href="#1-最大似然估计" class="headerlink" title="1. 最大似然估计"></a>1. 最大似然估计</h5><ol>
-<li>什么是最大似然估计<br>通俗理解来说，就是整体概率分布已知，利用已知的样本结果信息，反推最具有可能（最大概率）导致这些样本结果出现的分布模型的参数值！<br>举个栗子：假如国民收入符合正态分布，概率密度如下图。现在手里有一部分调查样本数据，根据这些样本数据，反推正态分布概率密度中的参数值，就是最大似然估计解决的问题。</li>
-</ol>
+<h4 id="1-最大似然估计"><a href="#1-最大似然估计" class="headerlink" title="1. 最大似然估计"></a>1. 最大似然估计</h4><p>1.什么是最大似然估计<br>通俗理解来说，就是整体概率分布已知，利用已知的样本结果信息，反推最具有可能（最大概率）导致这些样本结果出现的分布模型的参数值！<br>举个栗子：假如国民收入符合正态分布，概率密度如下图。现在手里有一部分调查样本数据，根据这些样本数据，反推正态分布概率密度中的参数值，就是最大似然估计解决的问题。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-ebca80a6384cdb38.png" alt=""></p>
-<ol>
-<li>最大似然估计的一般过程<br>首先要知道整体的 <strong>分布模型</strong> ，比如随便一个分布，概率密度p(x)，参数是θ<br>其次要有一些 <strong>样本数据</strong> ，假设为D</li>
-</ol>
+<p>2.最大似然估计的一般过程<br>首先要知道整体的 <strong>分布模型</strong> ，比如随便一个分布，概率密度p(x)，参数是θ<br>其次要有一些 <strong>样本数据</strong> ，假设为D</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-aa8cb023e7315c13.png" alt=""></p>
 <p>样本D同时发生的联合概率密度（不是条件概率，只是强调参数是θ）</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-440680a67d2f45a6.png" alt=""></p>
@@ -378,14 +374,13 @@
 <li>求导数</li>
 <li>解似然方程</li>
 </ul>
-<h3 id="二-逻辑回归算法"><a href="#二-逻辑回归算法" class="headerlink" title="二. 逻辑回归算法"></a>二. 逻辑回归算法</h3><h5 id="1-逻辑回归基本原理"><a href="#1-逻辑回归基本原理" class="headerlink" title="1. 逻辑回归基本原理"></a>1. 逻辑回归基本原理</h5><p>接下来我们回归正题，来看一下逻辑回归。逻辑回归也叫做对数几率回归，明明是分类算法，为什么叫做回归呢？因为它仅仅是在线性回归的基础上，将线性模型通过一个函数，转化为结果只有0/1的分类模型。它的建模过程和线性回归基本相同：</p>
+<h3 id="二-逻辑回归算法"><a href="#二-逻辑回归算法" class="headerlink" title="二. 逻辑回归算法"></a>二. 逻辑回归算法</h3><h4 id="1-逻辑回归基本原理"><a href="#1-逻辑回归基本原理" class="headerlink" title="1. 逻辑回归基本原理"></a>1. 逻辑回归基本原理</h4><p>接下来我们回归正题，来看一下逻辑回归。逻辑回归也叫做对数几率回归，明明是分类算法，为什么叫做回归呢？因为它仅仅是在线性回归的基础上，将线性模型通过一个函数，转化为结果只有0/1的分类模型。它的建模过程和线性回归基本相同：</p>
 <ul>
 <li>寻找预测函数</li>
 <li>构造代价函数</li>
-<li><p>想办法使得代价函数最小并求得回归参数</p>
-<p>1.寻找预测函数<br>假设有一个二分类问题，输出为y∈{0,1}，而线性回归模型产生的预测值为（w是参数向量）</p>
-</li>
+<li>想办法使得代价函数最小并求得回归参数</li>
 </ul>
+<p>1.寻找预测函数<br>假设有一个二分类问题，输出为y∈{0,1}，而线性回归模型产生的预测值为（w是参数向量）</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-91c7cc4cd4a720f1.png" alt=""></p>
 <p>我们希望有一个理想的函数来帮我们实现z值到0/1值的转化。 于是我们找到了sigmoid函数</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-3ec3935d32b6d851.png" alt=""></p>
@@ -394,7 +389,7 @@
 <p>于是，我们非常自然的把sigmoid计算得到的值作为预测点为类别1的概率。概率大于0.5归类为1，小于0.5归类为0。至此，我们得到了预测函数模型</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-e1484c138924b7e5.png" alt=""></p>
 <p>这里面， <strong>φ(z)</strong> 表示的是类别取1的概率大小，那类别取0的概率大小j就是 <strong>1-φ(z)</strong></p>
-<p>  2.构造代价函数<br>按照线性回归的思路，如果利用误差平方和来当代价函数，得到</p>
+<p>2.构造代价函数<br>按照线性回归的思路，如果利用误差平方和来当代价函数，得到</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-be3253b583598700.png" alt=""></p>
 <p>但是，我们此时的 <strong>预测函数模型φ</strong> 并 <strong>不是线性</strong> 的，如果把φ带入代价函数，得到的 <strong>J</strong> 是类似于下图的非凸函数，它有很多极值，使用梯度下降会很难找到代价函数最小的情况，所以这样构建代价函数并不合适。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-e1b2937baec08c4e.png" alt=""></p>
@@ -409,7 +404,7 @@
 <p>最后得到代价函数</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-d4dcbb1875380d10.png" alt=""></p>
 <p>3.求解参数<br>这里可以使用梯度下降法求解参数，具体做法已经在之前的线性回归中讲过，这里求解方式雷同，不在赘述。如果是使用计算库求解的话，可是使用 <strong>BFGS</strong> 与<br><strong>L-BFGS</strong> 来代替梯度下降法，这2种算法收敛速度更快，且可以自适应选择学习效率α，不必手动设置。</p>
-<h5 id="2-边界判定"><a href="#2-边界判定" class="headerlink" title="2. 边界判定"></a>2. 边界判定</h5><p>让我们回到最开始，再来回顾一下我们的逻辑回归算法。</p>
+<h4 id="2-边界判定"><a href="#2-边界判定" class="headerlink" title="2. 边界判定"></a>2. 边界判定</h4><p>让我们回到最开始，再来回顾一下我们的逻辑回归算法。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-e7e6b7e8686504fc.png" alt=""></p>
 <p>开始我们假设了一个线性模型，然后将线性模型带入了sigmoid函数，得到了逻辑回归模型。由sigmoid函数的图像，我们不难得出这样的结论：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/10902146-3f63544fd8d9172e.png" alt=""></p>
@@ -621,7 +616,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-前言"><span class="nav-number">1.</span> <span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-最大似然估计"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 最大似然估计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-逻辑回归算法"><span class="nav-number">2.</span> <span class="nav-text">二. 逻辑回归算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-逻辑回归基本原理"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 逻辑回归基本原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-边界判定"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 边界判定</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-逻辑回归特点"><span class="nav-number">3.</span> <span class="nav-text">三. 逻辑回归特点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-前言"><span class="nav-number">1.</span> <span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-最大似然估计"><span class="nav-number">1.1.</span> <span class="nav-text">1. 最大似然估计</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-逻辑回归算法"><span class="nav-number">2.</span> <span class="nav-text">二. 逻辑回归算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-逻辑回归基本原理"><span class="nav-number">2.1.</span> <span class="nav-text">1. 逻辑回归基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-边界判定"><span class="nav-number">2.2.</span> <span class="nav-text">2. 边界判定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-逻辑回归特点"><span class="nav-number">3.</span> <span class="nav-text">三. 逻辑回归特点</span></a></li></ol></div>
             
           </div>
         </section>
