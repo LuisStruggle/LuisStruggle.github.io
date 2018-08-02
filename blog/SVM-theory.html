@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习,算法,SVM,原理," />
+  <meta name="keywords" content="机器学习,算法,原理,SVM," />
 
 
 
@@ -84,20 +84,20 @@
 
 
 
-<meta name="description" content="一、简介支持向量机（support vectormachines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：
+<meta name="description" content="一、简介支持向量机（support vector machines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：
 
 当训练样本线性可分时，通过硬间隔最大化，学习一个线性可分支持向量机；
 当训练样本近似线性可分时，通过软间隔最大化，学习一个线性支持向量机；
-当训练样本线性不可分时，通过核技巧和软间隔最大化，">
+当训练样本线性不可分时，通过核技巧和软间隔最大化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习之SVM原理">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/SVM-theory.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="一、简介支持向量机（support vectormachines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：
+<meta property="og:description" content="一、简介支持向量机（support vector machines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：
 
 当训练样本线性可分时，通过硬间隔最大化，学习一个线性可分支持向量机；
 当训练样本近似线性可分时，通过软间隔最大化，学习一个线性支持向量机；
-当训练样本线性不可分时，通过核技巧和软间隔最大化，">
+当训练样本线性不可分时，通过核技巧和软间隔最大化">
 <meta property="og:image" content="https://img-blog.csdn.net/20180328152049421?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180328153118183?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180328153906645?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -136,14 +136,14 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20180329154220563?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180328165654360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180329154725124?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:updated_time" content="2018-08-02T05:11:54.220Z">
+<meta property="og:updated_time" content="2018-08-02T05:48:36.083Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习之SVM原理">
-<meta name="twitter:description" content="一、简介支持向量机（support vectormachines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：
+<meta name="twitter:description" content="一、简介支持向量机（support vector machines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：
 
 当训练样本线性可分时，通过硬间隔最大化，学习一个线性可分支持向量机；
 当训练样本近似线性可分时，通过软间隔最大化，学习一个线性支持向量机；
-当训练样本线性不可分时，通过核技巧和软间隔最大化，">
+当训练样本线性不可分时，通过核技巧和软间隔最大化">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180328152049421?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 
 
@@ -375,7 +375,7 @@
       
 
       
-        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>支持向量机（support vector<br>machines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：</p>
+        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>支持向量机（support vector machines）是一种二分类模型，它的目的是寻找一个超平面来对样本进行分割，分割的原则是间隔最大化，最终转化为一个凸二次规划问题来求解。由简至繁的模型包括：</p>
 <ul>
 <li>当训练样本线性可分时，通过硬间隔最大化，学习一个线性可分支持向量机；</li>
 <li>当训练样本近似线性可分时，通过软间隔最大化，学习一个线性支持向量机；</li>
@@ -383,51 +383,51 @@
 </ul>
 <a id="more"></a>
 <h2 id="二、线性可分支持向量机"><a href="#二、线性可分支持向量机" class="headerlink" title="二、线性可分支持向量机"></a>二、线性可分支持向量机</h2><p><strong>1、间隔最大化和支持向量</strong></p>
-<p>如果一个线性函数能够将样本分开，称这些数据样本是线性可分的。那么什么是线性函数呢？其实很简单，在二维空间中就是一条直线，在三维空间中就是一个平面，以此类推，如果不考虑空间维数，这样的线性函数统称为<br><strong>超平面</strong><br>。我们看一个简单的二维空间的例子，O代表正类，X代表负类，样本是线性可分的，但是很显然不只有这一条直线可以将样本分开，而是有无数条，我们所说的线性可分支持向量机就对应着能将数据正确划分并且<br><strong>间隔最大</strong> 的直线。  </p>
+<p>如果一个线性函数能够将样本分开，称这些数据样本是线性可分的。那么什么是线性函数呢？其实很简单，在二维空间中就是一条直线，在三维空间中就是一个平面，以此类推，如果不考虑空间维数，这样的线性函数统称为<strong>超平面</strong>。我们看一个简单的二维空间的例子，O代表正类，X代表负类，样本是线性可分的，但是很显然不只有这一条直线可以将样本分开，而是有无数条，我们所说的线性可分支持向量机就对应着能将数据正确划分并且<strong>间隔最大</strong> 的直线。 </p>
 <p><img src="https://img-blog.csdn.net/20180328152049421?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p>那么我们考虑第一个问题， <strong>为什么要间隔最大呢？</strong> 一般来说，一个点距离分离超平面的远近可以表示分类预测的确信度，如图中的A<br>B两个样本点，B点被预测为正类的确信度要大于A点，所以SVM的目标是寻找一个超平面，使得离超平面较近的异类点之间能有更大的间隔，即不必考虑所有样本点，只需让求得的超平面使得离它近的点间隔最大。<br>接下来考虑第二个问题， <strong>怎么计算间隔？</strong> 只有计算出了间隔，才能使得间隔最大化。在样本空间中，划分超平面可通过如下线性方程来描述：<br><img src="https://img-blog.csdn.net/20180328153118183?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中w为法向量，决定了超平面的方向，b为位移量，决定了超平面与原点的距离。假设超平面能将训练样本正确地分类，即对于训练样本(xi,yi)(xi,yi)，满足以下公式：<br><img src="https://img-blog.csdn.net/20180328153906645?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>公式（2）称为最大间隔假设，yi=+1yi=+1 表示样本为正样本，yi=−1yi=−1<br>表示样本为负样本，式子前面选择大于等于+1，小于等于-1只是为了计算方便，原则上可以是任意常数，但无论是多少，都可以通过对 w 的变换使其为 +1 和 -1<br>，此时将公式（2）左右都乘以 yiyi，得到如下：<br><img src="https://img-blog.csdn.net/20180328154622455?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>实际上等价于：<br><img src="https://img-blog.csdn.net/20180328154745293?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>训练集中的所有样本都应满足公式（3）。如下图所示，距离超平面最近的这几个样本点满足 yi(wTxi+b)=1yi(wTxi+b)=1，它们被称为<br><strong>“支持向量”。</strong> 虚线称为边界，两条虚线间的距离称为 <strong>间隔（margin）</strong> 。<br><img src="https://img-blog.csdn.net/20180328155347956?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>下面我们开始计算间隔，其实间隔就等于两个异类支持向量的差在 w 上的投影，即：<br><img src="https://img-blog.csdn.net/20180328160123465?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中 x⃗ +x→+ 和 x⃗ −x→− 分别表示两个正负支持向量，因为 x⃗ +x→+ 和 x⃗ −x→− 满足<br>yi(wTxi+b)=1yi(wTxi+b)=1，即：<br><img src="https://img-blog.csdn.net/20180328160552158?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述">，<br>推出：<br><img src="https://img-blog.csdn.net/20180328160903808?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述">，<br>代入公式（4）中可以得到：<br><img src="https://img-blog.csdn.net/20180328161131329?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>至此，我们求得了间隔，SVM的思想是使得间隔最大化，也就是：<br><img src="https://img-blog.csdn.net/20180328161900536?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>显然，最大化 2||w||2||w|| 相当于最小化 ||w||，为了计算方便，将公式（6）转化成如下：<br><img src="https://img-blog.csdn.net/2018032816192270?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>公式（7）即为支持向量机的基本型。</p>
+<p>那么我们考虑第一个问题，<strong>为什么要间隔最大呢？</strong> 一般来说，一个点距离分离超平面的远近可以表示分类预测的确信度，如图中的AB两个样本点，B点被预测为正类的确信度要大于A点，所以SVM的目标是寻找一个超平面，使得离超平面较近的异类点之间能有更大的间隔，即不必考虑所有样本点，只需让求得的超平面使得离它近的点间隔最大。<br>接下来考虑第二个问题，<strong>怎么计算间隔？</strong> 只有计算出了间隔，才能使得间隔最大化。在样本空间中，划分超平面可通过如下线性方程来描述：<br><img src="https://img-blog.csdn.net/20180328153118183?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中w为法向量，决定了超平面的方向，b为位移量，决定了超平面与原点的距离。假设超平面能将训练样本正确地分类，即对于训练样本(xi,yi)，满足以下公式：<br><img src="https://img-blog.csdn.net/20180328153906645?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>公式（2）称为最大间隔假设，yi=+1 表示样本为正样本，yi=−1 表示样本为负样本，式子前面选择大于等于+1，小于等于-1只是为了计算方便，原则上可以是任意常数，但无论是多少，都可以通过对 w 的变换使其为 +1 和 -1 ，此时将公式（2）左右都乘以 yi，得到如下：<br><img src="https://img-blog.csdn.net/20180328154622455?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>实际上等价于：<br><img src="https://img-blog.csdn.net/20180328154745293?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>训练集中的所有样本都应满足公式（3）。如下图所示，距离超平面最近的这几个样本点满足 yi(wTxi+b)=1，它们被称为<strong>“支持向量”。</strong> 虚线称为边界，两条虚线间的距离称为 <strong>间隔（margin）</strong> 。<br><img src="https://img-blog.csdn.net/20180328155347956?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>下面我们开始计算间隔，其实间隔就等于两个异类支持向量的差在 w 上的投影，即：<br><img src="https://img-blog.csdn.net/20180328160123465?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中 x⃗ + 和 x⃗ − 分别表示两个正负支持向量，因为 x⃗ + 和 x⃗ − 满足 yi(wTxi+b)=1，即：<br><img src="https://img-blog.csdn.net/20180328160552158?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>推出：<br><img src="https://img-blog.csdn.net/20180328160903808?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>代入公式（4）中可以得到：<br><img src="https://img-blog.csdn.net/20180328161131329?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>至此，我们求得了间隔，SVM的思想是使得间隔最大化，也就是：<br><img src="https://img-blog.csdn.net/20180328161900536?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>显然，最大化 2/||w|| 相当于最小化 ||w||，为了计算方便，将公式（6）转化成如下：<br><img src="https://img-blog.csdn.net/2018032816192270?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>公式（7）即为支持向量机的基本型。</p>
 <p><strong>2、对偶问题</strong></p>
-<p>公式（7）本身是一个凸二次规划问题，可以使用现有的优化计算包来计算，但我们选择更为高效的方法。对公式（7）使用拉格朗日乘子法得到其对偶问题，该问题的拉格朗日函数可以写为：<br><img src="https://img-blog.csdn.net/20180328162802163?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>公式（8）分别对 w 和 b求偏导：<br><img src="https://img-blog.csdn.net/20180328163155733?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>令其分别为0，可以得到：<br><img src="https://img-blog.csdn.net/20180328163404930?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>将公式（9）（10）代入公式（8），可得：<br><img src="https://img-blog.csdn.net/20180328163905768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>此时，原问题就转化为以下仅关于 αα 的问题：<br><img src="https://img-blog.csdn.net/20180328164515627?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>解出 αα 之后，根据公式（9）可以求得 w ， 进而求得 b，可以得到模型：<br><img src="https://img-blog.csdn.net/20180328165654360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>上述过程的KKT条件为：<br><img src="https://img-blog.csdn.net/20180328165301868?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>我们分析一下，对于任意的训练样本 (xi,yi)(xi,yi)，</p>
+<p>公式（7）本身是一个凸二次规划问题，可以使用现有的优化计算包来计算，但我们选择更为高效的方法。对公式（7）使用拉格朗日乘子法得到其对偶问题，该问题的拉格朗日函数可以写为：<br><img src="https://img-blog.csdn.net/20180328162802163?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>公式（8）分别对 w 和 b求偏导：<br><img src="https://img-blog.csdn.net/20180328163155733?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>令其分别为0，可以得到：<br><img src="https://img-blog.csdn.net/20180328163404930?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>将公式（9）（10）代入公式（8），可得：<br><img src="https://img-blog.csdn.net/20180328163905768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>此时，原问题就转化为以下仅关于 α 的问题：<br><img src="https://img-blog.csdn.net/20180328164515627?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>解出 α 之后，根据公式（9）可以求得 w ， 进而求得 b，可以得到模型：<br><img src="https://img-blog.csdn.net/20180328165654360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>上述过程的KKT条件为：<br><img src="https://img-blog.csdn.net/20180328165301868?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>我们分析一下，对于任意的训练样本 (xi,yi)，</p>
 <ul>
-<li>若 αi=0αi=0，则其不会在公式（13）中的求和项中出现，也就是说，它不影响模型的训练；</li>
-<li>若 αi&gt;0αi&gt;0，则 yif(xi)−1=0yif(xi)−1=0，也就是 yif(xi)=1yif(xi)=1，即该样本一定在边界上，是一个支持向量。</li>
+<li>若 αi=0，则其不会在公式（13）中的求和项中出现，也就是说，它不影响模型的训练；</li>
+<li>若 αi&gt;0，则 yif(xi)−1=0，也就是 yif(xi)=1，即该样本一定在边界上，是一个支持向量。</li>
 </ul>
 <p>这里显示出了支持向量机的重要特征：当训练完成后，大部分样本都不需要保留，最终模型只与支持向量有关。</p>
-<h2 id="三、非线性支持向量机和核函数"><a href="#三、非线性支持向量机和核函数" class="headerlink" title="三、非线性支持向量机和核函数"></a>三、非线性支持向量机和核函数</h2><p>对于非线性问题，线性可分支持向量机并不能有效解决，要使用非线性模型才能很好地分类。先看一个例子，如下图，很显然使用直线并不能将两类样本分开，但是可以使用一条椭圆曲线（非线性模型）将它们分开。非线性问题往往不好求解，所以希望能用解线性分类问题的方法求解，因此可以采用非线性变换，将非线性问题变换成线性问题。<br><img src="https://img-blog.csdn.net/20180329114634529?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>对于这样的问题，可以将训练样本从原始空间映射到一个更高维的空间，使得样本在这个空间中线性可分，如果原始空间维数是有限的，即属性是有限的，那么一定存在一个高维特征空间是样本可分。令ϕ(x)ϕ(x)表示将<br>x 映射后的特征向量，于是在特征空间中，划分超平面所对应的的模型可表示为：</p>
-<p>f(x)=wTϕ(x)+bf(x)=wTϕ(x)+b （14）</p>
-<p>于是有最小化函数：<br><img src="https://img-blog.csdn.net/20180329115702329?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其对偶问题为：<br><img src="https://img-blog.csdn.net/20180329120115364?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>若要对公式（16）求解，会涉及到计算 ϕ(xi)Tϕ(xj)ϕ(xi)Tϕ(xj)，这是样本 xixi 和<br>xjxj映射到特征空间之后的内积，由于特征空间的维数可能很高，甚至是无穷维，因此直接计算<br>ϕ(xi)Tϕ(xj)ϕ(xi)Tϕ(xj)通常是困难的，于是想到这样一个函数：<br><img src="https://img-blog.csdn.net/20180329144423690?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>即 xixi 和 xjxj 在特征空间中的内积等于他们在原始样本空间中通过函数 κ(xi,xj)κ(xi,xj) 计算的函数值，于是公式（16）写成如下：<br><img src="https://img-blog.csdn.net/20180329144717431?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>求解后得到：<br><img src="https://img-blog.csdn.net/20180329144954258?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>这里的函数 κ(xi,xj)κ(xi,xj)<br>就是核函数，在实际应用中，通常人们会从一些常用的核函数里选择（根据样本数据的不同，选择不同的参数，实际上就得到了不同的核函数），下面给出常用的核函数：</p>
+<h2 id="三、非线性支持向量机和核函数"><a href="#三、非线性支持向量机和核函数" class="headerlink" title="三、非线性支持向量机和核函数"></a>三、非线性支持向量机和核函数</h2><p>对于非线性问题，线性可分支持向量机并不能有效解决，要使用非线性模型才能很好地分类。先看一个例子，如下图，很显然使用直线并不能将两类样本分开，但是可以使用一条椭圆曲线（非线性模型）将它们分开。非线性问题往往不好求解，所以希望能用解线性分类问题的方法求解，因此可以采用非线性变换，将非线性问题变换成线性问题。<br><img src="https://img-blog.csdn.net/20180329114634529?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>对于这样的问题，可以将训练样本从原始空间映射到一个更高维的空间，使得样本在这个空间中线性可分，如果原始空间维数是有限的，即属性是有限的，那么一定存在一个高维特征空间是样本可分。令ϕ(x)表示将 x 映射后的特征向量，于是在特征空间中，划分超平面所对应的的模型可表示为：</p>
+<p>f(x)=wTϕ(x)+b （14）</p>
+<p>于是有最小化函数：<br><img src="https://img-blog.csdn.net/20180329115702329?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其对偶问题为：<br><img src="https://img-blog.csdn.net/20180329120115364?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>若要对公式（16）求解，会涉及到计算 ϕ(xi)Tϕ(xj)，这是样本 xi 和 xj映射到特征空间之后的内积，由于特征空间的维数可能很高，甚至是无穷维，因此直接计算 ϕ(xi)Tϕ(xj)通常是困难的，于是想到这样一个函数：<br><img src="https://img-blog.csdn.net/20180329144423690?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>即 xi 和 xj 在特征空间中的内积等于他们在原始样本空间中通过函数 κ(xi,xj) 计算的函数值，于是公式（16）写成如下：<br><img src="https://img-blog.csdn.net/20180329144717431?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>求解后得到：<br><img src="https://img-blog.csdn.net/20180329144954258?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>这里的函数 κ(xi,xj) 就是核函数，在实际应用中，通常人们会从一些常用的核函数里选择（根据样本数据的不同，选择不同的参数，实际上就得到了不同的核函数），下面给出常用的核函数：</p>
 <ul>
 <li><p>线性核：<br><img src="https://img-blog.csdn.net/20180329145238973?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 </li>
 <li><p>多项式核（d是多项式的次数，d=1是退化为线性核）：<br><img src="https://img-blog.csdn.net/2018032914533418?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 </li>
-<li><p>高斯核（σ&gt;0σ&gt;0）：<br><img src="https://img-blog.csdn.net/20180329145614974?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<li><p>高斯核（σ&gt;0）：<br><img src="https://img-blog.csdn.net/20180329145614974?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 </li>
-<li><p>拉普拉斯核（σ&gt;0σ&gt;0）：<br><img src="https://img-blog.csdn.net/20180329145801777?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<li><p>拉普拉斯核（σ&gt;0）：<br><img src="https://img-blog.csdn.net/20180329145801777?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 </li>
-<li><p>sigmiod核（β&gt;0,θ&gt;0β&gt;0,θ&gt;0）：<br><img src="https://img-blog.csdn.net/20180329145927975?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>此外，核函数也可以通过组合得到，在此不再赘述。</p>
+<li><p>sigmiod核（β&gt;0,θ&gt;0）：<br><img src="https://img-blog.csdn.net/20180329145927975?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>此外，核函数也可以通过组合得到，在此不再赘述。</p>
 </li>
 </ul>
 <h2 id="四、线性支持向量机（软间隔支持向量机）与松弛变量"><a href="#四、线性支持向量机（软间隔支持向量机）与松弛变量" class="headerlink" title="四、线性支持向量机（软间隔支持向量机）与松弛变量"></a>四、线性支持向量机（软间隔支持向量机）与松弛变量</h2><p><strong>1、线性支持向量机</strong></p>
 <p>在前面的讨论中，我们假设训练样本在样本空间或者特征空间中是线性可分的，但在现实任务中往往很难确定合适的核函数使训练集在特征空间中线性可分，退一步说，即使瞧好找到了这样的核函数使得样本在特征空间中线性可分，也很难判断是不是由于过拟合造成。</p>
-<p>线性不可分意味着某些样本点 (xi,yi)(xi,yi)<br>不能满足间隔大于等于1的条件，样本点落在超平面与边界之间。为解决这一问题，可以对每个样本点引入一个松弛变量<br>ξi≥0ξi≥0，使得间隔加上松弛变量大于等于1，这样约束条件变为：<br><img src="https://img-blog.csdn.net/20180329151529785?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>同时，对于每一个松弛变量 ξi≥0ξi≥0，支付一个代价 ξi≥0ξi≥0，目标函数变为：<br><img src="https://img-blog.csdn.net/20180329151943300?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中 C&gt;0C&gt;0为惩罚参数，C值大时对误分类的惩罚增大， C值小时对误分类的惩罚减小，公式（21）包含两层含义：使 12||w||212||w||2<br>尽量小即间隔尽量大，同时使误分类点的个数尽量小，C是调和两者的系数。<br>有了公式（21），可以和线性可分支持向量机一样考虑线性支持向量机的学习过程，此时，线性支持向量机的学习问题变成如下凸二次规划问题的求解（原始问题）：<br><img src="https://img-blog.csdn.net/20180329152633231?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>线性不可分意味着某些样本点 (xi,yi) 不能满足间隔大于等于1的条件，样本点落在超平面与边界之间。为解决这一问题，可以对每个样本点引入一个松弛变量ξi≥0，使得间隔加上松弛变量大于等于1，这样约束条件变为：<br><img src="https://img-blog.csdn.net/20180329151529785?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>同时，对于每一个松弛变量 ξi≥0，支付一个代价 ξi≥0，目标函数变为：<br><img src="https://img-blog.csdn.net/20180329151943300?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中 C&gt;0为惩罚参数，C值大时对误分类的惩罚增大，C值小时对误分类的惩罚减小，公式（21）包含两层含义：使 1/2*||w||^2 尽量小即间隔尽量大，同时使误分类点的个数尽量小，C是调和两者的系数。<br>有了公式（21），可以和线性可分支持向量机一样考虑线性支持向量机的学习过程，此时，线性支持向量机的学习问题变成如下凸二次规划问题的求解（原始问题）：<br><img src="https://img-blog.csdn.net/20180329152633231?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p><strong>2、对偶问题</strong></p>
-<p>与线性可分支持向量机的对偶问题解法一致，公式（22）的拉格朗日函数为：<br><img src="https://img-blog.csdn.net/20180329153017663?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中 αi≥0,μi≥0αi≥0,μi≥0 是拉格朗日乘子。</p>
-<p>令 L(w,b,α,ξ,μ)L(w,b,α,ξ,μ) 对 w,b,ξw,b,ξ的偏导数为0可得如下：<br><img src="https://img-blog.csdn.net/20180329153518304?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>将公式（24）（25）（26）代入公式（23）得对偶问题：<br><img src="https://img-blog.csdn.net/20180329154220563?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>解出 αα 之后，根据公式（9）可以求得 w ， 进而求得 b，可以得到模型：<br><img src="https://img-blog.csdn.net/20180328165654360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述">。<br>上述过程的KKT条件为：<br><img src="https://img-blog.csdn.net/20180329154725124?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>我们分析一下，对于任意的训练样本 (xi,yi)(xi,yi) ，总有 αi=0αi=0 或者 yif(xi)−1+ξi=0yif(xi)−1+ξi=0 。</p>
+<p>与线性可分支持向量机的对偶问题解法一致，公式（22）的拉格朗日函数为：<br><img src="https://img-blog.csdn.net/20180329153017663?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>其中 αi≥0,μi≥0 是拉格朗日乘子。</p>
+<p>令 L(w,b,α,ξ,μ) 对 w,b,ξw,b,ξ的偏导数为0可得如下：<br><img src="https://img-blog.csdn.net/20180329153518304?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>将公式（24）（25）（26）代入公式（23）得对偶问题：<br><img src="https://img-blog.csdn.net/20180329154220563?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>解出 α 之后，根据公式（9）可以求得 w ， 进而求得 b，可以得到模型：<br><img src="https://img-blog.csdn.net/20180328165654360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述">。<br>上述过程的KKT条件为：<br><img src="https://img-blog.csdn.net/20180329154725124?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzIwMTc3MzI3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>我们分析一下，对于任意的训练样本 (xi,yi) ，总有 αi=0 或者 yif(xi)−1+ξi=0。</p>
 <ul>
-<li>若 αi=0αi=0 ，则该样本不出现在公式（13）中，不影响模型。</li>
-<li>若 αi&gt;0αi&gt;0，必有 yif(xi)−1+ξi=0yif(xi)−1+ξi=0 ，即 yif(xi)=1−ξiyif(xi)=1−ξi ，此时该样本为支持向量。</li>
+<li>若 αi=0，则该样本不出现在公式（13）中，不影响模型。</li>
+<li>若 αi&gt;0，必有 yif(xi)−1+ξi=0，即 yif(xi)=1−ξi，此时该样本为支持向量。</li>
 </ul>
-<p>由于 C=αi+μiC=αi+μi （公式26）</p>
+<p>由于 C=αi+μi （公式26）</p>
 <ul>
-<li>若 αi<cαi<c， 则必有="" μi="">0μi&gt;0 ，根据公式（28）知 ξi=0ξi=0 ，即该样本恰好落在最大间隔的边界上；</cαi<c，></li>
-<li>若 αi=Cαi=C ，则 μi=0μi=0，此时若 ξi≤1ξi≤1 则该样本在最大间隔内部，若 ξi&gt;1ξi&gt;1 则样本分类错误。</li>
+<li>若 C&gt;αi，则必有 μi&gt;0，根据公式（28）知 ξi=0，即该样本恰好落在最大间隔的边界上；</li>
+<li>若 αi=C，则 μi=0，此时若 ξi≤1 则该样本在最大间隔内部，若 ξi&gt;1 则样本分类错误。</li>
 </ul>
-<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p><strong>至此，关于SVM的三类问题：线性可分支持向量机与硬间隔最大化，非线性支持向量机与核函数，线性支持向量机与软间隔最大化一一介绍完毕，最后附上博主<br>Duanxx 对SVM使用范围的一段总结：</strong></p>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p><strong>至此，关于SVM的三类问题：线性可分支持向量机与硬间隔最大化，非线性支持向量机与核函数，线性支持向量机与软间隔最大化一一介绍完毕，最后附上博主Duanxx 对SVM使用范围的一段总结：</strong></p>
 <p>我们所面对的所有的机器学算法，都是有适用范围的，或者说，我们所有的机器学习算法都是有约束的优化问题。而这些约束，就是我们在推导算法之前所做的假设。</p>
-<p>比如：Logistics Regression，在Logistics Regression中，假设后验概率为Logistics<br>分布；再比如：LDA假设fk(x)fk(x)是均值不同，方差相同的高斯分布；这些都是我们在推导算法之前所做的假设，也就是算法对数据分布的要求。</p>
-<p>而对于SVM而言，它并没有对原始数据的分布做任何的假设，这就是SVM和LDA、Logistics<br>Regression区别最大的地方。这表明SVM模型对数据分布的要求低，那么其适用性自然就会更广一些。如果我们事先对数据的分布没有任何的先验信息，即，不知道是什么分布，那么SVM无疑是比较好的选择。</p>
-<p>但是，如果我们已经知道数据满足或者近似满足高斯分布，那么选择LDA得到的结果就会更准确。如果我们已经知道数据满足或者近似满足Logistics<br>分布，那么选择Logistics Regression就会有更好的效果。</p>
+<p>比如：Logistics Regression，在Logistics Regression中，假设后验概率为Logistics 分布；再比如：LDA假设fk(x)是均值不同，方差相同的高斯分布；这些都是我们在推导算法之前所做的假设，也就是算法对数据分布的要求。</p>
+<p>而对于SVM而言，它并没有对原始数据的分布做任何的假设，这就是SVM和LDA、Logistics Regression区别最大的地方。这表明SVM模型对数据分布的要求低，那么其适用性自然就会更广一些。如果我们事先对数据的分布没有任何的先验信息，即，不知道是什么分布，那么SVM无疑是比较好的选择。</p>
+<p>但是，如果我们已经知道数据满足或者近似满足高斯分布，那么选择LDA得到的结果就会更准确。如果我们已经知道数据满足或者近似满足Logistics 分布，那么选择Logistics Regression就会有更好的效果。</p>
 <p>如有问题，欢迎批评指正~</p>
 
       
@@ -455,9 +455,9 @@
           
             <a href="/tags/算法/" rel="tag">#算法</a>
           
-            <a href="/tags/SVM/" rel="tag">#SVM</a>
-          
             <a href="/tags/原理/" rel="tag">#原理</a>
+          
+            <a href="/tags/SVM/" rel="tag">#SVM</a>
           
         </div>
       
@@ -473,6 +473,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/GBDT-theory.html" rel="prev" title="GBDT详解">
+                GBDT详解 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -540,7 +544,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -557,7 +561,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

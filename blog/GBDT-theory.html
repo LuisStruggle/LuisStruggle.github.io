@@ -1,0 +1,896 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="机器学习,算法,GBDT,原理,决策树," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
+
+从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。
+BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GBDT详解">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/GBDT-theory.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
+
+从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。
+BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927391/201607/927391-20160717135005498-1140287801.jpg">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503195611626?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927391/201607/927391-20160716073722420-208134951.jpg">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/927391/201607/927391-20160717135023373-1810846145.jpg">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503210224061?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503203033768?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503203732481?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503203912904?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503204049238?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503204146786?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503204230927?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503204305082?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503205500261?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503205717163?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503213606986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503234004265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503215003288?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20160705105950067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20160705110221256?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503223830287?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503231341377?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503231945499?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503232105319?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503233147438?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-02T06:19:22.214Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GBDT详解">
+<meta name="twitter:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
+
+从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。
+BaggingBagging=Bootstrap Aggregating，是 model averaging 的策略。bootstra">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/GBDT-theory.html"/>
+
+  <title> GBDT详解 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                GBDT详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-10T14:12:20+08:00" content="2018-02-10">
+              2018-02-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/GBDT-theory.html" class="leancloud_visitors" data-flag-title="GBDT详解">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。</p>
+<hr>
+<h1 id="从Ensemble说起"><a href="#从Ensemble说起" class="headerlink" title="从Ensemble说起"></a>从Ensemble说起</h1><p>Bagging，Boosting和Stacking是集成学习的三种主要的形式。</p>
+<h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><p><code>Bagging=Bootstrap Aggregating</code>，是 <strong>model averaging</strong> 的策略。<br><code>bootstrap</code>是一种有放回的抽样，那么bagging就是使用bootstrap抽样来进行模型平均(vote)。<br>从训练集从进行子抽样组成每个基模型所需要的子训练集，对所有基模型预测的结果进行综合产生最终的预测结果。</p>
+<a id="more"></a>
+<p>比如: <code>Random Forest</code>就是使用bagging的思想<br>(1) bootstrap抽样产生样本集M<br>(2) 从原始的K个特征中选择k(logK)个随机特征作为特征集F<br>(3) 对样本集M在特征集F上建立决策树(CART)<br>(4) 重复(1)-(3)产生多个决策树<br>(5) 投票(average)</p>
+<p><img src="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="bagging"></p>
+<p>这里借鉴别人的一张图：<br><img src="http://images2015.cnblogs.com/blog/927391/201607/927391-20160717135005498-1140287801.jpg" alt="bagging"></p>
+<h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2><p>是指训练一个模型用于组合其他各个模型。即首先我们先训练多个不同的模型，然后再以之前训练的各个模型的输出为输入来训练一个模型，以得到一个最终的输出。<br>将训练好的所有基模型对训练基进行预测，第j个基模型对第i个训练样本的预测值将作为新的训练集中第i个样本的第j个特征值，最后基于新的训练集进行训练。同理，预测的过程也要先经过所有基模型的预测形成新的测试集，最后再对测试集进行预测。</p>
+<p><img src="https://img-blog.csdn.net/20170503195611626?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="stacking"></p>
+<p>别人的一个图画的很好，这里拿来：<br><img src="http://images2015.cnblogs.com/blog/927391/201607/927391-20160716073722420-208134951.jpg" alt="stacking"></p>
+<h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><blockquote>
+<p>While boosting is not algorithmically constrained, most boosting algorithms<br>consist of <strong>iteratively learning weak classifiers with respect to a<br>distribution and adding them to a final strong classifier</strong>. When they are<br>added, they are typically weighted in some way that is usually related to the<br>weak learners’ accuracy. After a weak learner is added, the data are<br>reweighted: examples that are misclassified gain weight and examples that are<br>classified correctly lose weight (some boosting algorithms actually decrease<br>the weight of repeatedly misclassified examples, e.g., boost by majority and<br>BrownBoost). Thus, future weak learners focus more on the examples that<br>previous weak learners misclassified.</p>
+</blockquote>
+<p>总结起来就是:<br>(1) 分步去学习weak classifier，最终的strong claissifier是由分步产生的classifier’组合‘而成的<br>(2) 根据每步学习到的classifier去reweight样本(分错的样本权重加大，反之减小)</p>
+<p>流程图如下：</p>
+<p><img src="http://images2015.cnblogs.com/blog/927391/201607/927391-20160717135023373-1810846145.jpg" alt="boosting"></p>
+<p>对此有个示例:</p>
+<p><img src="https://img-blog.csdn.net/20170503210224061?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="prml p660"></p>
+<p>其中绿色的线表示目前取得的模型（模型是由前m次得到的模型合并得到的），虚线表示当前这次模型。每次分类的时候，会更关注分错的数据，上图中，红色和蓝色的点就是数据，点越大表示权重越高。当m=150的时候，模型已经可以将数据正确的分来。</p>
+<p>从上面我们可以看出Boosting和Bagging的区别，通过Gradient Boosting算法引入Bagging的思想，加上正则项，使得模型具有比一般Boosting算法(比如Adaboost)更强的robust，这也就是为什么GBDT能流行的原因。</p>
+<h1 id="Boosting-Tree"><a href="#Boosting-Tree" class="headerlink" title="Boosting Tree"></a>Boosting Tree</h1><p>Boosting实际采用加法模型(classifier的线性组合)+前向分布，如果每次在Boosting中的基函数(classifier)使用决策树的算法就是Boosting Tree。所以boosting tree模型就是决策树的加法模型:</p>
+<p><img src="https://img-blog.csdn.net/20170503203033768?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="boosting tree"></p>
+<p>其中T表示决策树。</p>
+<p>对于回归问题的boosting tree的前向分步算法如下:</p>
+<p><img src="https://img-blog.csdn.net/20170503203732481?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>其中<img src="https://img-blog.csdn.net/20170503203912904?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="">表示第m步之后的当前模型，此时需要求解:</p>
+<p><img src="https://img-blog.csdn.net/20170503204049238?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>对于回归问题可以使用平方误差作为损失函数L，即:</p>
+<p><img src="https://img-blog.csdn.net/20170503204146786?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>转换下就是:</p>
+<p><img src="https://img-blog.csdn.net/20170503204230927?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>其中<img src="https://img-blog.csdn.net/20170503204305082?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="residual">就是当前模型拟合产生的残差(residual)。</p>
+<p>对于不是平方误差的情况，可以采用泰勒展开来进行计算，具体的可以参考xgboost作者陈天奇的介绍。<br><a href="http://xgboost.readthedocs.io/en/latest/model.html" target="_blank" rel="external"><strong>boosted tree introduction</strong></a><br><a href="http://dataunion.org/15787.html" target="_blank" rel="external"><strong>boosted tree introduction 中文版</strong></a></p>
+<p>这里我直接摘抄下:</p>
+<p><img src="https://img-blog.csdn.net/20170503205500261?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="object function"></p>
+<p>Obj表示object function，跟我们上面说的不一样的是，这里加上了正则，不过不影响理解。采用泰勒展开来近似:</p>
+<p><img src="https://img-blog.csdn.net/20170503205717163?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<h1 id="Gradient-Boosting"><a href="#Gradient-Boosting" class="headerlink" title="Gradient Boosting"></a>Gradient Boosting</h1><p>Boosting更像是一种思想, gradient boosting是一种boosting的方法. 它主要的思想是，<strong>每一次建立模型是在之前建立模型损失函数的梯度下降方向</strong>。</p>
+<p>统计学习方法中是这么说的：</p>
+<blockquote>
+<p>假设分步模型下当前模型是f(x)，利用损失函数L的负梯度在f(x)下的值作为boosting tree算法中的残差(residual)去拟合一个回归树。<br><img src="https://img-blog.csdn.net/20170503213606986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+</blockquote>
+<p>所以大概算法是这样的:<br><img src="https://img-blog.csdn.net/20170503234004265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<blockquote>
+<p>2(a)表示计算损失函数的负梯度在当前模型的值，将其作为残差的估计值;<br>2(b)表示估计回归树叶子节点的区域，以拟合残差的近似值;<br>2(c)表示利用线性搜索估计叶子节点区域的值，使得损失函数最小化;<br>2(d)更新回归树;</p>
+</blockquote>
+<p>说的不好懂，没关系，下面还有个更具体的解释。</p>
+<p>假设:<br><img src="https://img-blog.csdn.net/20170503215003288?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>其中P表示参数，F(x;P)表示以P为参数的x的函数，也就是预测函数，在分步模型中表示为加法。</p>
+<p><img src="https://img-blog.csdn.net/20160705105950067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p>写成梯度下降的方式就是下面的形式，也就是我们将要得到的模型fm(x)的参数{am,bm}能够使得fm的方向是之前得到的模型Fm-1(x)的损失函数下降最快的方向：</p>
+<p><img src="https://img-blog.csdn.net/20160705110221256?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p>Gradient Boosting是boosting思想下的一种优化的方法，首先将函数分解为可加的形式（其实所有的函数都是可加的，只是是否好放在这个框架中，以及最终的效果如何），然后进行m次迭代，通过使得损失函数在梯度方向上减少，最终得到一个优秀的模型。<br><em>*每次模型在梯度方向上的减少的部分，可以认为是一个“小”的或者“弱”的模型</em>。，最终我们会通过加权(也就是每次在梯度方向上下降的距离）的方式将这些“弱”的模型合并起来，形成一个更好的模型。</p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><p>一个树的定义可以分成两个部分: 结构部分和叶子权重部分。假设q是结构映射函数把输入映射到叶子的索引号上面去，w表示叶子节点的权重. 则树可以表示为:</p>
+<p><img src="https://img-blog.csdn.net/20170503223830287?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>定义树的复杂度：包含两个部分树的叶子节点的个数T和叶子节点的权重的平方，即：</p>
+<p><img src="https://img-blog.csdn.net/20170503231341377?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>则此时的obj为:</p>
+<p><img src="https://img-blog.csdn.net/20170503231945499?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20170503232105319?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>此时单棵决策树的学习过程如下:</p>
+<blockquote>
+<p>(1) 枚举所有可能的树结构q<br>(2) 计算对应的分数(损失值)obj，obj越小越好<br>(3) 找到最佳的树结构，为每个叶子节点计算权值w</p>
+</blockquote>
+<p>然而，可能的树结构数量是无穷的，所以实际上我们不可能枚举所有可能的树结构。通常情况下，我们采用贪心策略来生成决策树的每个节点。</p>
+<blockquote>
+<ol>
+<li>从深度为0的树开始，对每个叶节点枚举所有的可用特征</li>
+<li>针对每个特征，把属于该节点的训练样本根据该特征值升序排列，通过线性扫描的方式来决定该特征的最佳分裂点，并记录该特征的最大收益（采用最佳分裂点时的收益）</li>
+<li>选择收益最大的特征作为分裂特征，用该特征的最佳分裂点作为分裂位置，把该节点生长出左右两个新的叶节点，并为每个新节点关联对应的样本集</li>
+<li>回到第1步，递归执行到满足特定条件为止</li>
+</ol>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>GBDT的算法:</p>
+<blockquote>
+<ol>
+<li>算法每次迭代生成一颗新的决策树</li>
+<li>计算损失函数对每个样本的一阶导gi和二阶导hi</li>
+<li>通过贪心策略生成新的决策树，同时计算每个叶子节点的权重w</li>
+<li>把新生成的决策树f(x)添加到模型:<br><img src="https://img-blog.csdn.net/20170503233147438?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>为了防止过拟合添加了学习率参数(shrinkage)</li>
+</ol>
+</blockquote>
+<hr>
+<p><strong>参考博客</strong><br>1. <a href="http://dataunion.org/15787.html" target="_blank" rel="external"><strong>陈天奇的博客</strong></a><br>2. <a href="https://www.zybuluo.com/yxd/note/611571#gbdt算法" target="_blank" rel="external"><strong>GBDT算法原理解析</strong></a><br>3. <a href="http://blog.jobbole.com/88193/" target="_blank" rel="external"><strong>gradient boosting解析</strong></a><br>4. 统计学习方法(李航)<br>5. <a href="http://www.cnblogs.com/jasonfreak/p/5657196.html" target="_blank" rel="external">ensemble learning原理[推荐]</a><br>6. <a href="http://www.cnblogs.com/jasonfreak/p/5720137.html" target="_blank" rel="external">ensemble learning实战[推荐]</a><br>7. <a href="https://mlwave.com/kaggle-ensembling-guide/" target="_blank" rel="external">kaggle ensemble guide</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag">#机器学习</a>
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/GBDT/" rel="tag">#GBDT</a>
+          
+            <a href="/tags/原理/" rel="tag">#原理</a>
+          
+            <a href="/tags/决策树/" rel="tag">#决策树</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/SVM-theory.html" rel="next" title="机器学习之SVM原理">
+                <i class="fa fa-chevron-left"></i> 机器学习之SVM原理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从Ensemble说起"><span class="nav-number">1.</span> <span class="nav-text">从Ensemble说起</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bagging"><span class="nav-number">1.1.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stacking"><span class="nav-number">1.2.</span> <span class="nav-text">Stacking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boosting"><span class="nav-number">1.3.</span> <span class="nav-text">Boosting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Boosting-Tree"><span class="nav-number">2.</span> <span class="nav-text">Boosting Tree</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gradient-Boosting"><span class="nav-number">3.</span> <span class="nav-text">Gradient Boosting</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GBDT"><span class="nav-number">4.</span> <span class="nav-text">GBDT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
