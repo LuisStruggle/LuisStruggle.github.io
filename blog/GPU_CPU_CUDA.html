@@ -1,0 +1,1019 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CPU,GPU,CUDA,cuDNN," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess）
+CPU虽然有多核，但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU、GPU、CUDA，CuDNN 简介">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/GPU_CPU_CUDA.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess）
+CPU虽然有多核，但">
+<meta property="og:image" content="https://img-blog.csdn.net/20161228111841667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20161228195113023?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20161230105726677?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20161230160758862?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20161230162245477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-15T14:46:31.521Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CPU、GPU、CUDA，CuDNN 简介">
+<meta name="twitter:description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess）
+CPU虽然有多核，但">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20161228111841667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/GPU_CPU_CUDA.html"/>
+
+  <title> CPU、GPU、CUDA，CuDNN 简介 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CPU、GPU、CUDA，CuDNN 简介
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-04-05T13:34:01+08:00" content="2018-04-05">
+              2018-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/GPU_CPU_CUDA.html" class="leancloud_visitors" data-flag-title="CPU、GPU、CUDA，CuDNN 简介">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、CPU和GPU的区别"><a href="#一、CPU和GPU的区别" class="headerlink" title="一、CPU和GPU的区别"></a>一、CPU和GPU的区别</h1><p>1，CPU (Central Processing Unit) 即中央处理器<br>2，GPU (Graphics Processing Unit) 即图形处理器<br>3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess）</p>
+<p>CPU虽然有多核，但总数没有超过两位数，每个核都有足够大的缓存和足够多的数字和逻辑运算单元，并辅助有很多加速分支判断甚至更复杂的逻辑判断的硬件。</p>
+<a id="more"></a>
+<p>GPU的核数远超CPU，被称为众核（NVIDIA Fermi有512个核）。每个核拥有的缓存大小相对小，数字逻辑运算单元也少而简单（GPU初始时在浮点计算上一直弱于CPU）。</p>
+<p>从结果上导致CPU擅长处理具有复杂计算步骤和复杂数据依赖的计算任务，如分布式计算，数据压缩，人工智能，物理模拟，以及其他很多很多计算任务等。</p>
+<p>GPU由于历史原因，是为了视频游戏而产生的（至今其主要驱动力还是不断增长的视频游戏市场），在三维游戏中常常出现的一类操作是对海量数据进行相同的操作，如：对每一个顶点进行同样的坐标变换，对每一个顶点按照同样的光照模型计算颜色值。GPU的众核架构非常适合把同样的指令流并行发送到众核上，采用不同的输入数据执行。</p>
+<p>当程序员为CPU编写程序时，他们倾向于利用复杂的逻辑结构优化算法从而减少计算任务的运行时间，即Latency。<br>当程序员为GPU编写程序时，则利用其处理海量数据的优势，通过提高总的数据吞吐量（Throughput）来掩盖Lantency。</p>
+<p><img src="https://img-blog.csdn.net/20161228111841667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>其中绿色的是计算单元，橙红色的是存储单元，橙黄色的是控制单元。</p>
+<p>GPU采用了数量众多的计算单元和超长的流水线，但只有非常简单的控制逻辑并省去了Cache。而CPU不仅被Cache占据了大量空间，而且还有有复杂的控制逻辑和诸多优化电路，相比之下计算能力只是CPU很小的一部分。</p>
+<h1 id="二、CUDA"><a href="#二、CUDA" class="headerlink" title="二、CUDA"></a>二、CUDA</h1><p>CUDA(Compute Unified Device Architecture)，是英伟达公司推出的一种基于新的并行编程模型和指令集架构的通用计算架构，它能利用英伟达GPU的并行计算引擎，比CPU更高效的解决许多复杂计算任务。</p>
+<p>使用CUDA的好处就是透明。根据摩尔定律GPU的晶体管数量不断增多，硬件结构必然是不断的在发展变化，没有必要每次都为不同的硬件结构重新编码，而CUDA就是提供了一种可扩展的编程模型，使得已经写好的CUDA代码可以在任意数量核心的GPU上运行。如下图所示，只有运行时，系统才知道物理处理器的数量。<br><img src="https://img-blog.csdn.net/20161228195113023?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="三、CuDNN"><a href="#三、CuDNN" class="headerlink" title="三、CuDNN"></a>三、CuDNN</h1><p>NVIDIA cuDNN是用于深度神经网络的GPU加速库。它强调性能、易用性和低内存开销。NVIDIA cuDNN可以集成到更高级别的机器学习框架中，如加州大学伯克利分校的流行CAFFE软件。简单的，插入式设计可以让开发人员专注于设计和实现神经网络模型，而不是调整性能，同时还可以在GPU上实现高性能现代并行计算。</p>
+<p><a href="http://pan.baidu.com/s/1c0GjUdq" target="_blank" rel="external">cuDNN 用户手册（英文）</a></p>
+<p>CuDNN支持的算法</p>
+<ol>
+<li>卷积操作、相关操作的前向和后向过程。</li>
+<li>pooling的前向后向过程</li>
+<li>softmax的前向后向过程</li>
+<li><p>激活函数的前向后向过程   </p>
+<ul>
+<li>ReLU</li>
+<li>sigmoid</li>
+<li>TANH</li>
+</ul>
+</li>
+<li>Tensor转换函数，其中一个Tensor就是一个四维的向量。</li>
+</ol>
+<p><img src="https://img-blog.csdn.net/20161230105726677?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>Baseline Caffe与用NVIDIA Titan Z 加速cuDNN的Caffe做比较</p>
+<h1 id="四、CUDA编程"><a href="#四、CUDA编程" class="headerlink" title="四、CUDA编程"></a>四、CUDA编程</h1><p>参考自 <a href="http://bbs.csdn.net/topics/390798229" target="_blank" rel="external">一篇不错的CUDA入门博客</a></p>
+<p>开发人员可以通过调用CUDA的API，来进行并行编程，达到高性能计算目的。NVIDIA公司为了吸引更多的开发人员，对CUDA进行了编程语言扩展，如CUDA C/C++,CUDA Fortran语言。注意CUDA C/C++可以看作一个新的编程语言，因为NVIDIA配置了相应的编译器nvcc,CUDA Fortran一样。</p>
+<p>如果粗暴的认为C语言工作的对象是CPU和内存条（接下来,称为主机内存），那么CUDA C工作的的对象就是GPU及GPU上的内存（接下来,称为设备内存），且充分利用了GPU多核的优势及降低了并行编程的难度。一般通过C语言把数据从外界读入，再分配数据，给CUDA C，以便在GPU上计算，然后再把计算结果返回给C语言，以便进一步工作，如进一步处理及显示，或重复此过程。</p>
+<h2 id="主要概念与名称"><a href="#主要概念与名称" class="headerlink" title="主要概念与名称"></a>主要概念与名称</h2><ol>
+<li><p>主机<br>将CPU及系统的内存（内存条）称为主机。</p>
+</li>
+<li><p>设备<br>将GPU及GPU本身的显示内存称为设备。</p>
+</li>
+<li><p>线程(Thread)<br>一般通过GPU的一个核进行处理。（可以表示成一维，二维，三维，具体下面再细说）。</p>
+</li>
+<li><p>线程块(Block)<br>1. 由多个线程组成（可以表示成一维，二维，三维，具体下面再细说）。<br>2. 各block是并行执行的，block间无法通信，也没有执行顺序。<br>3. 注意线程块的数量限制为不超过65535（硬件限制）。</p>
+</li>
+<li><p>线程格(Grid)<br>由多个线程块组成（可以表示成一维，二维，三维，具体下面再细说）。</p>
+</li>
+<li><p>线程束<br>在CUDA架构中，线程束是指一个 <strong>包含32个线程</strong> 的集合，这个线程集合被“编织在一起”并且“步调一致”的形式执行。在程序中的每一行，线程束中的每个线程都将在不同数据上执行相同的命令。</p>
+</li>
+<li><p>核函数（Kernel）   </p>
+<ol>
+<li>在GPU上执行的函数通常称为核函数。</li>
+<li>一般通过标识符<code>__global__</code>修饰，调用通过&lt;&lt;&lt;参数1,参数2&gt;&gt;&gt;，用于说明内核函数中的线程数量，以及线程是如何组织的。</li>
+<li>以线程格（Grid）的形式组织，每个线程格由若干个线程块（block）组成，而每个线程块又由若干个线程（thread）组成。</li>
+<li>是以block为单位执行的。</li>
+<li>只能在主机端代码中调用。</li>
+<li>调用时必须声明内核函数的执行参数。</li>
+<li>在编程时，必须先为kernel函数中用到的数组或变量分配好足够的空间，再调用kernel函数，否则在GPU计算时会发生错误，例如越界或报错，甚至导致蓝屏和死机。</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://img-blog.csdn.net/20161230160758862?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<pre><code>/*
+ * @file_name HelloWorld.cu  后缀名称.cu
+ */
+
+#include &lt;stdio.h&gt;
+#include &lt;cuda_runtime.h&gt;  //头文件
+
+//核函数声明，前面的关键字__global__
+__global__ void kernel( void ) {
+}
+
+int main( void ) {
+    //核函数的调用，注意&lt;&lt;&lt;1,1&gt;&gt;&gt;，第一个1，代表线程格里只有一个线程块；第二个1，代表一个线程块里只有一个线程。
+    kernel&lt;&lt;&lt;1,1&gt;&gt;&gt;();
+    printf( &quot;Hello, World!\n&quot; );
+    return 0;
+}
+</code></pre><h2 id="dim3结构类型"><a href="#dim3结构类型" class="headerlink" title="dim3结构类型"></a>dim3结构类型</h2><ol>
+<li>dim3是基于 uint3 定义的矢量类型，相当亍由3个unsigned int型组成的结构体。uint3类型有三个数据成员<code>unsigned int x; unsigned int y; unsigned int z;</code></li>
+<li>可使用一维、二维或三维的索引来标识线程，构成一维、二维或三维线程块。</li>
+<li>dim3结构类型变量用在核函数调用的&lt;&lt;&lt;,&gt;&gt;&gt;中。</li>
+<li><p>相关的几个内置变量   </p>
+<ul>
+<li>threadIdx，顾名思义获取线程 thread 的ID索引；如果线程是一维的那么就取 threadIdx.x，二维的还可以多取到一个值threadIdx.y，以此类推到三维threadIdx.z。</li>
+<li>blockIdx，线程块的ID索引；同样有blockIdx.x，blockIdx.y，blockIdx.z。</li>
+<li>blockDim，线程块的维度，同样有blockDim.x，blockDim.y，blockDim.z。</li>
+<li>gridDim，线程格的维度，同样有gridDim.x，gridDim.y，gridDim.z。</li>
+</ul>
+</li>
+<li>对于一维的block，线程的threadID=threadIdx.x。</li>
+<li>对于大小为（blockDim.x, blockDim.y）的二维block，线程的threadID=threadIdx.x+threadIdx.y*blockDim.x。</li>
+<li>对于大小为（blockDim.x, blockDim.y, blockDim.z）的三维block，线程的threadID=threadIdx.x+threadIdx.y<em>blockDim.x+threadIdx.z</em>blockDim.x*blockDim.y。</li>
+<li>对于计算线程索引偏移增量为已启动线程的总数。如stride = blockDim.x * gridDim.x; threadId += stride。</li>
+</ol>
+<h2 id="函数修饰符"><a href="#函数修饰符" class="headerlink" title="函数修饰符"></a>函数修饰符</h2><ol>
+<li><code>__global__</code>，表明被修饰的函数在设备上执行，但在主机上调用。</li>
+<li><code>__device__</code>，表明被修饰的函数在设备上执行，但只能在其他 <strong>device</strong> 函数或者 <strong>global</strong> 函数中调用。</li>
+</ol>
+<h2 id="常用的GPU内存函数"><a href="#常用的GPU内存函数" class="headerlink" title="常用的GPU内存函数"></a>常用的GPU内存函数</h2><h3 id="cudaMalloc"><a href="#cudaMalloc" class="headerlink" title="cudaMalloc()"></a>cudaMalloc()</h3><ol>
+<li>函数原型： <code>cudaError_t cudaMalloc (void **devPtr, size_t size)</code>。</li>
+<li>函数用处：与C语言中的malloc函数一样，只是此函数在GPU的内存你分配内存。</li>
+<li><p>注意事项：   </p>
+<ul>
+<li>可以将cudaMalloc()分配的指针传递给在设备上执行的函数；</li>
+<li>可以在设备代码中使用cudaMalloc()分配的指针进行设备内存读写操作；</li>
+<li>可以将cudaMalloc()分配的指针传递给在主机上执行的函数；</li>
+<li>不可以在主机代码中使用cudaMalloc()分配的指针进行主机内存读写操作（即不能进行解引用）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="cudaMemcpy"><a href="#cudaMemcpy" class="headerlink" title="cudaMemcpy()"></a>cudaMemcpy()</h3><ol>
+<li>函数原型：<code>cudaError_t cudaMemcpy (void *dst, const void *src, size_t count, cudaMemcpyKind kind)</code>。</li>
+<li>函数作用：与c语言中的memcpy函数一样，只是此函数可以在主机内存和GPU内存之间互相拷贝数据。</li>
+<li>函数参数：cudaMemcpyKind kind表示数据拷贝方向，如果kind赋值为cudaMemcpyDeviceToHost表示数据从设备内存拷贝到主机内存。</li>
+<li>与C中的memcpy()一样，以同步方式执行，即当函数返回时，复制操作就已经完成了，并且在输出缓冲区中包含了复制进去的内容。</li>
+<li>相应的有个异步方式执行的函数cudaMemcpyAsync()，这个函数详解请看下面的流一节有关内容。</li>
+</ol>
+<h3 id="cudaFree"><a href="#cudaFree" class="headerlink" title="cudaFree()"></a>cudaFree()</h3><ol>
+<li>函数原型：<code>cudaError_t cudaFree ( void* devPtr )</code>。</li>
+<li>函数作用：与c语言中的free()函数一样，只是此函数释放的是cudaMalloc()分配的内存。</li>
+</ol>
+<p>下面实例用于解释上面三个函数</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;cuda_runtime.h&gt;
+__global__ void add( int a, int b, int *c ) {
+    *c = a + b;
+}
+int main( void ) {
+    int c;
+    int *dev_c;
+    //cudaMalloc()
+    cudaMalloc( (void**)&amp;dev_c, sizeof(int) );
+    //核函数执行
+    add&lt;&lt;&lt;1,1&gt;&gt;&gt;( 2, 7, dev_c );   
+    //cudaMemcpy()
+    cudaMemcpy( &amp;c, dev_c, sizeof(int),cudaMemcpyDeviceToHost ) ;
+    printf( &quot;2 + 7 = %d\n&quot;, c );
+    //cudaFree()
+    cudaFree( dev_c );
+
+    return 0;
+}
+</code></pre><h2 id="GPU内存分类"><a href="#GPU内存分类" class="headerlink" title="GPU内存分类"></a>GPU内存分类</h2><h3 id="全局内存"><a href="#全局内存" class="headerlink" title="全局内存"></a>全局内存</h3><p>通俗意义上的设备内存。</p>
+<h3 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h3><ol>
+<li>位置：设备内存。</li>
+<li>形式：关键字 <strong>shared</strong> 添加到变量声明中。如 <strong>shared</strong> float cache[10]。</li>
+<li>目的：对于GPU上启动的每个线程块，CUDA C编译器都将创建该共享变量的一个副本。线程块中的每个线程都共享这块内存，但线程却无法看到也不能修改其他线程块的变量副本。这样使得一个线程块中的多个线程能够在计算上通信和协作。</li>
+</ol>
+<h3 id="常量内存"><a href="#常量内存" class="headerlink" title="常量内存"></a>常量内存</h3><ol>
+<li>位置：设备内存</li>
+<li>形式：关键字 <strong>constant</strong> 添加到变量声明中。如 <strong>constant</strong> float s[10];。</li>
+<li>目的：为了提升性能。常量内存采取了不同于标准全局内存的处理方式。在某些情况下，用常量内存替换全局内存能有效地减少内存带宽。</li>
+<li>特点：常量内存用于保存在核函数执行期间不会发生变化的数据。变量的访问限制为只读。NVIDIA硬件提供了64KB的常量内存。不再需要cudaMalloc()或者cudaFree(),而是在编译时，静态地分配空间。</li>
+<li>要求：当我们需要拷贝数据到常量内存中应该使用cudaMemcpyToSymbol()，而cudaMemcpy()会复制到全局内存。</li>
+<li>性能提升的原因：<ul>
+<li>对常量内存的单次读操作可以广播到其他的“邻近”线程。这将节约15次读取操作。（为什么是15，因为“邻近”指半个线程束，一个线程束包含32个线程的集合。）</li>
+<li>常量内存的数据将缓存起来，因此对相同地址的连续读操作将不会产生额外的内存通信量。</li>
+</ul>
+</li>
+</ol>
+<h3 id="纹理内存"><a href="#纹理内存" class="headerlink" title="纹理内存"></a>纹理内存</h3><ol>
+<li>位置：设备内存</li>
+<li>目的：能够减少对内存的请求并提供高效的内存带宽。是专门为那些在内存访问模式中存在大量空间局部性的图形应用程序设计，意味着一个线程读取的位置可能与邻近线程读取的位置“非常接近”。如下图：</li>
+<li>纹理变量（引用）必须声明为文件作用域内的全局变量。</li>
+<li><p>形式：分为一维纹理内存 和 二维纹理内存。   </p>
+<ul>
+<li><p>一维纹理内存   </p>
+<ul>
+<li>用<code>texture&lt;类型&gt;</code>类型声明，如<code>texture&lt;float&gt; texIn</code>。</li>
+<li>通过<code>cudaBindTexture()</code>绑定到纹理内存中。</li>
+<li>通过<code>tex1Dfetch()</code>来读取纹理内存中的数据。</li>
+<li>通过<code>cudaUnbindTexture()</code>取消绑定纹理内存。</li>
+</ul>
+</li>
+<li><p>二维纹理内存   </p>
+<ul>
+<li>用<code>texture&lt;类型,数字&gt;</code>类型声明，如<code>texture&lt;float，2&gt; texIn</code>。</li>
+<li>通过<code>cudaBindTexture2D()</code>绑定到纹理内存中。</li>
+<li>通过<code>tex2D()</code>来读取纹理内存中的数据。</li>
+<li>通过<code>cudaUnbindTexture()</code>取消绑定纹理内存。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://img-blog.csdn.net/20161230162245477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="固定内存"><a href="#固定内存" class="headerlink" title="固定内存"></a>固定内存</h3><ol>
+<li>位置：主机内存。</li>
+<li>概念：也称为页锁定内存或者不可分页内存，操作系统将不会对这块内存分页并交换到磁盘上，从而确保了该内存始终驻留在物理内存中。因此操作系统能够安全地使某个应用程序访问该内存的物理地址，因为这块内存将不会破坏或者重新定位。</li>
+<li>目的：提高访问速度。由于GPU知道主机内存的物理地址，因此可以通过“直接内存访问DMA（Direct Memory Access)技术来在GPU和主机之间复制数据。由于DMA在执行复制时无需CPU介入。因此DMA复制过程中使用固定内存是非常重要的。</li>
+<li>缺点：使用固定内存，将失去虚拟内存的所有功能；系统将更快的耗尽内存。</li>
+<li>建议：对cudaMemcpy()函数调用中的源内存或者目标内存，才使用固定内存，并且在不再需要使用它们时立即释放。</li>
+<li>形式：通过cudaHostAlloc()函数来分配；通过cudaFreeHost()释放。</li>
+<li>只能以异步方式对固定内存进行复制操作。</li>
+</ol>
+<h2 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h2><ol>
+<li>概念：如果操作的执行过程不能分解为更小的部分，我们将满足这种条件限制的操作称为原子操作。</li>
+<li>形式：函数调用，如atomicAdd（addr,y)将生成一个原子的操作序列，这个操作序列包括读取地址addr处的值，将y增加到这个值，以及将结果保存回地址addr。</li>
+</ol>
+<h2 id="常用线程操作函数"><a href="#常用线程操作函数" class="headerlink" title="常用线程操作函数"></a>常用线程操作函数</h2><ol>
+<li>同步方法<strong>syncthreads()，这个函数的调用，将确保线程块中的每个线程都执行完</strong>syscthreads()前面的语句后，才会执行下一条语句。</li>
+</ol>
+<h2 id="使用事件来测量性能"><a href="#使用事件来测量性能" class="headerlink" title="使用事件来测量性能"></a>使用事件来测量性能</h2><ol>
+<li>用途：为了测量GPU在某个任务上花费的时间。CUDA中的事件本质上是一个GPU时间戳。由于事件是直接在GPU上实现的。因此不适用于对同时包含设备代码和主机代码的混合代码设计。</li>
+<li>形式：首先创建一个事件，然后记录事件，再计算两个事件之差，最后销毁事件。如：</li>
+</ol>
+<pre><code>cudaEvent_t start, stop;
+cudaEventCreate( &amp;start );
+cudaEventCreate( &amp;stop );
+cudaEventRecord( start, 0 );
+//do something
+cudaEventRecord( stop, 0 );
+float   elapsedTime;
+cudaEventElapsedTime( &amp;elapsedTime,start, stop );
+cudaEventDestroy( start );
+cudaEventDestroy( stop )；
+</code></pre><h2 id="流"><a href="#流" class="headerlink" title="流"></a>流</h2><ol>
+<li>扯一扯：并发重点在于一个极短时间段内运行多个不同的任务；并行重点在于同时运行一个任务。</li>
+<li>任务并行性：是指并行执行两个或多个不同的任务，而不是在大量数据上执行同一个任务。</li>
+<li>概念：CUDA流表示一个GPU操作队列，并且该队列中的操作将以指定的顺序执行。我们可以在流中添加一些操作，如核函数启动，内存复制以及事件的启动和结束等。这些操作的添加到流的顺序也是它们的执行顺序。可以将每个流视为GPU上的一个任务，并且这些任务可以并行执行。</li>
+<li>硬件前提：必须是支持设备重叠功能的GPU。支持设备重叠功能，即在执行一个核函数的同时，还能在设备与主机之间执行复制操作。</li>
+<li>声明与创建：声明<code>cudaStream_t stream</code>;，创建<code>cudaSteamCreate(&amp;stream)</code>。</li>
+<li><code>cudaMemcpyAsync()</code>：前面在<code>cudaMemcpy()</code>中提到过，这是一个以异步方式执行的函数。在调用<code>cudaMemcpyAsync()</code>时，只是放置一个请求，表示在流中执行一次内存复制操作，这个流是通过参数stream来指定的。当函数返回时，我们无法确保复制操作是否已经启动，更无法保证它是否已经结束。我们能够得到的保证是，复制操作肯定会当下一个被放入流中的操作之前执行。传递给此函数的主机内存指针必须是通过<code>cudaHostAlloc()</code>分配好的内存。（流中要求固定内存）</li>
+<li>流同步：通过<code>cudaStreamSynchronize()</code>来协调。</li>
+<li>流销毁：在退出应用程序之前，需要销毁对GPU操作进行排队的流，调用<code>cudaStreamDestroy()</code>。</li>
+<li>针对多个流：<ul>
+<li>记得对流进行同步操作。</li>
+<li>将操作放入流的队列时，应采用宽度优先方式，而非深度优先的方式，换句话说，不是首先添加第0个流的所有操作，再依次添加后面的第1，2,…个流。而是交替进行添加，比如将a的复制操作添加到第0个流中，接着把a的复制操作添加到第1个流中，再继续其他的类似交替添加的行为。</li>
+<li>要牢牢记住操作放入流中的队列中的顺序影响到CUDA驱动程序调度这些操作和流以及执行的方式。</li>
+</ul>
+</li>
+</ol>
+<h2 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h2><ol>
+<li>当线程块的数量为GPU中处理数量的2倍时，将达到最优性能。</li>
+<li>核函数执行的第一个计算就是计算输入数据的偏移。每个线程的起始偏移都是0到线程数量减1之间的某个值。然后，对偏移的增量为已启动线程的总数。</li>
+</ol>
+<p>来源：<a href="https://blog.csdn.net/fangjin_kl/article/details/53906874" target="_blank" rel="external">https://blog.csdn.net/fangjin_kl/article/details/53906874</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CPU/" rel="tag">#CPU</a>
+          
+            <a href="/tags/GPU/" rel="tag">#GPU</a>
+          
+            <a href="/tags/CUDA/" rel="tag">#CUDA</a>
+          
+            <a href="/tags/cuDNN/" rel="tag">#cuDNN</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/LR-Deduction.html" rel="next" title="逻辑回归推导">
+                <i class="fa fa-chevron-left"></i> 逻辑回归推导
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、CPU和GPU的区别"><span class="nav-number">1.</span> <span class="nav-text">一、CPU和GPU的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、CUDA"><span class="nav-number">2.</span> <span class="nav-text">二、CUDA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、CuDNN"><span class="nav-number">3.</span> <span class="nav-text">三、CuDNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、CUDA编程"><span class="nav-number">4.</span> <span class="nav-text">四、CUDA编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要概念与名称"><span class="nav-number">4.1.</span> <span class="nav-text">主要概念与名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dim3结构类型"><span class="nav-number">4.2.</span> <span class="nav-text">dim3结构类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数修饰符"><span class="nav-number">4.3.</span> <span class="nav-text">函数修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的GPU内存函数"><span class="nav-number">4.4.</span> <span class="nav-text">常用的GPU内存函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cudaMalloc"><span class="nav-number">4.4.1.</span> <span class="nav-text">cudaMalloc()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cudaMemcpy"><span class="nav-number">4.4.2.</span> <span class="nav-text">cudaMemcpy()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cudaFree"><span class="nav-number">4.4.3.</span> <span class="nav-text">cudaFree()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU内存分类"><span class="nav-number">4.5.</span> <span class="nav-text">GPU内存分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局内存"><span class="nav-number">4.5.1.</span> <span class="nav-text">全局内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#共享内存"><span class="nav-number">4.5.2.</span> <span class="nav-text">共享内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常量内存"><span class="nav-number">4.5.3.</span> <span class="nav-text">常量内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纹理内存"><span class="nav-number">4.5.4.</span> <span class="nav-text">纹理内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#固定内存"><span class="nav-number">4.5.5.</span> <span class="nav-text">固定内存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子性"><span class="nav-number">4.6.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用线程操作函数"><span class="nav-number">4.7.</span> <span class="nav-text">常用线程操作函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用事件来测量性能"><span class="nav-number">4.8.</span> <span class="nav-text">使用事件来测量性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流"><span class="nav-number">4.9.</span> <span class="nav-text">流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技巧"><span class="nav-number">4.10.</span> <span class="nav-text">技巧</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
