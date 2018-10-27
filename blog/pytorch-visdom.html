@@ -1,0 +1,1023 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="pyroch,可视化,visdom," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="https://blog.csdn.net/wen_fei/article/details/82979497
+Pytorch使用visdom进行可视化文章目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch 可视化工具 visdom">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/pytorch-visdom.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="https://blog.csdn.net/wen_fei/article/details/82979497
+Pytorch使用visdom进行可视化文章目录">
+<meta property="og:image" content="https://camo.githubusercontent.com/d69475a01f9f327fc42931a21df8134d1fbdfc19/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f2d62714839555843772d42452f574c3255736472726241492f41414141414141416e59632f656d727877436d6e7257345f434c54797955747442305359524a2d693443436951434c63422f73302f53637265656e2b53686f742b323031372d30332d30362b61742b31302e35312e30322b414d2e706e67253232766973646f6d5f626967253232">
+<meta property="og:image" content="http://otw7his7z.bkt.clouddn.com/visdom-1.png">
+<meta property="og:image" content="http://otw7his7z.bkt.clouddn.com/visdom-3.png">
+<meta property="og:image" content="http://otw7his7z.bkt.clouddn.com/visdom-2.png">
+<meta property="og:updated_time" content="2018-10-27T07:48:24.485Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pytorch 可视化工具 visdom">
+<meta name="twitter:description" content="https://blog.csdn.net/wen_fei/article/details/82979497
+Pytorch使用visdom进行可视化文章目录">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/d69475a01f9f327fc42931a21df8134d1fbdfc19/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f2d62714839555843772d42452f574c3255736472726241492f41414141414141416e59632f656d727877436d6e7257345f434c54797955747442305359524a2d693443436951434c63422f73302f53637265656e2b53686f742b323031372d30332d30362b61742b31302e35312e30322b414d2e706e67253232766973646f6d5f626967253232">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/pytorch-visdom.html"/>
+
+  <title> pytorch 可视化工具 visdom | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                pytorch 可视化工具 visdom
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-05-20T14:24:10+08:00" content="2018-05-20">
+              2018-05-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习资源/" itemprop="url" rel="index">
+                    <span itemprop="name">学习资源</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/pytorch-visdom.html" class="leancloud_visitors" data-flag-title="pytorch 可视化工具 visdom">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://blog.csdn.net/wen_fei/article/details/82979497" target="_blank" rel="external">https://blog.csdn.net/wen_fei/article/details/82979497</a></p>
+<h1 id="Pytorch使用visdom进行可视化"><a href="#Pytorch使用visdom进行可视化" class="headerlink" title="Pytorch使用visdom进行可视化"></a>Pytorch使用visdom进行可视化</h1><h3 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h3><a id="more"></a>
+<ul>
+<li>Pytorch使用visdom进行可视化<ul>
+<li>visdom介绍</li>
+<li>visdom核心概念</li>
+<li>visdom安装与使用</li>
+<li>常用API<ul>
+<li>plot.scatter</li>
+<li>plot.line</li>
+<li>plot.stem</li>
+<li>plot.heatmap</li>
+<li>plot.bar</li>
+<li>plot.histogram</li>
+<li>plot.boxplot</li>
+<li>plot.surf</li>
+<li>plot.contour</li>
+<li>plot.quiver</li>
+<li>plot.image<ul>
+<li>plot.video</li>
+<li>plot.svg</li>
+</ul>
+</li>
+<li>plot.text<ul>
+<li>plot.mesh</li>
+<li>Customizing plots</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>visdom底层</li>
+<li>参考</li>
+</ul>
+</li>
+</ul>
+<h2 id="visdom介绍"><a href="#visdom介绍" class="headerlink" title="visdom介绍"></a>visdom介绍</h2><p>visdom是Facebook专门为Pytorch开发的一款可视化工具，开源于2017年3月，项目地址为<a href="https://github.com/facebookresearch/visdom" target="_blank" rel="external">visdom</a>，其十分轻量级，但功能丰富，提供了大多数的科学运算可视化API，基本可视化界面如下图所示：</p>
+<p><img src="https://camo.githubusercontent.com/d69475a01f9f327fc42931a21df8134d1fbdfc19/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f2d62714839555843772d42452f574c3255736472726241492f41414141414141416e59632f656d727877436d6e7257345f434c54797955747442305359524a2d693443436951434c63422f73302f53637265656e2b53686f742b323031372d30332d30362b61742b31302e35312e30322b414d2e706e67253232766973646f6d5f626967253232" alt="visdom-1"></p>
+<p>visdom支持多种数据格式的可视化，包括数值、图像、文本以及视频等，支持Pytorch、Torch和Numpy。用户可以通过编程的方式组织可视化空间或者通过用户接口为数据打造仪表板，检查实验结果和调试代码。</p>
+<h2 id="visdom核心概念"><a href="#visdom核心概念" class="headerlink" title="visdom核心概念"></a>visdom核心概念</h2><ul>
+<li>env：环境</li>
+</ul>
+<p>可以使用<code>envs</code>对可视化空间进行分区。默认地，每个用户都会有一个叫做<code>main</code>的<code>envs</code>。可以通过编程或<code>UI</code>创建新的<code>envs</code>。<code>envs</code>的状态是长期保存的。不同环境的可视化结果相互隔离，互不影响。在使用时如果不指定env，默认使用main。不同用户、不同程序，最好使用不同的env，避免相互影响。</p>
+<ul>
+<li>pane：窗格</li>
+</ul>
+<p>窗格用于可视化图像、数值或文本等，它可以自由拖动、缩放、保存和关闭。类似于一个一个的小的窗口。一个程序可以使用同一个env中的不同pane，每个pane可视化记录某一信息。</p>
+<h2 id="visdom安装与使用"><a href="#visdom安装与使用" class="headerlink" title="visdom安装与使用"></a>visdom安装与使用</h2><p>visdom安装十分简单，可以直接pip进行安装</p>
+<pre><code>pip install visdom
+</code></pre><p>安装好以后，需要启动visdom服务</p>
+<pre><code>python -m visdom.server
+或者(后台运行)
+nohup python -m visdom.server &amp;
+</code></pre><p>visdom服务是一个Web Server服务，默认绑定8097端口。</p>
+<p>基本使用，编程代码如下：</p>
+<pre><code>import visdom
+import torch
+# 新建一个连接客户端
+# 指定env = &apos;test1&apos;
+vis = visdom.Visdom(env=&apos;test1&apos;)
+x = torch.arange(1, 100, 0.01)
+y = torch.sin(x)
+vis.line(X=x,Y=y, win=&apos;sinx&apos;,opts={&apos;title&apos;:&apos;y=sin(x)&apos;})
+</code></pre><p>打开浏览器，输入localhost:8097，如下图所示：</p>
+<p><img src="http://otw7his7z.bkt.clouddn.com/visdom-1.png" alt="visdom-1"></p>
+<p>选择我们新建的env环境：</p>
+<p><img src="http://otw7his7z.bkt.clouddn.com/visdom-3.png" alt="visdom-2"></p>
+<p>可以看到我们绘制的图像：</p>
+<p><img src="http://otw7his7z.bkt.clouddn.com/visdom-2.png" alt="visdom-3"></p>
+<p>对于每一个图像，其占用一个panel，都可以自由移动、缩放等</p>
+<blockquote>
+<p>注意:</p>
+<p>这些不会自动保存，需要手动保存save，不然会清空</p>
+</blockquote>
+<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><p><code>Visdom</code>支持下列<code>API</code>。由<a href="https://plot.ly/" target="_blank" rel="external">Plotly</a>提供可视化支持。</p>
+<ul>
+<li><code>vis.scatter</code> : 2D 或 3D 散点图</li>
+<li><code>vis.line</code> : 线图</li>
+<li><code>vis.stem</code> : 茎叶图</li>
+<li><code>vis.heatmap</code> : 热力图</li>
+<li><code>vis.bar</code> : 条形图</li>
+<li><code>vis.histogram</code>: 直方图</li>
+<li><code>vis.boxplot</code> : 箱型图</li>
+<li><code>vis.surf</code> : 表面图</li>
+<li><code>vis.contour</code> : 轮廓图</li>
+<li><code>vis.quiver</code> : 绘出二维矢量场</li>
+<li><code>vis.image</code> : 图片</li>
+<li><code>vis.text</code> : 文本</li>
+<li><code>vis.mesh</code> : 网格图</li>
+<li><code>vis.save</code> : 序列化状态</li>
+</ul>
+<h4 id="plot-scatter"><a href="#plot-scatter" class="headerlink" title="plot.scatter"></a>plot.scatter</h4><p>这个函数是用来画<code>2D</code>或<code>3D</code>数据的散点图。它需要输入 <code>N*2</code>或<code>N*3</code>的 tensor <code>X</code>来指定<code>N</code>个点的位置。一个可供选择的长度为<code>N</code>的<code>vector</code>用来保存<code>X</code>中的点对应的标签(1 到 K)。 – 标签可以通过点的颜色反应出来。</p>
+<p><code>scatter()</code>支持下列的选项：</p>
+<ul>
+<li><code>options.colormap</code> : 色图（控制图的颜色） (<code>string</code>; default = <code>&#39;Viridis&#39;</code>)</li>
+<li><code>options.markersymbol</code>: 标记符号 (<code>string</code>; default = <code>&#39;dot&#39;</code>)</li>
+<li><code>options.markersize</code> : 标记大小(<code>number</code>; default = <code>&#39;10&#39;</code>)</li>
+<li><code>options.markercolor</code> : 每个标记的颜色. (<code>torch.*Tensor</code>; default = <code>nil</code>)</li>
+<li><code>options.legend</code> : 包含图例名字的<code>table</code></li>
+</ul>
+<p><code>options.markercolor</code> 是一个包含整数值的<code>Tensor</code>。<code>Tensor</code>的形状可以是 <code>N</code> 或 <code>N x 3</code> 或 <code>K</code> 或 <code>K x 3</code>.</p>
+<ul>
+<li>Tensor of size <code>N</code>: 表示每个点的单通道颜色强度。 0 = black, 255 = red</li>
+<li>Tensor of size <code>N x 3</code>: 用三通道表示每个点的颜色。 0,0,0 = black, 255,255,255 = white</li>
+<li>Tensor of size <code>K</code> and <code>K x 3</code>: 为每个类别指定颜色，不是为每个点指定颜色。</li>
+</ul>
+<h4 id="plot-line"><a href="#plot-line" class="headerlink" title="plot.line"></a>plot.line</h4><p>这个函数用来画 线图。它需要一个形状为<code>N</code>或者<code>N×M</code>的tensor <code>Y</code>，用来指定 <code>M</code>条线的值(每条线上有<code>N</code>个点)。和一个可供选择的tensor <code>X</code> 用来指定对应的 x轴的值; <code>X</code>可以是一个长度为<code>N</code>的tensor（这种情况下，M条线共享同一个x轴），也可以是形状和<code>Y</code>一样的tensor。</p>
+<p>The following <code>options</code> are supported:</p>
+<ul>
+<li><code>options.fillarea</code> : 填充线下面的区域 (<code>boolean</code>)</li>
+<li><code>options.colormap</code> : 色图 (<code>string</code>; default = <code>&#39;Viridis&#39;</code>)</li>
+<li><code>options.markers</code> : 显示点标记 (<code>boolean</code>; default = <code>false</code>)</li>
+<li><code>options.markersymbol</code>: 标记的形状 (<code>string</code>; default = <code>&#39;dot&#39;</code>)</li>
+<li><code>options.markersize</code> : 标记的大小 (<code>number</code>; default = <code>&#39;10&#39;</code>)</li>
+<li><code>options.legend</code> : 保存图例名字的 <code>table</code></li>
+</ul>
+<h4 id="plot-stem"><a href="#plot-stem" class="headerlink" title="plot.stem"></a>plot.stem</h4><p>这个函数用来画茎叶图。它需要一个 形状为<code>N</code>或者<code>N*M</code>的 tensor <code>X</code> 来指定<code>M</code>时间序列中<code>N</code>个点的值。一个可选择的<code>Y</code>，形状为<code>N</code>或者<code>N×M</code>，用<code>Y</code>来指定时间戳，如果<code>Y</code>的形状是<code>N</code>，那么默认<code>M</code>时间序列共享同一个时间戳。</p>
+<p>支持以下特定选项：</p>
+<ul>
+<li><code>options.colormap</code>: colormap (<code>string</code>; default = <code>&#39;Viridis&#39;</code>)</li>
+<li><code>options.legend</code> : <code>table</code> containing legend names</li>
+</ul>
+<h4 id="plot-heatmap"><a href="#plot-heatmap" class="headerlink" title="plot.heatmap"></a>plot.heatmap</h4><p>这个函数用来画热力图。它输入一个 形状为<code>N×M</code>的 tensor <code>X</code>。<code>X</code>指定了热力图中位置的值。</p>
+<p>支持下列特定选项：</p>
+<ul>
+<li><code>options.colormap</code> : 色图 (<code>string</code>; default = <code>&#39;Viridis&#39;</code>)</li>
+<li><code>options.xmin</code> : 小于这个值的会被剪切成这个值(<code>number</code>; default = <code>X:min()</code>)</li>
+<li><code>options.xmax</code> : 大于这个值的会被剪切成这个值 (<code>number</code>; default = <code>X:max()</code>)</li>
+<li><code>options.columnnames</code>: 包含x轴标签的<code>table</code></li>
+<li><code>options.rownames</code> : 包含y轴标签的<code>table</code></li>
+</ul>
+<h4 id="plot-bar"><a href="#plot-bar" class="headerlink" title="plot.bar"></a>plot.bar</h4><p>这个函数可以画 正常的，堆起来的，或分组的的条形图。<br>输入参数：</p>
+<ul>
+<li>X(tensor):形状 <code>N</code> 或 <code>N×M</code>，指定每个条的高度。如果<code>X</code>有<code>M</code>列，那么每行的值可以看作一组或者把他们值堆起来（取决与<code>options.stacked</code>是否为True）。</li>
+<li>Y(tensor, optional):形状 <code>N</code>，指定对应的x轴的值。</li>
+</ul>
+<p>支持以下特定选项：</p>
+<ul>
+<li><code>options.columnnames</code>: <code>table</code> containing x-axis labels</li>
+<li><code>options.stacked</code> : stack multiple columns in <code>X</code></li>
+<li><code>options.legend</code> : <code>table</code> containing legend labels</li>
+</ul>
+<h4 id="plot-histogram"><a href="#plot-histogram" class="headerlink" title="plot.histogram"></a>plot.histogram</h4><p>这个函数用来画指定数据的直方图。他需要输入长度为 <code>N</code> 的 tensor <code>X</code>。<code>X</code>保存了构建直方图的值。</p>
+<p>支持下面特定选项：</p>
+<ul>
+<li><code>options.numbins</code>: <code>bins</code>的个数 (<code>number</code>; default = 30)</li>
+</ul>
+<h4 id="plot-boxplot"><a href="#plot-boxplot" class="headerlink" title="plot.boxplot"></a>plot.boxplot</h4><p>这个函数用来画箱型图：</p>
+<p>输入：</p>
+<ul>
+<li>X(tensor): 形状 <code>N</code>或<code>N×M</code>，指定做第<code>m</code>个箱型图的<code>N</code>个值。</li>
+</ul>
+<p>支持以下特定选项：</p>
+<ul>
+<li><code>options.legend</code>: labels for each of the columns in <code>X</code></li>
+</ul>
+<h4 id="plot-surf"><a href="#plot-surf" class="headerlink" title="plot.surf"></a>plot.surf</h4><p>这个函数用来画表面图：<br>输入：</p>
+<ul>
+<li>X(tensor):形状 <code>N×M</code>，指定表面图上位置的值.</li>
+</ul>
+<p>支持以下特定选项：</p>
+<ul>
+<li><code>options.colormap</code>: colormap (<code>string</code>; default = <code>&#39;Viridis&#39;</code>)</li>
+<li><code>options.xmin</code> : clip minimum value (<code>number</code>; default = <code>X:min()</code>)</li>
+<li><code>options.xmax</code> : clip maximum value (<code>number</code>; default = <code>X:max()</code>)</li>
+</ul>
+<h4 id="plot-contour"><a href="#plot-contour" class="headerlink" title="plot.contour"></a>plot.contour</h4><p>这个函数用来画轮廓图。</p>
+<p>输入：</p>
+<ul>
+<li>X(tensor)：形状 <code>N×M</code>，指定了轮廓图中的值</li>
+</ul>
+<p>支持以下特定选项：</p>
+<ul>
+<li><code>options.colormap</code>: colormap (<code>string</code>; default = <code>&#39;Viridis&#39;</code>)</li>
+<li><code>options.xmin</code> : clip minimum value (<code>number</code>; default = <code>X:min()</code>)</li>
+<li><code>options.xmax</code> : clip maximum value (<code>number</code>; default = <code>X:max()</code>)</li>
+</ul>
+<h4 id="plot-quiver"><a href="#plot-quiver" class="headerlink" title="plot.quiver"></a>plot.quiver</h4><p>这个函数用来画二维矢量场图。</p>
+<p>输入：</p>
+<ul>
+<li>X(tensor): 形状 <code>N*M</code></li>
+<li>Y(tensor):形状 <code>N*M</code></li>
+<li>gridX(tensor, optional):形状 <code>N*M</code></li>
+<li>gradY(tensor, optional): 形状 <code>N*M</code><br><code>X</code> 与 <code>Y</code>决定了 箭头的长度和方向。可选的<code>gridX</code>和<code>gridY</code>指定了偏移。</li>
+</ul>
+<p>支持下列特定选项：</p>
+<ul>
+<li><code>options.normalize</code>: 最长肩头的长度 (<code>number</code>)</li>
+<li><code>options.arrowheads</code>: 是否现实箭头 (<code>boolean</code>; default = <code>true</code>)</li>
+</ul>
+<h4 id="plot-image"><a href="#plot-image" class="headerlink" title="plot.image"></a>plot.image</h4><p>这个函数用来画 图片。<br>输入：</p>
+<ul>
+<li>img(tensor): shape(<code>C*H*W</code>)。</li>
+</ul>
+<p>支持下面特定选项:</p>
+<ul>
+<li><code>options.jpgquality</code>: JPG quality (<code>number</code> 0-100; default = 100)</li>
+</ul>
+<h3 id="plot-video"><a href="#plot-video" class="headerlink" title="plot.video"></a>plot.video</h3><p>这个函数 播放一个 <code>video</code>。<br>输入： <code>video</code> 的文件名，或者是一个 shape 为<code>L*H*W*C</code> 的 <code>tensor</code>。这个函数不支持其它特定的功能选项。</p>
+<p>注意:使用<code>tensor</code>作为输入的时候，需要安装<code>ffmpeg</code>。<br>能不能播放<code>video</code>取决你使用的浏览器：浏览器必须要支持<code>Theano codec in an OGG container</code>。（chrome可以用）。</p>
+<h3 id="plot-svg"><a href="#plot-svg" class="headerlink" title="plot.svg"></a>plot.svg</h3><p>此函数绘制一个<code>SVG</code>对象。输入是一个<code>SVG</code>字符串或 一个<code>SVG</code>文件的名称。该功能不支持任何特定的功能<br><code>options</code>。</p>
+<h4 id="plot-text"><a href="#plot-text" class="headerlink" title="plot.text"></a>plot.text</h4><p>此函数可在文本框中打印文本。输入输入一个<code>text</code>字符串。目前不支持特定的<code>options</code></p>
+<h3 id="plot-mesh"><a href="#plot-mesh" class="headerlink" title="plot.mesh"></a>plot.mesh</h3><p>此函数画出一个网格图。</p>
+<p>输入：</p>
+<ul>
+<li>X(tensor): shape(<code>N*2</code>或<code>N*3</code>) 定义<code>N</code>个顶点</li>
+<li>Y(tensor， optional)：shape(<code>M*2</code>或<code>M×3</code>) 定义多边形</li>
+</ul>
+<p>支持下列特定选项:</p>
+<ul>
+<li><code>options.color</code>: color (<code>string</code>)</li>
+<li><code>options.opacity</code>: 多边形的不透明性 (<code>number</code> between 0 and 1)</li>
+</ul>
+<h3 id="Customizing-plots"><a href="#Customizing-plots" class="headerlink" title="Customizing plots"></a>Customizing plots</h3><p>绘图函数使用可选的<code>options</code>表作为输入。用它来修改默认的绘图属性。所有输入参数在单个表中指定;输入参数是基于输入表中键的匹配。</p>
+<p>下列的选项除了对于<code>plot.img</code>和<code>plot.txt</code>不可用以外，其他的绘图函数都适用。我们称他为 通用选项。</p>
+<ul>
+<li><code>options.title</code> : figure title</li>
+<li><code>options.width</code> : figure width</li>
+<li><code>options.height</code> : figure height</li>
+<li><code>options.showlegend</code> : show legend (<code>true</code> or <code>false</code>)</li>
+<li><code>options.xtype</code> : type of x-axis (<code>&#39;linear&#39;</code> or <code>&#39;log&#39;</code>)</li>
+<li><code>options.xlabel</code> : label of x-axis</li>
+<li><code>options.xtick</code> : show ticks on x-axis (<code>boolean</code>)</li>
+<li><code>options.xtickmin</code> : first tick on x-axis (<code>number</code>)</li>
+<li><code>options.xtickmax</code> : last tick on x-axis (<code>number</code>)</li>
+<li><code>options.xtickstep</code> : distances between ticks on x-axis (<code>number</code>)</li>
+<li><code>options.ytype</code> : type of y-axis (<code>&#39;linear&#39;</code> or <code>&#39;log&#39;</code>)</li>
+<li><code>options.ylabel</code> : label of y-axis</li>
+<li><code>options.ytick</code> : show ticks on y-axis (<code>boolean</code>)</li>
+<li><code>options.ytickmin</code> : first tick on y-axis (<code>number</code>)</li>
+<li><code>options.ytickmax</code> : last tick on y-axis (<code>number</code>)</li>
+<li><code>options.ytickstep</code> : distances between ticks on y-axis (<code>number</code>)</li>
+<li><code>options.marginleft</code> : left margin (in pixels)</li>
+<li><code>options.marginright</code> : right margin (in pixels)</li>
+<li><code>options.margintop</code> : top margin (in pixels)</li>
+<li><code>options.marginbottom</code>: bottom margin (in pixels)</li>
+</ul>
+<blockquote>
+<p>注意：</p>
+<p>如果想在同一个图中画多个曲线，原来的API updateTrace已经废弃了，可以直接在line等API加上update=”append”即可</p>
+</blockquote>
+<h2 id="visdom底层"><a href="#visdom底层" class="headerlink" title="visdom底层"></a>visdom底层</h2><p>visdom服务是一个Web Server服务，客户端与服务器端通过tornado进行非阻塞交互，可视化操作不会阻塞当前程序，网络异常也不会导致程序退出</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>[1] 深度学习框架Pytorch：入门与实践（陈云著）<br>[2] 官方介绍：<a href="https://github.com/facebookresearch/visdom" target="_blank" rel="external">https://github.com/facebookresearch/visdom</a><br>[3] 博客：<a href="https://blog.csdn.net/u012436149/article/details/69389610" target="_blank" rel="external">pytorch学习笔记（八）：PytTorch可视化工具visdom</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pyroch/" rel="tag">#pyroch</a>
+          
+            <a href="/tags/可视化/" rel="tag">#可视化</a>
+          
+            <a href="/tags/visdom/" rel="tag">#visdom</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/digital-image.html" rel="next" title="数字图像处理学习资源">
+                <i class="fa fa-chevron-left"></i> 数字图像处理学习资源
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pytorch使用visdom进行可视化"><span class="nav-number">1.</span> <span class="nav-text">Pytorch使用visdom进行可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文章目录"><span class="nav-number">1.0.1.</span> <span class="nav-text">文章目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom介绍"><span class="nav-number">1.1.</span> <span class="nav-text">visdom介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom核心概念"><span class="nav-number">1.2.</span> <span class="nav-text">visdom核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom安装与使用"><span class="nav-number">1.3.</span> <span class="nav-text">visdom安装与使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">1.4.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-scatter"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">plot.scatter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-line"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">plot.line</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-stem"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">plot.stem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-heatmap"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">plot.heatmap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-bar"><span class="nav-number">1.4.0.5.</span> <span class="nav-text">plot.bar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-histogram"><span class="nav-number">1.4.0.6.</span> <span class="nav-text">plot.histogram</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-boxplot"><span class="nav-number">1.4.0.7.</span> <span class="nav-text">plot.boxplot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-surf"><span class="nav-number">1.4.0.8.</span> <span class="nav-text">plot.surf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-contour"><span class="nav-number">1.4.0.9.</span> <span class="nav-text">plot.contour</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-quiver"><span class="nav-number">1.4.0.10.</span> <span class="nav-text">plot.quiver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-image"><span class="nav-number">1.4.0.11.</span> <span class="nav-text">plot.image</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-video"><span class="nav-number">1.4.1.</span> <span class="nav-text">plot.video</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-svg"><span class="nav-number">1.4.2.</span> <span class="nav-text">plot.svg</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-text"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">plot.text</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-mesh"><span class="nav-number">1.4.3.</span> <span class="nav-text">plot.mesh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-plots"><span class="nav-number">1.4.4.</span> <span class="nav-text">Customizing plots</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom底层"><span class="nav-number">1.5.</span> <span class="nav-text">visdom底层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.6.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
