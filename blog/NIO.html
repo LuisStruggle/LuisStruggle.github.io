@@ -85,17 +85,13 @@
 
 
 <meta name="description" content="服务器端编程经常需要构造高性能的IO模型，常见的IO模型有四种：
-（1）同步阻塞IO（Blocking IO）：即传统的IO模型。
-（2）同步非阻塞IO（Non-blockingIO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。
-（3）IO多路复用（IOMultiplexing）：即经典的Rea">
+（1）同步阻塞IO（Blocking IO）：即传统的IO模型。（2）同步非阻塞IO（Non-blocking IO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。（3）IO多路复用（IO Multiplexing）：即经典的Rea">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IO多路复用机制解析">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/NIO.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="服务器端编程经常需要构造高性能的IO模型，常见的IO模型有四种：
-（1）同步阻塞IO（Blocking IO）：即传统的IO模型。
-（2）同步非阻塞IO（Non-blockingIO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。
-（3）IO多路复用（IOMultiplexing）：即经典的Rea">
+（1）同步阻塞IO（Blocking IO）：即传统的IO模型。（2）同步非阻塞IO（Non-blocking IO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。（3）IO多路复用（IO Multiplexing）：即经典的Rea">
 <meta property="og:image" content="http://images.cnitblog.com/blog/405877/201411/142330286789443.png">
 <meta property="og:image" content="http://images.cnitblog.com/blog/405877/201411/142332004602984.png">
 <meta property="og:image" content="http://images.cnitblog.com/blog/405877/201411/142332187256396.png">
@@ -103,13 +99,11 @@
 <meta property="og:image" content="http://images.cnitblog.com/blog/405877/201411/142333254136604.png">
 <meta property="og:image" content="http://images.cnitblog.com/blog/405877/201411/151608309061672.jpg">
 <meta property="og:image" content="http://images.cnitblog.com/blog/405877/201411/142333511475767.png">
-<meta property="og:updated_time" content="2019-03-30T09:12:41.008Z">
+<meta property="og:updated_time" content="2019-03-30T09:17:13.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IO多路复用机制解析">
 <meta name="twitter:description" content="服务器端编程经常需要构造高性能的IO模型，常见的IO模型有四种：
-（1）同步阻塞IO（Blocking IO）：即传统的IO模型。
-（2）同步非阻塞IO（Non-blockingIO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。
-（3）IO多路复用（IOMultiplexing）：即经典的Rea">
+（1）同步阻塞IO（Blocking IO）：即传统的IO模型。（2）同步非阻塞IO（Non-blocking IO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。（3）IO多路复用（IO Multiplexing）：即经典的Rea">
 <meta name="twitter:image" content="http://images.cnitblog.com/blog/405877/201411/142330286789443.png">
 
 
@@ -342,10 +336,7 @@
 
       
         <p>服务器端编程经常需要构造高性能的IO模型，常见的IO模型有四种：</p>
-<p>（1）同步阻塞IO（Blocking IO）：即传统的IO模型。</p>
-<p>（2）同步非阻塞IO（Non-blocking<br>IO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。</p>
-<p>（3）IO多路复用（IO<br>Multiplexing）：即经典的Reactor设计模式，有时也称为异步阻塞IO，Java中的Selector和Linux中的epoll都是这种模型。</p>
-<p>（4）异步IO（Asynchronous IO）：即经典的Proactor设计模式，也称为异步非阻塞IO。</p>
+<p>（1）同步阻塞IO（Blocking IO）：即传统的IO模型。<br>（2）同步非阻塞IO（Non-blocking IO）：默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK。注意这里所说的NIO并非Java的NIO（New IO）库。<br>（3）IO多路复用（IO Multiplexing）：即经典的Reactor设计模式，有时也称为异步阻塞IO，Java中的Selector和Linux中的epoll都是这种模型。<br>（4）异步IO（Asynchronous IO）：即经典的Proactor设计模式，也称为异步非阻塞IO。</p>
 <a id="more"></a>
 <p>同步和异步的概念描述的是用户线程与内核的交互方式：同步是指用户线程发起IO请求后需要等待或者轮询内核IO操作完成后才能继续执行；而异步是指用户线程发起IO请求后仍继续执行，当内核IO操作完成后会通知用户线程，或者调用用户线程注册的回调函数。</p>
 <p>阻塞和非阻塞的概念描述的是用户线程调用内核IO操作的方式：阻塞是指IO操作需要彻底完成后才返回到用户空间；而非阻塞是指IO操作被调用后立即返回给用户一个状态值，无需等到IO操作彻底完成。</p>
@@ -356,10 +347,7 @@
 <p>图1 同步阻塞IO</p>
 <p>如图1所示，用户线程通过系统调用read发起IO读操作，由用户空间转到内核空间。内核等到数据包到达后，然后将接收的数据拷贝到用户空间，完成read操作。</p>
 <p>用户线程使用同步阻塞IO模型的伪代码描述为：</p>
-<p>{</p>
-<p>read(socket, buffer);</p>
-<p>process(buffer);</p>
-<p>}</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"></div><div class="line">	read(<span class="name">socket</span>, buffer)<span class="comment">;</span></div><div class="line"></div><div class="line">	process(<span class="name">buffer</span>)<span class="comment">;</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>即用户需要等待read将socket中的数据读取到buffer后，才继续处理接收的数据。整个IO请求的过程中，用户线程是被阻塞的，这导致用户在发起IO请求时，不能做任何事情，对CPU的资源利用率不够。</p>
 <p>二、同步非阻塞IO</p>
 <p>同步非阻塞IO是在同步阻塞IO的基础上，将socket设置为NONBLOCK。这样做用户线程可以在发起IO请求后可以立即返回。</p>
@@ -367,11 +355,7 @@
 <p>图2 同步非阻塞IO</p>
 <p>如图2所示，由于socket是非阻塞的方式，因此用户线程发起IO请求时立即返回。但并未读取到任何数据，用户线程需要不断地发起IO请求，直到数据到达后，才真正读取到数据，继续执行。</p>
 <p>用户线程使用同步非阻塞IO模型的伪代码描述为：</p>
-<p>{</p>
-<p>while(read(socket, buffer) != SUCCESS)</p>
-<p>;</p>
-<p>process(buffer);</p>
-<p>}</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	while(<span class="name"><span class="builtin-name">read</span></span>(<span class="name">socket</span>, buffer) != SUCCESS)<span class="comment">;</span></div><div class="line">	process(<span class="name">buffer</span>)<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>即用户需要不断地调用read，尝试读取socket中的数据，直到读取成功后，才继续处理接收的数据。整个IO请求的过程中，虽然用户线程每次发起IO请求后可以立即返回，但是为了等到数据，仍需要不断地轮询、重复请求，消耗了大量的CPU的资源。一般很少直接使用这种模型，而是在其他IO模型中使用非阻塞IO这一特性。</p>
 <p>三、IO多路复用</p>
 <p>IO多路复用模型是建立在内核提供的多路分离函数select基础之上的，使用select函数可以避免同步非阻塞IO模型中轮询等待的问题。</p>
@@ -380,18 +364,7 @@
 <p>如图3所示，用户首先将需要进行IO操作的socket添加到select中，然后阻塞等待select系统调用返回。当数据到达时，socket被激活，select函数返回。用户线程正式发起read请求，读取数据并继续执行。</p>
 <p>从流程上来看，使用select函数进行IO请求和同步阻塞模型没有太大的区别，甚至还多了添加监视socket，以及调用select函数的额外操作，效率更差。但是，使用select以后最大的优势是用户可以在一个线程内同时处理多个socket的IO请求。用户可以注册多个socket，然后不断地调用select读取被激活的socket，即可达到在同一个线程内同时处理多个IO请求的目的。而在同步阻塞模型中，必须通过多线程的方式才能达到这个目的。</p>
 <p>用户线程使用select函数的伪代码描述为：</p>
-<p>{</p>
-<p>select(socket);</p>
-<p>while(1) {</p>
-<p>sockets = select();</p>
-<p>for(socket in sockets) {</p>
-<p>if(can_read(socket)) {</p>
-<p>read(socket, buffer);</p>
-<p>process(buffer);</p>
-<p>}</p>
-<p>}</p>
-<p>}</p>
-<p>}</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	select(<span class="name">socket</span>)<span class="comment">;</span></div><div class="line"></div><div class="line">	while(<span class="number">1</span>) &#123;</div><div class="line">		sockets = select()<span class="comment">;</span></div><div class="line">		for(<span class="name">socket</span> in sockets) &#123;</div><div class="line">			if(<span class="name">can_read</span>(<span class="name">socket</span>)) &#123;</div><div class="line">				read(<span class="name">socket</span>, buffer)<span class="comment">;</span></div><div class="line">				process(<span class="name">buffer</span>)<span class="comment">;</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>其中while循环前将socket添加到select监视中，然后在while内一直调用select获取被激活的socket，一旦socket可读，便调用read函数将socket中的数据读取出来。</p>
 <p>然而，使用select函数的优点并不仅限于此。虽然上述方式允许单线程内处理多个IO请求，但是每个IO请求的过程还是阻塞的（在select函数上阻塞），平均时间甚至比同步阻塞IO模型还要长。如果用户线程只注册自己感兴趣的socket或者IO请求，然后去做自己的事情，等到数据到来时再进行处理，则可以提高CPU的利用率。</p>
 <p>IO多路复用模型使用了Reactor设计模式实现了这一机制。</p>
