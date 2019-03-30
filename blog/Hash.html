@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法,Hash,分布式,缓存," />
+  <meta name="keywords" content="Hash,算法,分布式,缓存," />
 
 
 
@@ -84,23 +84,20 @@
 
 
 
-<meta name="description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。
-一致性Hash算法的使用场景假设我们的将10台redis部署为我们的缓存系统，存储数据，存储方式是：hash(k)%10，用来将数据分散到各个redis存储系统中。这样做，最大的问题就在于：如果此缓存系统扩展">
+<meta name="description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一致性hash算法，解决分布式下缓存问题">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Hash.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。
-一致性Hash算法的使用场景假设我们的将10台redis部署为我们的缓存系统，存储数据，存储方式是：hash(k)%10，用来将数据分散到各个redis存储系统中。这样做，最大的问题就在于：如果此缓存系统扩展">
+<meta property="og:description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。">
 <meta property="og:image" content="https://img-blog.csdn.net/20180125210623356?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20180125211206004?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20180125212525338?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20180125213406703?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2019-03-30T08:48:54.193Z">
+<meta property="og:updated_time" content="2019-03-30T08:55:39.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一致性hash算法，解决分布式下缓存问题">
-<meta name="twitter:description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。
-一致性Hash算法的使用场景假设我们的将10台redis部署为我们的缓存系统，存储数据，存储方式是：hash(k)%10，用来将数据分散到各个redis存储系统中。这样做，最大的问题就在于：如果此缓存系统扩展">
+<meta name="twitter:description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180125210623356?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -333,6 +330,7 @@
 
       
         <p>一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等<k,v>非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。</k,v></p>
+<a id="more"></a>
 <h1 id="一致性Hash算法的使用场景"><a href="#一致性Hash算法的使用场景" class="headerlink" title="一致性Hash算法的使用场景"></a>一致性Hash算法的使用场景</h1><p>假设我们的将10台redis部署为我们的缓存系统，存储<k,v>数据，存储方式是：hash(k)%10，用来将数据分散到各个redis存储系统中。这样做，最大的问题就在于：如果此缓存系统扩展（比如：增加或减少redis服务器的数量），节点故障宕机等将会带来很高的代价。比如：我们业务量增大了，需要扩展我们的缓存系统，再增加一台redis作为缓存服务器，那么后来的数据<k,v>的散列方式变为了：hash(k)%11。我们可以看到，如果我们要查找扩展之前的数据，利用hash(k)%11，则会找不到对应的存储服务器。<br><strong>所以这个时候大量的数据失效了（访问不到了）。</strong><br>这时候，我们就要进行数据的重现散列，如果是将redis作为存储系统，则需要<br>进行数据迁移，然后进行恢复，但是这个时候就意味着每次增减服务器的时候，集群就需要大量的通信，进行数据迁移，这个开销是非常大的。如果只是缓存，那么缓存就都失效了。这会形成缓存击穿，导致数据库压力巨大，可能会导致应用的崩溃。</k,v></k,v></p>
 <h1 id="一致性Hash算法的原理"><a href="#一致性Hash算法的原理" class="headerlink" title="一致性Hash算法的原理"></a>一致性Hash算法的原理</h1><p>因为对于hash(k)的范围在int范围，所以我们将0~2^32作为一个环。其步骤为：</p>
 <p>1，求出每个服务器的hash（服务器ip）值，将其配置到一个 0~2^n 的圆环上（n通常取32）。</p>
@@ -373,9 +371,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag">#算法</a>
-          
             <a href="/tags/Hash/" rel="tag">#Hash</a>
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
           
             <a href="/tags/分布式/" rel="tag">#分布式</a>
           
