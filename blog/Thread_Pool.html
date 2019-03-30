@@ -1,0 +1,1343 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Thread,pool,java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在Java1.5中提供了一个非常高效实用的多线程包：java.util.concurrent,提供了大量高级工具，可以帮助开发者编写高效易维护、结构清晰的Java多线程程序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java线程池">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Thread_Pool.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="在Java1.5中提供了一个非常高效实用的多线程包：java.util.concurrent,提供了大量高级工具，可以帮助开发者编写高效易维护、结构清晰的Java多线程程序。">
+<meta property="og:updated_time" content="2019-03-30T14:19:26.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java线程池">
+<meta name="twitter:description" content="在Java1.5中提供了一个非常高效实用的多线程包：java.util.concurrent,提供了大量高级工具，可以帮助开发者编写高效易维护、结构清晰的Java多线程程序。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Thread_Pool.html"/>
+
+  <title> Java线程池 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java线程池
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-10-09T13:56:34+08:00" content="2018-10-09">
+              2018-10-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/Thread_Pool.html" class="leancloud_visitors" data-flag-title="Java线程池">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在Java1.5中提供了一个非常高效实用的多线程包：java.util.concurrent,提供了大量高级工具，可以帮助开发者编写高效易维护、结构清晰的Java多线程程序。</p>
+<a id="more"></a>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p>之前我们在使用多线程都是用Thread的start()来创建启动一个线程，但是在实际开发中，如果每个请求到达就创建一个新线程，开销是相当大的。服务器在创建和销毁线程上花费的时间和消耗的系统资源都相当大，甚至可能要比在处理实际的用请求的时间和资源要多的多。除了创建和销毁线程的开销之外，活动的线程也需要消耗系统资源。如果在一个jvm里创建太多的线程，可能会使系统由于过度消耗内存或“切换过度”而导致系统资源不足。这就引入了线程池概念。</p>
+<p>线程池的原理其实就是对多线程的一个管理，为了实现异步机制的一种方法，其实就是多个线程执行多个任务，最终这些线程通过线程池进行管理…不用手动去维护…一次可以处理多个任务，这样就可以迅速的进行相应…比如说一个网站成为了热点网站，那么对于大量的点击量，就必须要对每一次的点击做出迅速的处理，这样才能达到更好的交互效果…这样就需要多个线程去处理这些请求，以便能够更好的提供服务…</p>
+<p>在java.util.concurrent包下，提供了一系列与线程池相关的类。合理的使用线程池，可以带来多个好处：</p>
+<p>（1） <strong>降低资源消耗</strong> 。通过重复利用已创建的线程降低线程创建和销毁造成的消耗；</p>
+<p>（2） <strong>提高响应速度</strong> 。当任务到达时，任务可以不需要等到线程创建就能立即执行；</p>
+<p>（3） <strong>提高线程的可管理性</strong> 。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</p>
+<p>线程池可以应对突然大爆发量的访问，通过有限个固定线程为大量的操作服务，减少创建和销毁线程所需的时间。</p>
+<p>使用线程池：</p>
+<ul>
+<li><p>1、创建线程池</p>
+</li>
+<li><p>2、创建任务</p>
+</li>
+<li><p>3、执行任务</p>
+</li>
+<li><p>4、关闭线程池</p>
+</li>
+</ul>
+<h2 id="五种线程池的使用场景"><a href="#五种线程池的使用场景" class="headerlink" title="五种线程池的使用场景"></a>五种线程池的使用场景</h2><ul>
+<li><p><code>newSingleThreadExecutor</code>：一个单线程的线程池，可以用于需要保证顺序执行的场景，并且只有一个线程在执行。</p>
+</li>
+<li><p><code>newFixedThreadPool</code>：一个固定大小的线程池，可以用于已知并发压力的情况下，对线程数做限制。</p>
+</li>
+<li><p><code>newCachedThreadPool</code>：一个可以无限扩大的线程池，比较适合处理执行时间比较小的任务。</p>
+</li>
+<li><p><code>newScheduledThreadPool</code>：可以延时启动，定时启动的线程池，适用于需要多个后台线程执行周期任务的场景。</p>
+</li>
+</ul>
+<p><code>newWorkStealingPool</code>：一个拥有多个任务队列的线程池，可以减少连接数，创建当前可用cpu数量的线程来并行执行。</p>
+<h2 id="创建线程池"><a href="#创建线程池" class="headerlink" title="创建线程池"></a>创建线程池</h2><p>一般通过工具类Executors的静态方法来获取线程池或静态方法。介绍四种常用创建方法</p>
+<blockquote>
+<p>ExecutorService service1 = Executors.newSingleThreadExecutor();</p>
+</blockquote>
+<p>说明： <strong>单例线程</strong> ，表示在任意的时间段内，线程池中只有一个线程在工作</p>
+<blockquote>
+<p>ExecutorService service2 = Executors.newCacheThreadPool();</p>
+</blockquote>
+<p>说明： <strong>缓存线程池</strong><br>，先查看线程池中是否有当前执行线程的缓存，如果有就resue(复用),如果没有,那么需要创建一个线程来完成当前的调用.并且这类线程池只能完成一些生存期很短的一些任务.并且这类线程池内部规定能resue(复用)的线程，空闲的时间不能超过60s,一旦超过了60s,就会被移出线程池</p>
+<blockquote>
+<p>ExecutorService service3 = Executors.newFixedThreadPool(10);</p>
+</blockquote>
+<p>说明： <strong>固定型线程池</strong><br>，和newCacheThreadPool()差不多，也能够实现resue(复用),但是这个池子规定了线程的最大数量，也就是说当池子有空闲时，那么新的任务将会在空闲线程中被执行，一旦线程池内的线程都在进行工作，那么新的任务就必须等待线程池有空闲的时候才能够进入线程池,其他的任务继续排队等待.这类池子没有规定其空闲的时间到底有多长.这一类的池子更适用于服务器.</p>
+<blockquote>
+<p>ExecutorService service4 = Executors.newScheduledThreadPool(10);</p>
+</blockquote>
+<p>说明： <strong>调度型线程池</strong> ,调度型线程池会根据Scheduled(任务列表)进行延迟执行，或者是进行周期性的执行.适用于一些周期性的工作.</p>
+<pre><code>package com.reapal.brave.main;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/**
+ * Created by jack-cooper on 2017/2/23.
+ */
+public class Test {
+    public static void main(String[] args) {
+        ExecutorService service = Executors.newCachedThreadPool();
+        service.submit(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    System.out.println(&quot;hello world !&quot;);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        System.out.println(&quot; ===&gt; main Thread execute here ! &quot; );
+    }
+}
+</code></pre><h3 id="自定义线程池"><a href="#自定义线程池" class="headerlink" title="自定义线程池"></a>自定义线程池</h3><p>构造函数的定义</p>
+<pre><code>public ThreadPoolExecutor(int corePoolSize,
+                              int maximumPoolSize,
+                              long keepAliveTime,
+                              TimeUnit unit,
+                              BlockingQueue&lt;Runnable&gt; workQueue,
+                              ThreadFactory threadFactory,
+                              RejectedExecutionHandler handler) ;
+</code></pre><ul>
+<li><p>corePoolSize<br>线程池大小，决定着新提交的任务是新开线程去执行还是放到任务队列中，也是线程池的最最核心的参数。一般线程池开始时是没有线程的，只有当任务来了并且线程数量小于corePoolSize才会创建线程。</p>
+</li>
+<li><p>maximumPoolSize<br>最大线程数，线程池能创建的最大线程数量。</p>
+</li>
+<li><p>keepAliveTime<br>在线程数量超过corePoolSize后，多余空闲线程的最大存活时间。</p>
+</li>
+<li><p>unit<br>时间单位</p>
+</li>
+<li><p>workQueue<br>存放来不及处理的任务的队列，是一个BlockingQueue。</p>
+</li>
+<li><p>threadFactory<br>生产线程的工厂类，可以定义线程名，优先级等。</p>
+</li>
+</ul>
+<pre><code>ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+          .setNameFormat(&quot;demo-pool-%d&quot;).build();
+</code></pre><ul>
+<li>handler<br>拒绝策略，当任务来不及处理的时候，如何处理, 前面有讲解。<br>1、 <code>AbortPolicy</code> -- 当任务添加到线程池中被拒绝时，它将抛出 RejectedExecutionException 异常。<br>2、 <code>CallerRunsPolicy</code> -- 当任务添加到线程池中被拒绝时，会在线程池当前正在运行的Thread线程池中处理被拒绝的任务。<br>3、 <code>DiscardOldestPolicy</code> --当任务添加到线程池中被拒绝时，线程池会放弃等待队列中最旧的未处理任务，然后将被拒绝的任务添加到等待队列中。<br>4、 <code>DiscardPolicy</code> -- 当任务添加到线程池中被拒绝时，线程池将丢弃被拒绝 的任务。<br>参考： <a href="http://www.cnblogs.com/skywang12345/p/3512947.html" target="_blank" rel="external">http://www.cnblogs.com/skywang12345/p/3512947.html</a></li>
+</ul>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<pre><code>ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+                .setNameFormat(&quot;demo-pool-%d&quot;).build();
+        ExecutorService pool = new ThreadPoolExecutor(5, 200,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue&lt;Runnable&gt;(1024), namedThreadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
+        for(int i=0;i&lt;1000;i++) {
+            pool.execute(() -&gt; {
+                //todo 此处写业务
+            });
+        }
+</code></pre><h2 id="创建任务"><a href="#创建任务" class="headerlink" title="创建任务"></a>创建任务</h2><p>任务分为两种:一种是有返回值的（ <strong>callable</strong> ），一种是没有返回值的（ <strong>runnable</strong> ）. Callable与 Future<br>两功能是Java在后续版本中为了适应多并法才加入的，Callable是类似于Runnable的接口，实现Callable接口的类和实现Runnable的类都是可被其他线程执行的任务。</p>
+<ul>
+<li>无返回值的任务就是一个实现了runnable接口的类.使用run方法.</li>
+<li>有返回值的任务是一个实现了callable接口的类.使用call方法.</li>
+</ul>
+<h3 id="Callable和Runnable的区别如下："><a href="#Callable和Runnable的区别如下：" class="headerlink" title="Callable和Runnable的区别如下："></a>Callable和Runnable的区别如下：</h3><ul>
+<li>Callable定义的方法是call，而Runnable定义的方法是run。</li>
+<li>Callable的call方法可以有返回值，而Runnable的run方法不能有返回值。</li>
+<li>Callable的call方法可抛出异常，而Runnable的run方法不能抛出异常。</li>
+</ul>
+<h4 id="Future-介绍"><a href="#Future-介绍" class="headerlink" title="Future 介绍"></a>Future 介绍</h4><p>Future表示异步计算的结果，它提供了检查计算是否完成的方法，以等待计算的完成，并检索计算的结果。Future的cancel方法可以取消任务的执行，它有一布尔参数，参数为<br>true 表示立即中断任务的执行，参数为 false 表示允许正在运行的任务运行完成。Future的 get 方法等待计算完成，获取计算结果。</p>
+<pre><code>package com.reapal.brave.main;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class CallableAndFuture {
+
+    public static class  MyCallable  implements Callable{
+        private int flag = 0;
+        public MyCallable(int flag){
+            this.flag = flag;
+        }
+        public String call() throws Exception{
+            if (this.flag == 0){
+                return &quot;flag = 0&quot;;
+            }
+            if (this.flag == 1){
+                try {
+                    while (true) {
+                        System.out.println(&quot;looping.&quot;);
+                        Thread.sleep(2000);
+                    }
+                } catch (InterruptedException e) {
+                    System.out.println(&quot;Interrupted&quot;);
+                }
+                return &quot;false&quot;;
+            } else {
+                throw new Exception(&quot;Bad flag value!&quot;);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // 定义3个Callable类型的任务
+        MyCallable task1 = new MyCallable(0);
+        MyCallable task2 = new MyCallable(1);
+        MyCallable task3 = new MyCallable(2);
+        // 创建一个执行任务的服务
+        ExecutorService es = Executors.newFixedThreadPool(3);
+        try {
+            // 提交并执行任务，任务启动时返回了一个Future对象，
+            // 如果想得到任务执行的结果或者是异常可对这个Future对象进行操作
+            Future future1 = es.submit(task1);
+            // 获得第一个任务的结果，如果调用get方法，当前线程会等待任务执行完毕后才往下执行
+            System.out.println(&quot;task1: &quot; + future1.get());
+            Future future2 = es.submit(task2);
+            // 等待5秒后，再停止第二个任务。因为第二个任务进行的是无限循环
+            Thread.sleep(5000);
+            System.out.println(&quot;task2 cancel: &quot; + future2.cancel(true));
+            // 获取第三个任务的输出，因为执行第三个任务会引起异常
+            // 所以下面的语句将引起异常的抛出
+            Future future3 = es.submit(task3);
+            System.out.println(&quot;task3: &quot; + future3.get());
+        } catch (Exception e){
+            System.out.println(e.toString());
+        }
+        // 停止任务执行服务
+        es.shutdownNow();
+    }
+}
+</code></pre><h2 id="执行任务"><a href="#执行任务" class="headerlink" title="执行任务"></a>执行任务</h2><p>通过java.util.concurrent.ExecutorService接口对象来执行任务，该对象有两个方法可以执行任务execute和submit。execute这种方式提交没有返回值，也就不能判断是否执行成功。submit这种方式它会返回一个Future对象，通过future的get方法来获取返回值，get方法会阻塞住直到任务完成。</p>
+<p>execute与submit区别：</p>
+<ul>
+<li>接收的参数不一样</li>
+<li>submit有返回值，而execute没有</li>
+<li>submit方便Exception处理</li>
+<li>execute是Executor接口中唯一定义的方法；submit是ExecutorService（该接口继承Executor）中定义的方法</li>
+</ul>
+<h2 id="关闭线程池"><a href="#关闭线程池" class="headerlink" title="关闭线程池"></a>关闭线程池</h2><p>线程池使用完毕，需要对其进行关闭，有两种方法</p>
+<blockquote>
+<p>shutdown()</p>
+</blockquote>
+<p>说明：shutdown并不是直接关闭线程池，而是不再接受新的任务…如果线程池内有任务，那么把这些任务执行完毕后，关闭线程池</p>
+<blockquote>
+<p>shutdownNow()</p>
+</blockquote>
+<p>说明：这个方法表示不再接受新的任务，并把任务队列中的任务直接移出掉，如果有正在执行的，尝试进行停止</p>
+<h2 id="综合使用案例-FutureTask"><a href="#综合使用案例-FutureTask" class="headerlink" title="综合使用案例(FutureTask)"></a><strong>综合使用案例(FutureTask)</strong></h2><pre><code>import java.util.concurrent.*;
+
+/**
+ * Author  : Slogen
+ * AddTime : 17/6/4
+ * Email   : huangjian13@meituan.com
+ */
+public class CallDemo {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+
+        /**
+         * 第一种方式:Future + ExecutorService
+         * Task task = new Task();
+         * ExecutorService service = Executors.newCachedThreadPool();
+         * Future&lt;Integer&gt; future = service.submit(task1);
+         * service.shutdown();
+         */
+
+
+        /**
+         * 第二种方式: FutureTask + ExecutorService
+         * ExecutorService executor = Executors.newCachedThreadPool();
+         * Task task = new Task();
+         * FutureTask&lt;Integer&gt; futureTask = new FutureTask&lt;Integer&gt;(task);
+         * executor.submit(futureTask);
+         * executor.shutdown();
+         */
+
+        /**
+         * 第三种方式:FutureTask + Thread
+         */
+
+        // 2. 新建FutureTask,需要一个实现了Callable接口的类的实例作为构造函数参数
+        FutureTask&lt;Integer&gt; futureTask = new FutureTask&lt;Integer&gt;(new Task());
+        // 3. 新建Thread对象并启动
+        Thread thread = new Thread(futureTask);
+        thread.setName(&quot;Task thread&quot;);
+        thread.start();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(&quot;Thread [&quot; + Thread.currentThread().getName() + &quot;] is running&quot;);
+
+        // 4. 调用isDone()判断任务是否结束
+        if(!futureTask.isDone()) {
+            System.out.println(&quot;Task is not done&quot;);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        int result = 0;
+        try {
+            // 5. 调用get()方法获取任务结果,如果任务没有执行完成则阻塞等待
+            result = futureTask.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(&quot;result is &quot; + result);
+
+    }
+
+    // 1. 继承Callable接口,实现call()方法,泛型参数为要返回的类型
+    static class Task  implements Callable&lt;Integer&gt; {
+
+        @Override
+        public Integer call() throws Exception {
+            System.out.println(&quot;Thread [&quot; + Thread.currentThread().getName() + &quot;] is running&quot;);
+            int result = 0;
+            for(int i = 0; i &lt; 100;++i) {
+                result += i;
+            }
+
+            Thread.sleep(3000);
+            return result;
+        }
+    }
+}
+</code></pre><h2 id="综合使用案例一"><a href="#综合使用案例一" class="headerlink" title="综合使用案例一"></a>综合使用案例一</h2><p>需求：从数据库中获取url，并利用httpclient循环访问url地址，并对返回结果进行操作</p>
+<p>分析：由于是循环的对多个url进行访问并获取数据，为了执行的效率，考虑使用多线程，url数量未知如果每个任务都创建一个线程将消耗大量的系统资源，最后决定使用线程池。</p>
+<pre><code>public class GetMonitorDataService {
+
+    private Logger logger = LoggerFactory.getLogger(GetMonitorDataService.class);
+    @Resource
+    private MonitorProjectUrlMapper groupUrlMapper;
+    @Resource
+    private MonitorDetailBatchInsertMapper monitorDetailBatchInsertMapper;
+    public void sendData(){
+        //调用dao查询所有url
+        MonitorProjectUrlExample example=new MonitorProjectUrlExample();
+        List&lt;MonitorProjectUrl&gt; list=groupUrlMapper.selectByExample(example);
+        logger.info(&quot;此次查询数据库中监控url个数为&quot;+list.size());
+
+        //获取系统处理器个数，作为线程池数量
+        int nThreads=Runtime.getRuntime().availableProcessors();
+
+        //定义一个装载多线程返回值的集合
+        List&lt;MonitorDetail&gt; result= Collections.synchronizedList(new ArrayList&lt;MonitorDetail&gt;());
+        //创建线程池，这里定义了一个创建线程池的工具类，避免了创建多个线程池，ThreadPoolFactoryUtil可以使用单例模式设计
+        ExecutorService executorService = ThreadPoolFactoryUtil.getExecutorService(nThreads);
+        //遍历数据库取出的url
+        if(list!=null&amp;&amp;list.size()&gt;0) {
+            for (MonitorProjectUrl monitorProjectUrl : list) {
+                String url = monitorProjectUrl.getMonitorUrl();
+                //创建任务
+                ThreadTask threadTask = new ThreadTask(url, result);
+                //执行任务
+                executorService.execute(threadTask);
+                //注意区分shutdownNow
+                executorService.shutdown();
+                try {//等待直到所有任务完成
+                          executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            //对数据进行操作
+            saveData(result);
+        }
+    }
+</code></pre><p>任务</p>
+<pre><code>public class ThreadTask implements Runnable{
+    //这里实现runnable接口
+    private String url;
+    private List&lt;MonitorDetail&gt; list;
+    public ThreadTask(String url,List&lt;MonitorDetail&gt; list){
+        this.url=url;
+        this.list=list;
+    }
+    //把获取的数据进行处理
+    @Override
+    public void run() {
+        MonitorDetail detail = HttpClientUtil.send(url, MonitorDetail.class);
+        list.add(detail);
+    }
+
+}
+</code></pre><h2 id="综合使用案例二-countDownLatch"><a href="#综合使用案例二-countDownLatch" class="headerlink" title="综合使用案例二(countDownLatch)"></a>综合使用案例二(countDownLatch)</h2><pre><code>package com.br.lucky.utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
+
+/**
+ * @author 10400
+ * @create 2018-04-19 20:38
+ */
+public class FatureTest {
+
+    //1、配置线程池
+    private static ExecutorService es = Executors.newFixedThreadPool(20);
+
+    //2、封装响应Feature
+    class BizResult{
+        public String orderId;
+        public String  data;
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+    }
+
+
+    //3、实现Callable接口
+    class BizTask implements Callable {
+
+        private String orderId;
+
+        private Object data;
+
+        //可以用其他方式
+        private CountDownLatch countDownLatch;
+
+        public BizTask(String orderId, Object data, CountDownLatch countDownLatch) {
+            this.orderId = orderId;
+            this.data = data;
+            this.countDownLatch = countDownLatch;
+        }
+
+        @Override
+        public Object call() {
+            try {
+                //todo business
+                System.out.println(&quot;当前线程Id = &quot; + this.orderId);
+                BizResult br = new BizResult();
+                br.setOrderId(this.orderId);
+                br.setData(&quot;some key about your business&quot; + this.getClass());
+                return br;
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                //线程结束时，将计时器减一
+                countDownLatch.countDown();
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 业务逻辑入口
+     */
+    public List&lt;Future&gt; beginBusiness() throws InterruptedException {
+        //模拟批量业务数据
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        for (int i = 0 ; i &lt; 1000 ; i++) {
+            list.add(String.valueOf(i));
+        }
+        //设置计数器
+        CountDownLatch countDownLatch = new CountDownLatch(list.size());
+
+        //接收多线程响应结果
+        List&lt;Future&gt; resultList = new ArrayList&lt;&gt;();
+        //begin thread
+        for( int i = 0 ,size = list.size() ; i&lt;size; i++){
+            //todo something befor thread
+            resultList.add(es.submit(new BizTask(list.get(i), null, countDownLatch)));
+        }
+        //wait finish
+        countDownLatch.await();
+        return resultList;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        FatureTest ft = new FatureTest();
+            List&lt;Future&gt; futures = ft.beginBusiness();
+            System.out.println(&quot;futures.size() = &quot; + futures.size());
+            //todo some operate
+            System.out.println(&quot; ==========================end========================= &quot; );
+    }
+
+}
+</code></pre><h2 id="综合使用案例三-future-get"><a href="#综合使用案例三-future-get" class="headerlink" title="综合使用案例三(future.get())"></a>综合使用案例三(future.get())</h2><pre><code>package com.br.lucky.utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
+
+/**
+ * @author 10400
+ * @create 2018-04-19 20:38
+ */
+public class FatureTest {
+
+/**
+ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+                .setNameFormat(&quot;demo-pool-%d&quot;).build();
+        ExecutorService pool = new ThreadPoolExecutor(5, 200,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue&lt;Runnable&gt;(1024), namedThreadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
+        for(int i=0;i&lt;1000;i++) {
+            pool.execute(() -&gt; {
+                //todo 业务逻辑在此
+            });
+        }
+*/
+    //1、配置线程池
+    private static ExecutorService es = Executors.newFixedThreadPool(20);
+
+    //2、封装响应Feature
+    class BizResult{
+        public String orderId;
+        public String  data;
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+    }
+
+
+    //3、实现Callable接口
+    class BizTask implements Callable {
+
+        private String orderId;
+
+        private Object data;
+
+
+        public BizTask(String orderId, Object data) {
+            this.orderId = orderId;
+            this.data = data;
+        }
+
+        @Override
+        public Object call() {
+            try {
+                //todo business
+                System.out.println(&quot;当前线程Id = &quot; + this.orderId);
+                BizResult br = new BizResult();
+                br.setOrderId(this.orderId);
+                br.setData(&quot;some key about your business&quot; + this.getClass());
+                Thread.sleep(3000);
+                return br;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 业务逻辑入口
+     */
+    public List&lt;Future&gt; beginBusiness() throws InterruptedException, ExecutionException {
+        //模拟批量业务数据
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        for (int i = 0 ; i &lt; 100 ; i++) {
+            list.add(String.valueOf(i));
+        }
+
+        //接收多线程响应结果
+        List&lt;Future&gt; resultList = new ArrayList&lt;&gt;();
+        //begin thread
+        for( int i = 0 ,size = list.size() ; i&lt;size; i++){
+            //todo something befor thread
+            Future future = es.submit(new BizTask(list.get(i), null));
+            resultList.add(future);
+        }
+
+        for (Future f : resultList) {
+            f.get();
+        }
+
+        System.out.println(&quot; =====多线程执行结束====== &quot;);
+
+        //wait finish
+        return resultList;
+    }
+
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        FatureTest ft = new FatureTest();
+            List&lt;Future&gt; futures = ft.beginBusiness();
+            System.out.println(&quot;futures.size() = &quot; + futures.size());
+            //todo some operate
+            System.out.println(&quot; ==========================end========================= &quot; );
+    }
+
+}
+</code></pre><p><a href="https://yq.aliyun.com/articles/5952" target="_blank" rel="external">https://yq.aliyun.com/articles/5952</a><br><a href="http://www.importnew.com/25286.html" target="_blank" rel="external">http://www.importnew.com/25286.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Thread/" rel="tag">#Thread</a>
+          
+            <a href="/tags/pool/" rel="tag">#pool</a>
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Master_Slave.html" rel="next" title="Redis的主从复制">
+                <i class="fa fa-chevron-left"></i> Redis的主从复制
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池"><span class="nav-number">1.</span> <span class="nav-text">线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五种线程池的使用场景"><span class="nav-number">2.</span> <span class="nav-text">五种线程池的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建线程池"><span class="nav-number">3.</span> <span class="nav-text">创建线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义线程池"><span class="nav-number">3.1.</span> <span class="nav-text">自定义线程池</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建任务"><span class="nav-number">4.</span> <span class="nav-text">创建任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Callable和Runnable的区别如下："><span class="nav-number">4.1.</span> <span class="nav-text">Callable和Runnable的区别如下：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Future-介绍"><span class="nav-number">4.1.1.</span> <span class="nav-text">Future 介绍</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行任务"><span class="nav-number">5.</span> <span class="nav-text">执行任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭线程池"><span class="nav-number">6.</span> <span class="nav-text">关闭线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合使用案例-FutureTask"><span class="nav-number">7.</span> <span class="nav-text">综合使用案例(FutureTask)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合使用案例一"><span class="nav-number">8.</span> <span class="nav-text">综合使用案例一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合使用案例二-countDownLatch"><span class="nav-number">9.</span> <span class="nav-text">综合使用案例二(countDownLatch)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合使用案例三-future-get"><span class="nav-number">10.</span> <span class="nav-text">综合使用案例三(future.get())</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
