@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="technology,nodeJs,express," />
+  <meta name="keywords" content="redis,String,HASH,LIST," />
 
 
 
@@ -84,33 +84,25 @@
 
 
 
-<meta name="description" content="Express框架是后台的Node框架，所以和jQuery、zepto、yui、bootstrap都不是一个东西。Express在后台的受欢迎的程度，和jQuery一样，就是企业的事实上的标准。
-Express项目框架的生成
-
-首先需要全局安装express-generator，express-generator即express项目框架生成npm
-
-1安装命令：$ npm install expr">
+<meta name="description" content="Redis常用的五种数据类型String (Key-Value)String是最常用的一种数据类型，普通的key/value存储都可以归为此类。
+一个Key对应一个Value，string类型是二进制安全的。
+Redis的string可以包含任何数据，比如jpg图片(生成二进制)或者序列化的对象。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nodeJs+express学习">
-<meta property="og:url" content="https://luisstruggle.github.io/blog/nodejs-express.html">
+<meta property="og:title" content="redis的五种数据类型">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Redis_Type.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="Express框架是后台的Node框架，所以和jQuery、zepto、yui、bootstrap都不是一个东西。Express在后台的受欢迎的程度，和jQuery一样，就是企业的事实上的标准。
-Express项目框架的生成
-
-首先需要全局安装express-generator，express-generator即express项目框架生成npm
-
-1安装命令：$ npm install expr">
-<meta property="og:image" content="https://luisstruggle.github.io/images/nodejsExpress1.png">
-<meta property="og:updated_time" content="2018-01-03T06:45:57.880Z">
+<meta property="og:description" content="Redis常用的五种数据类型String (Key-Value)String是最常用的一种数据类型，普通的key/value存储都可以归为此类。
+一个Key对应一个Value，string类型是二进制安全的。
+Redis的string可以包含任何数据，比如jpg图片(生成二进制)或者序列化的对象。">
+<meta property="og:image" content="https://img-blog.csdn.net/20161011135858246">
+<meta property="og:image" content="https://img-blog.csdn.net/20161011135959294">
+<meta property="og:updated_time" content="2019-03-30T13:09:34.755Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nodeJs+express学习">
-<meta name="twitter:description" content="Express框架是后台的Node框架，所以和jQuery、zepto、yui、bootstrap都不是一个东西。Express在后台的受欢迎的程度，和jQuery一样，就是企业的事实上的标准。
-Express项目框架的生成
-
-首先需要全局安装express-generator，express-generator即express项目框架生成npm
-
-1安装命令：$ npm install expr">
-<meta name="twitter:image" content="https://luisstruggle.github.io/images/nodejsExpress1.png">
+<meta name="twitter:title" content="redis的五种数据类型">
+<meta name="twitter:description" content="Redis常用的五种数据类型String (Key-Value)String是最常用的一种数据类型，普通的key/value存储都可以归为此类。
+一个Key对应一个Value，string类型是二进制安全的。
+Redis的string可以包含任何数据，比如jpg图片(生成二进制)或者序列化的对象。">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20161011135858246">
 
 
 
@@ -131,9 +123,9 @@ Express项目框架的生成
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/nodejs-express.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Redis_Type.html"/>
 
-  <title> nodeJs+express学习 | 奋斗的青春 </title>
+  <title> redis的五种数据类型 | 奋斗的青春 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +265,7 @@ Express项目框架的生成
             
             
               
-                nodeJs+express学习
+                redis的五种数据类型
               
             
           </h1>
@@ -285,8 +277,8 @@ Express项目框架的生成
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-06T11:23:11+08:00" content="2017-06-06">
-              2017-06-06
+            <time itemprop="dateCreated" datetime="2018-09-08T19:23:12+08:00" content="2018-09-08">
+              2018-09-08
             </time>
           </span>
 
@@ -319,7 +311,7 @@ Express项目框架的生成
 
           
           
-             <span id="/blog/nodejs-express.html" class="leancloud_visitors" data-flag-title="nodeJs+express学习">
+             <span id="/blog/Redis_Type.html" class="leancloud_visitors" data-flag-title="redis的五种数据类型">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -341,33 +333,160 @@ Express项目框架的生成
       
 
       
-        <p>Express框架是后台的Node框架，所以和jQuery、zepto、yui、bootstrap都不是一个东西。Express在后台的受欢迎的程度，和jQuery一样，就是企业的事实上的标准。</p>
-<p><strong>Express项目框架的生成</strong></p>
-<blockquote>
-<p>首先需要全局安装express-generator，express-generator即express项目框架生成npm</p>
-</blockquote>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装命令：$ npm <span class="keyword">install</span> express-generator -g</div></pre></td></tr></table></figure>
+        <h1 id="Redis常用的五种数据类型"><a href="#Redis常用的五种数据类型" class="headerlink" title="Redis常用的五种数据类型"></a>Redis常用的五种数据类型</h1><h2 id="String-Key-Value"><a href="#String-Key-Value" class="headerlink" title="String (Key-Value)"></a>String (Key-Value)</h2><p>String是最常用的一种数据类型，普通的key/value存储都可以归为此类。</p>
+<p>一个Key对应一个Value，string类型是二进制安全的。</p>
+<p>Redis的string可以包含任何数据，比如jpg图片(生成二进制)或者序列化的对象。</p>
 <a id="more"></a>
-<blockquote>
-<p>其次，运行下面的命令生成，express项目结构</p>
-</blockquote>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">使用ejs模板：<span class="variable">$ </span>express -e projectName</div><div class="line">使用jade模板（默认）：<span class="variable">$ </span>express projectName</div></pre></td></tr></table></figure>
-<blockquote>
-<p>再次，运行下面的命令生成，express项目所依赖的npm包</p>
-</blockquote>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm <span class="keyword">install</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>最后，运行下面的命令运行express项目，查看是否正确</p>
-</blockquote>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">npm</span> start</div></pre></td></tr></table></figure>
-<blockquote>
-<p>提示：若启动成功，可在浏览器中输入地址：<a href="http://localhost:3000" target="_blank" rel="external">http://localhost:3000</a> 查看运行结果<br>运行结果如下图所示：</p>
-</blockquote>
-<p><img src="/images/nodejsExpress1.png" alt="nodejsExpress1"></p>
-<blockquote>
-<p>到此完成了，Express项目的生成<br>Express 命令帮助</p>
-</blockquote>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>express -h</div></pre></td></tr></table></figure>
+<p>基本操作如下：</p>
+<pre><code>//基本数据类型
+var client = new RedisClient(&quot;127.0.0.1&quot;, 6379);
+client.Set&lt;int&gt;(&quot;pwd&quot;, 1111);
+int pwd=client.Get&lt;int&gt;(&quot;pwd&quot;);
+Console.WriteLine(pwd);
+
+//对象
+UserInfo userInfo = new UserInfo() { UserName = &quot;zhangsan&quot;, UserPwd = &quot;1111&quot; };//底层使用json序列化
+client.Set&lt;UserInfo&gt;(&quot;userInfo&quot;, userInfo);
+UserInfo user=client.Get&lt;UserInfo&gt;(&quot;userInfo&quot;);
+Console.WriteLine(user.UserName);
+
+//对象集合
+List&lt;UserInfo&gt; list = new List&lt;UserInfo&gt;() { new UserInfo(){UserName=&quot;lisi&quot;,UserPwd=&quot;111&quot;},new UserInfo(){UserName=&quot;wangwu&quot;,UserPwd=&quot;123&quot;} };
+client.Set&lt;List&lt;UserInfo&gt;&gt;(&quot;list&quot;,list);
+List&lt;UserInfo&gt;userInfoList=client.Get&lt;List&lt;UserInfo&gt;&gt;(&quot;list&quot;);
+foreach (UserInfo userInfo in userInfoList)
+{
+    Console.WriteLine(userInfo.UserName);
+}
+</code></pre><h2 id="Hash-Key-Value"><a href="#Hash-Key-Value" class="headerlink" title="Hash(Key-Value)"></a>Hash(Key-Value)</h2><p>hash是一个string 类型的field和value的映射表。</p>
+<p>hash特别适合存储对象。相对于将对象的每个字段存成单个string 类型。一个对象存储在hash类型中会占用更少的内存，并且可以更方便的存取整个对象。</p>
+<p>Redis的Hash数据类型的value内部是一个HashMap,如果该Map的成员比较少，则会采用一维数组的方式来紧凑存储该MAP，省去了大量指针的内存开销，这个参数在redis.conf配置文件中下面2项。</p>
+<p>Hash-max-zipmap-entries 64</p>
+<p>Hash-max-zipmap-value 512.</p>
+<p>含义是当value这个Map内部不超过多少个成员时会采用线性紧凑格式存储，默认是64，即value内部有64个以下的成员就是使用线性紧凑存储，超过该值自动转成真正的HashMap.</p>
+<p>Hash-max-zipmap-value含义是当value这个MAP内部的每个成员值长度不超过多少字节就会采用线性紧凑存储来节省空间。以上两个条件任意一个条件超过设置值都会转成真正的HashMap，也就不会再节省内存了，这个值设置多少需要权衡，HashMap的优势就是查找和操作时间短。</p>
+<p>采用key—field—value的方式。一个key可对应多个field，一个field对应一个value。这里同时需要注意，Redis提供了接口(hgetall)可以直接取到全部的属性数据,但是如果内部Map的成员很多，那么涉及到遍历整个内部Map的操作，由于Redis单线程模型的缘故，这个遍历操作可能会比较耗时，而令其它客户端的请求完全不响应，这点需要格外注意</p>
+<p>建议使用对象类别和ID构成键名，使用字段表示对象属性，字段值存储属性值，</p>
+<p>对比</p>
+<h3 id="1-采用String类型的存储对象，需要将对象进行序列化。"><a href="#1-采用String类型的存储对象，需要将对象进行序列化。" class="headerlink" title="1. 采用String类型的存储对象，需要将对象进行序列化。"></a>1. 采用String类型的存储对象，需要将对象进行序列化。</h3><p><img src="https://img-blog.csdn.net/20161011135858246" alt="">  </p>
+<p>增加了序列化/反序列化的开销，并且在需要修改其中一项信息时，需要把整个对象取回。</p>
+<h3 id="2-使用Hash数据类型则不需要"><a href="#2-使用Hash数据类型则不需要" class="headerlink" title="2. 使用Hash数据类型则不需要"></a>2. 使用Hash数据类型则不需要</h3><p>Key仍然是用户ID,<br>value是一个Map，这个Map的key是成员的属性名，value是属性值，这样对数据的修改和存取都可以直接通过其内部Map的Key(Redis里称内部Map的key为field),<br>也就是通过 key(用户ID) + field(属性标签) 就可以操作对应属性数据了，既不需要重复存储数据，也不会带来序列化和反序列化。</p>
+<p><img src="https://img-blog.csdn.net/20161011135959294" alt="">  </p>
+<pre><code>//SetEntryInHash  key—field—value这种方式
+client.SetEntryInHash(&quot;userId&quot;, &quot;userName&quot;, “changliang&quot;);
+List&lt;string&gt; list = client.GetHashKeys(“userId&quot;);
+List&lt;string&gt; list = client.GetHashValues(&quot;userName&quot;);//获取值
+List&lt;string&gt; list = client.GetAllKeys();//获取所有的key。
+</code></pre><h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><p>list是一个链表结构，主要功能是push, pop, 获取一个范围的所有的值等。操作中key理解为链表名字。</p>
+<p>Redis的list类型其实就是一个每个子元素都是string类型的双向链表。我们可以通过push,pop操作从链表的头部或者尾部添加删除元素，这样list既可以作为栈，又可以作为队列（栈就是insertFirst+deleteFirst，队列就是insertLast+deleteFirst）。可以支持反向查找和遍历，方便操作，不过带来了部分额外的内存开销。Redis内部的很多实现，包括发送缓冲队列等也都是用的这个数据结构。</p>
+<pre><code>//队列使用--入队
+client.EnqueueItemOnList(&quot;name&quot;, &quot;zhangsan&quot;);
+client.EnqueueItemOnList(&quot;name&quot;, &quot;lisi&quot;);
+int count= client.GetListCount(&quot;name&quot;);
+for (int i = 0; i &lt; count; i++)
+{
+  Console.WriteLine(client.DequeueItemFromList(&quot;name&quot;));
+}
+
+//栈使用--压栈
+client.PushItemToList(&quot;name2&quot;, &quot;wangwu&quot;);
+client.PushItemToList(&quot;name2&quot;, &quot;maliu&quot;);
+int count = client.GetListCount(&quot;name2&quot;);
+for (int i = 0; i &lt; count; i++)
+{
+    Console.WriteLine(client.PopItemFromList(&quot;name2&quot;));
+}
+</code></pre><h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>它是string类型的无序集合。set是通过hash table实现的，可以进行添加、删除和查找。对集合我们可以取并集，交集，差集.</p>
+<p>集合可以进行 交集、并集 如新浪微博中获取两个用户共同的关注人</p>
+<p>新浪微博使用redis有两种应用场景：</p>
+<p>1. 直接把数据放到redis中进行存储，这些数据是独立的</p>
+<p>2. 有些数据包含表与表之间的逻辑关系，这些数据又访问比较频繁，如果直接从数据库中进行查询性能比较差。先将数据写到redis中，再将数据保存到mysql数据库</p>
+<pre><code>//对Set类型进行操作 集合名 后面可以放key-value对，也可以是基本类型
+client.AddItemToSet(&quot;a3&quot;, &quot;ddd&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;ccc&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;tttt&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;sssh&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;hhhh&quot;);
+System.Collections.Generic.HashSet&lt;string&gt;hashset=client.GetAllItemsFromSet(&quot;a3&quot;);
+foreach (string str in hashset)
+{
+    Console.WriteLine(str);
+}
+
+求并集
+//集合1 a3集合
+client.AddItemToSet(&quot;a3&quot;, &quot;ddd&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;ccc&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;tttt&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;sssh&quot;);
+client.AddItemToSet(&quot;a3&quot;, &quot;hhhh&quot;);
+
+//集合2 a4集合
+client.AddItemToSet(&quot;a4&quot;, &quot;hhhh&quot;);
+client.AddItemToSet(&quot;a4&quot;, &quot;h777&quot;);
+
+System.Collections.Generic.HashSet&lt;string&gt;hashset= client.GetUnionFromSets(new string[] { &quot;a3&quot;,&quot;a4&quot;});
+foreach (string str in hashset)
+{
+  Console.WriteLine(str);
+}
+
+//求交集
+System.Collections.Generic.HashSet&lt;string&gt; hashset = client.GetIntersectFromSets(new string[] { “a3”, “a4” });
+//求差集. 
+//返回存在于第一个集合，但是不存在于其他集合的数据。差集 
+System.Collections.Generic.HashSet&lt;string&gt; hashset = client.GetDifferencesFromSet(&quot;a3&quot;,new string[] { &quot;a4&quot;});
+</code></pre><h2 id="zset"><a href="#zset" class="headerlink" title="zset"></a>zset</h2><p>Redis sorted set的使用场景与set类似，区别是set不是自动有序的，而sorted<br>set可以通过用户额外提供一个优先级(score)的参数来为成员排序，并且是插入有序的，即自动排序。</p>
+<p>可以理解为一列存 value,一列存顺序。操作中key理解为zset的名字.</p>
+<p>当你需要一个有序的并且不重复的集合列表，那么可以选择sorted set数据结构</p>
+<pre><code>//保存插入时的顺序，并放到集合a5中
+client.AddItemToSortedSet(&quot;a5&quot;,&quot;ffff&quot;);
+client.AddItemToSortedSet(&quot;a5&quot;,&quot;bbbb&quot;);
+client.AddItemToSortedSet(&quot;a5&quot;,&quot;gggg&quot;);
+client.AddItemToSortedSet(&quot;a5&quot;,&quot;cccc&quot;);
+client.AddItemToSortedSet(&quot;a5&quot;,&quot;waaa&quot;);
+System.Collections.Generic.List&lt;string&gt;list =client.GetAllItemsFromSortedSet(&quot;a5&quot;);
+foreach (string str in list)
+{
+         Console.WriteLine(str);
+}
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>Key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>正常的key</td>
+<td>正常的value  </td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>正常的Key 如用户ID</td>
+<td>HashMap(field,value) 代表对象</td>
+</tr>
+<tr>
+<td>List</td>
+<td>链表名字</td>
+<td>每个子元素都是string类型的双向链表</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>Set名字</td>
+<td>string类型的无序集合</td>
+</tr>
+<tr>
+<td>Zset</td>
+<td>Zset名字</td>
+<td>一列存 value,一列存顺序</td>
+</tr>
+</tbody>
+</table>
+
       
     </div>
 
@@ -389,11 +508,13 @@ Express项目框架的生成
       
         <div class="post-tags">
           
-            <a href="/tags/technology/" rel="tag">#technology</a>
+            <a href="/tags/redis/" rel="tag">#redis</a>
           
-            <a href="/tags/nodeJs/" rel="tag">#nodeJs</a>
+            <a href="/tags/String/" rel="tag">#String</a>
           
-            <a href="/tags/express/" rel="tag">#express</a>
+            <a href="/tags/HASH/" rel="tag">#HASH</a>
+          
+            <a href="/tags/LIST/" rel="tag">#LIST</a>
           
         </div>
       
@@ -402,17 +523,13 @@ Express项目框架的生成
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/CAP-theorem.html" rel="next" title="CAP theorem">
-                <i class="fa fa-chevron-left"></i> CAP theorem
+              <a href="/blog/Rdb_and_Aof.html" rel="next" title="redis的持久化方式">
+                <i class="fa fa-chevron-left"></i> redis的持久化方式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/mongodb-study.html" rel="prev" title="mongodb学习">
-                mongodb学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -564,7 +681,7 @@ Express项目框架的生成
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis常用的五种数据类型"><span class="nav-number">1.</span> <span class="nav-text">Redis常用的五种数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String-Key-Value"><span class="nav-number">1.1.</span> <span class="nav-text">String (Key-Value)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash-Key-Value"><span class="nav-number">1.2.</span> <span class="nav-text">Hash(Key-Value)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-采用String类型的存储对象，需要将对象进行序列化。"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 采用String类型的存储对象，需要将对象进行序列化。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用Hash数据类型则不需要"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 使用Hash数据类型则不需要</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List"><span class="nav-number">1.3.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set"><span class="nav-number">1.4.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zset"><span class="nav-number">1.5.</span> <span class="nav-text">zset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
