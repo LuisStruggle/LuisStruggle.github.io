@@ -94,15 +94,15 @@ Redis的string可以包含任何数据，比如jpg图片(生成二进制)或者�
 <meta property="og:description" content="Redis常用的五种数据类型String (Key-Value)String是最常用的一种数据类型，普通的key/value存储都可以归为此类。
 一个Key对应一个Value，string类型是二进制安全的。
 Redis的string可以包含任何数据，比如jpg图片(生成二进制)或者序列化的对象。">
-<meta property="og:image" content="https://img-blog.csdn.net/20161011135858246">
-<meta property="og:image" content="https://img-blog.csdn.net/20161011135959294">
-<meta property="og:updated_time" content="2019-03-30T13:09:34.755Z">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Redis_Type1.jpg">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Redis_Type2.jpg">
+<meta property="og:updated_time" content="2019-03-30T13:55:16.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis的五种数据类型">
 <meta name="twitter:description" content="Redis常用的五种数据类型String (Key-Value)String是最常用的一种数据类型，普通的key/value存储都可以归为此类。
 一个Key对应一个Value，string类型是二进制安全的。
 Redis的string可以包含任何数据，比如jpg图片(生成二进制)或者序列化的对象。">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20161011135858246">
+<meta name="twitter:image" content="https://luisstruggle.github.io/images/Redis_Type1.jpg">
 
 
 
@@ -368,10 +368,10 @@ foreach (UserInfo userInfo in userInfoList)
 <p>采用key—field—value的方式。一个key可对应多个field，一个field对应一个value。这里同时需要注意，Redis提供了接口(hgetall)可以直接取到全部的属性数据,但是如果内部Map的成员很多，那么涉及到遍历整个内部Map的操作，由于Redis单线程模型的缘故，这个遍历操作可能会比较耗时，而令其它客户端的请求完全不响应，这点需要格外注意</p>
 <p>建议使用对象类别和ID构成键名，使用字段表示对象属性，字段值存储属性值，</p>
 <p>对比</p>
-<h3 id="1-采用String类型的存储对象，需要将对象进行序列化。"><a href="#1-采用String类型的存储对象，需要将对象进行序列化。" class="headerlink" title="1. 采用String类型的存储对象，需要将对象进行序列化。"></a>1. 采用String类型的存储对象，需要将对象进行序列化。</h3><p><img src="https://img-blog.csdn.net/20161011135858246" alt="">  </p>
+<h3 id="1-采用String类型的存储对象，需要将对象进行序列化。"><a href="#1-采用String类型的存储对象，需要将对象进行序列化。" class="headerlink" title="1. 采用String类型的存储对象，需要将对象进行序列化。"></a>1. 采用String类型的存储对象，需要将对象进行序列化。</h3><p><img src="/images/Redis_Type1.jpg" alt="">  </p>
 <p>增加了序列化/反序列化的开销，并且在需要修改其中一项信息时，需要把整个对象取回。</p>
 <h3 id="2-使用Hash数据类型则不需要"><a href="#2-使用Hash数据类型则不需要" class="headerlink" title="2. 使用Hash数据类型则不需要"></a>2. 使用Hash数据类型则不需要</h3><p>Key仍然是用户ID,<br>value是一个Map，这个Map的key是成员的属性名，value是属性值，这样对数据的修改和存取都可以直接通过其内部Map的Key(Redis里称内部Map的key为field),<br>也就是通过 key(用户ID) + field(属性标签) 就可以操作对应属性数据了，既不需要重复存储数据，也不会带来序列化和反序列化。</p>
-<p><img src="https://img-blog.csdn.net/20161011135959294" alt="">  </p>
+<p><img src="/images/Redis_Type2.jpg" alt="">  </p>
 <pre><code>//SetEntryInHash  key—field—value这种方式
 client.SetEntryInHash(&quot;userId&quot;, &quot;userName&quot;, “changliang&quot;);
 List&lt;string&gt; list = client.GetHashKeys(“userId&quot;);
