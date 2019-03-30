@@ -84,23 +84,20 @@
 
 
 
-<meta name="description" content="https://blog.csdn.net/wen_fei/article/details/82979497
-Pytorch使用visdom进行可视化文章目录">
+<meta name="description" content="visdom介绍visdom是Facebook专门为Pytorch开发的一款可视化工具，开源于2017年3月，项目地址为visdom，其十分轻量级，但功能丰富，提供了大多数的科学运算可视化API，基本可视化界面如下图所示：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pytorch 可视化工具 visdom">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/pytorch-visdom.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="https://blog.csdn.net/wen_fei/article/details/82979497
-Pytorch使用visdom进行可视化文章目录">
+<meta property="og:description" content="visdom介绍visdom是Facebook专门为Pytorch开发的一款可视化工具，开源于2017年3月，项目地址为visdom，其十分轻量级，但功能丰富，提供了大多数的科学运算可视化API，基本可视化界面如下图所示：">
 <meta property="og:image" content="https://camo.githubusercontent.com/d69475a01f9f327fc42931a21df8134d1fbdfc19/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f2d62714839555843772d42452f574c3255736472726241492f41414141414141416e59632f656d727877436d6e7257345f434c54797955747442305359524a2d693443436951434c63422f73302f53637265656e2b53686f742b323031372d30332d30362b61742b31302e35312e30322b414d2e706e67253232766973646f6d5f626967253232">
 <meta property="og:image" content="http://otw7his7z.bkt.clouddn.com/visdom-1.png">
 <meta property="og:image" content="http://otw7his7z.bkt.clouddn.com/visdom-3.png">
 <meta property="og:image" content="http://otw7his7z.bkt.clouddn.com/visdom-2.png">
-<meta property="og:updated_time" content="2018-10-27T07:48:24.485Z">
+<meta property="og:updated_time" content="2019-03-30T09:02:14.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pytorch 可视化工具 visdom">
-<meta name="twitter:description" content="https://blog.csdn.net/wen_fei/article/details/82979497
-Pytorch使用visdom进行可视化文章目录">
+<meta name="twitter:description" content="visdom介绍visdom是Facebook专门为Pytorch开发的一款可视化工具，开源于2017年3月，项目地址为visdom，其十分轻量级，但功能丰富，提供了大多数的科学运算可视化API，基本可视化界面如下图所示：">
 <meta name="twitter:image" content="https://camo.githubusercontent.com/d69475a01f9f327fc42931a21df8134d1fbdfc19/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f2d62714839555843772d42452f574c3255736472726241492f41414141414141416e59632f656d727877436d6e7257345f434c54797955747442305359524a2d693443436951434c63422f73302f53637265656e2b53686f742b323031372d30332d30362b61742b31302e35312e30322b414d2e706e67253232766973646f6d5f626967253232">
 
 
@@ -332,42 +329,8 @@ Pytorch使用visdom进行可视化文章目录">
       
 
       
-        <p><a href="https://blog.csdn.net/wen_fei/article/details/82979497" target="_blank" rel="external">https://blog.csdn.net/wen_fei/article/details/82979497</a></p>
-<h1 id="Pytorch使用visdom进行可视化"><a href="#Pytorch使用visdom进行可视化" class="headerlink" title="Pytorch使用visdom进行可视化"></a>Pytorch使用visdom进行可视化</h1><h3 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h3><a id="more"></a>
-<ul>
-<li>Pytorch使用visdom进行可视化<ul>
-<li>visdom介绍</li>
-<li>visdom核心概念</li>
-<li>visdom安装与使用</li>
-<li>常用API<ul>
-<li>plot.scatter</li>
-<li>plot.line</li>
-<li>plot.stem</li>
-<li>plot.heatmap</li>
-<li>plot.bar</li>
-<li>plot.histogram</li>
-<li>plot.boxplot</li>
-<li>plot.surf</li>
-<li>plot.contour</li>
-<li>plot.quiver</li>
-<li>plot.image<ul>
-<li>plot.video</li>
-<li>plot.svg</li>
-</ul>
-</li>
-<li>plot.text<ul>
-<li>plot.mesh</li>
-<li>Customizing plots</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>visdom底层</li>
-<li>参考</li>
-</ul>
-</li>
-</ul>
-<h2 id="visdom介绍"><a href="#visdom介绍" class="headerlink" title="visdom介绍"></a>visdom介绍</h2><p>visdom是Facebook专门为Pytorch开发的一款可视化工具，开源于2017年3月，项目地址为<a href="https://github.com/facebookresearch/visdom" target="_blank" rel="external">visdom</a>，其十分轻量级，但功能丰富，提供了大多数的科学运算可视化API，基本可视化界面如下图所示：</p>
+        <h2 id="visdom介绍"><a href="#visdom介绍" class="headerlink" title="visdom介绍"></a>visdom介绍</h2><p>visdom是Facebook专门为Pytorch开发的一款可视化工具，开源于2017年3月，项目地址为<a href="https://github.com/facebookresearch/visdom" target="_blank" rel="external">visdom</a>，其十分轻量级，但功能丰富，提供了大多数的科学运算可视化API，基本可视化界面如下图所示：</p>
+<a id="more"></a>
 <p><img src="https://camo.githubusercontent.com/d69475a01f9f327fc42931a21df8134d1fbdfc19/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f2d62714839555843772d42452f574c3255736472726241492f41414141414141416e59632f656d727877436d6e7257345f434c54797955747442305359524a2d693443436951434c63422f73302f53637265656e2b53686f742b323031372d30332d30362b61742b31302e35312e30322b414d2e706e67253232766973646f6d5f626967253232" alt="visdom-1"></p>
 <p>visdom支持多种数据格式的可视化，包括数值、图像、文本以及视频等，支持Pytorch、Torch和Numpy。用户可以通过编程的方式组织可视化空间或者通过用户接口为数据打造仪表板，检查实验结果和调试代码。</p>
 <h2 id="visdom核心概念"><a href="#visdom核心概念" class="headerlink" title="visdom核心概念"></a>visdom核心概念</h2><ul>
@@ -617,8 +580,8 @@ vis.line(X=x,Y=y, win=&apos;sinx&apos;,opts={&apos;title&apos;:&apos;y=sin(x)&ap
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/pooling-introduce.html" rel="prev" title="pooling layer introduce">
-                pooling layer introduce <i class="fa fa-chevron-right"></i>
+              <a href="/blog/R-CNN.html" rel="prev" title="RCNN 原理学习">
+                RCNN 原理学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -687,7 +650,7 @@ vis.line(X=x,Y=y, win=&apos;sinx&apos;,opts={&apos;title&apos;:&apos;y=sin(x)&ap
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -704,7 +667,7 @@ vis.line(X=x,Y=y, win=&apos;sinx&apos;,opts={&apos;title&apos;:&apos;y=sin(x)&ap
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-count">78</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -771,7 +734,7 @@ vis.line(X=x,Y=y, win=&apos;sinx&apos;,opts={&apos;title&apos;:&apos;y=sin(x)&ap
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pytorch使用visdom进行可视化"><span class="nav-number">1.</span> <span class="nav-text">Pytorch使用visdom进行可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文章目录"><span class="nav-number">1.0.1.</span> <span class="nav-text">文章目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom介绍"><span class="nav-number">1.1.</span> <span class="nav-text">visdom介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom核心概念"><span class="nav-number">1.2.</span> <span class="nav-text">visdom核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom安装与使用"><span class="nav-number">1.3.</span> <span class="nav-text">visdom安装与使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">1.4.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-scatter"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">plot.scatter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-line"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">plot.line</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-stem"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">plot.stem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-heatmap"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">plot.heatmap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-bar"><span class="nav-number">1.4.0.5.</span> <span class="nav-text">plot.bar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-histogram"><span class="nav-number">1.4.0.6.</span> <span class="nav-text">plot.histogram</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-boxplot"><span class="nav-number">1.4.0.7.</span> <span class="nav-text">plot.boxplot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-surf"><span class="nav-number">1.4.0.8.</span> <span class="nav-text">plot.surf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-contour"><span class="nav-number">1.4.0.9.</span> <span class="nav-text">plot.contour</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-quiver"><span class="nav-number">1.4.0.10.</span> <span class="nav-text">plot.quiver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-image"><span class="nav-number">1.4.0.11.</span> <span class="nav-text">plot.image</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-video"><span class="nav-number">1.4.1.</span> <span class="nav-text">plot.video</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-svg"><span class="nav-number">1.4.2.</span> <span class="nav-text">plot.svg</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-text"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">plot.text</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-mesh"><span class="nav-number">1.4.3.</span> <span class="nav-text">plot.mesh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-plots"><span class="nav-number">1.4.4.</span> <span class="nav-text">Customizing plots</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom底层"><span class="nav-number">1.5.</span> <span class="nav-text">visdom底层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.6.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom介绍"><span class="nav-number">1.</span> <span class="nav-text">visdom介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom核心概念"><span class="nav-number">2.</span> <span class="nav-text">visdom核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom安装与使用"><span class="nav-number">3.</span> <span class="nav-text">visdom安装与使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">4.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-scatter"><span class="nav-number">4.0.1.</span> <span class="nav-text">plot.scatter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-line"><span class="nav-number">4.0.2.</span> <span class="nav-text">plot.line</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-stem"><span class="nav-number">4.0.3.</span> <span class="nav-text">plot.stem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-heatmap"><span class="nav-number">4.0.4.</span> <span class="nav-text">plot.heatmap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-bar"><span class="nav-number">4.0.5.</span> <span class="nav-text">plot.bar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-histogram"><span class="nav-number">4.0.6.</span> <span class="nav-text">plot.histogram</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-boxplot"><span class="nav-number">4.0.7.</span> <span class="nav-text">plot.boxplot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-surf"><span class="nav-number">4.0.8.</span> <span class="nav-text">plot.surf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-contour"><span class="nav-number">4.0.9.</span> <span class="nav-text">plot.contour</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-quiver"><span class="nav-number">4.0.10.</span> <span class="nav-text">plot.quiver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-image"><span class="nav-number">4.0.11.</span> <span class="nav-text">plot.image</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-video"><span class="nav-number">4.1.</span> <span class="nav-text">plot.video</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-svg"><span class="nav-number">4.2.</span> <span class="nav-text">plot.svg</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#plot-text"><span class="nav-number">4.2.1.</span> <span class="nav-text">plot.text</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-mesh"><span class="nav-number">4.3.</span> <span class="nav-text">plot.mesh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-plots"><span class="nav-number">4.4.</span> <span class="nav-text">Customizing plots</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visdom底层"><span class="nav-number">5.</span> <span class="nav-text">visdom底层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>
