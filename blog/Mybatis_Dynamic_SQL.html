@@ -1,0 +1,943 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Mybatis,动态SQL,使用方法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Mybatis的强大特性之一便是它的动态SQL。在实际开发中，数据库的查询比较复杂，需要在不同的逻辑中执行不同的SQL语句。我们往往要根据各种不同的场景拼接出不同的SQL语句，而Mybatis给我们提供了动态SQL，可以让我们根据具体的业务逻辑来拼接SQL语句。（Mybatis采用功能强大的基于OGNL的表达式来淘汰其他的大部分元素 ）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis动态SQL的使用方法">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Mybatis_Dynamic_SQL.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="Mybatis的强大特性之一便是它的动态SQL。在实际开发中，数据库的查询比较复杂，需要在不同的逻辑中执行不同的SQL语句。我们往往要根据各种不同的场景拼接出不同的SQL语句，而Mybatis给我们提供了动态SQL，可以让我们根据具体的业务逻辑来拼接SQL语句。（Mybatis采用功能强大的基于OGNL的表达式来淘汰其他的大部分元素 ）">
+<meta property="og:updated_time" content="2019-03-31T12:36:53.127Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mybatis动态SQL的使用方法">
+<meta name="twitter:description" content="Mybatis的强大特性之一便是它的动态SQL。在实际开发中，数据库的查询比较复杂，需要在不同的逻辑中执行不同的SQL语句。我们往往要根据各种不同的场景拼接出不同的SQL语句，而Mybatis给我们提供了动态SQL，可以让我们根据具体的业务逻辑来拼接SQL语句。（Mybatis采用功能强大的基于OGNL的表达式来淘汰其他的大部分元素 ）">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Mybatis_Dynamic_SQL.html"/>
+
+  <title> Mybatis动态SQL的使用方法 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mybatis动态SQL的使用方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-12-17T12:49:19+08:00" content="2018-12-17">
+              2018-12-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/Mybatis_Dynamic_SQL.html" class="leancloud_visitors" data-flag-title="Mybatis动态SQL的使用方法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>Mybatis</code>的强大特性之一便是它的动态<code>SQL</code>。在实际开发中，数据库的查询比较复杂，需要在不同的逻辑中执行不同的SQL语句。我们往往要根据各种不同的场景拼接出不同的SQL语句，而<code>Mybatis</code>给我们提供了动态SQL，可以让我们根据具体的业务逻辑来拼接SQL语句。（<strong>Mybatis采用功能强大的基于OGNL的表达式来淘汰其他的大部分元素</strong> ）</p>
+<a id="more"></a>
+<h3 id="if条件（简单的条件判断）"><a href="#if条件（简单的条件判断）" class="headerlink" title="if条件（简单的条件判断）"></a>if条件（简单的条件判断）</h3><p>用户可以选择其中的任意某些字段或者都不选，这个时候我们的查询语句该怎么写呢。<br>其实很简单，我们只需要写一些动态的sql就可以实现这一功能。如下代码，只需要在拼接查询条件前，先用<code>&lt;if&gt;</code>是否为<code>null</code>，如果不为<code>null</code>，则执行代码时会把条件拼接在<code>&lt;where&gt;</code>后</p>
+<pre><code>&lt;select id=&quot;findActiveBlogLike&quot; resultType=&quot;Blog&quot;&gt;
+    SELECT * FROM BLOG WHERE state = ‘ACTIVE’ 
+  &lt;if test=&quot;title != null&quot;&gt;
+    AND title like #{title}
+  &lt;/if&gt;
+  &lt;if test=&quot;author != null and author.name != null&quot;&gt;
+    AND author_name like #{author.name}
+  &lt;/if&gt;
+&lt;/select&gt;
+</code></pre><p>现在回到“if”示例，这次我们将<code>“ACTIVE = 1”</code>也设置成动态的条件，看看会发生什么。</p>
+<pre><code>&lt;select id=&quot;findActiveBlogLike&quot;
+     resultType=&quot;Blog&quot;&gt;
+  SELECT * FROM BLOG 
+  &lt;where&gt; 
+    &lt;if test=&quot;state != null&quot;&gt;
+         state = #{state}
+    &lt;/if&gt; 
+    &lt;if test=&quot;title != null&quot;&gt;
+        AND title like #{title}
+    &lt;/if&gt;
+    &lt;if test=&quot;author != null and author.name != null&quot;&gt;
+        AND author_name like #{author.name}
+    &lt;/if&gt;
+  &lt;/where&gt;
+&lt;/select&gt;
+</code></pre><p><em>where</em> 元素只会在至少有一个子元素的条件返回 SQL 子句的情况下才去插入“WHERE”子句。而且，若语句的开头为“AND”或“OR”，<em>where</em> 元素也会将它们去除。</p>
+<h4 id="test属性"><a href="#test属性" class="headerlink" title="test属性"></a>test属性</h4><p><code>test</code>的属性用于条件判断的语句中，它在<code>Mybatis</code>中广泛使用。它的作用相当于判断真假。在大部分场景中我们都是用它判断空和非空。有时候我们需要判断字符串、数字和枚举等。</p>
+<h3 id="choose（选择其中的一项）"><a href="#choose（选择其中的一项）" class="headerlink" title="choose（选择其中的一项）"></a>choose（选择其中的一项）</h3><p><strong>有时我们不想应用到所有的条件语句，而只想从中择其一项</strong> 。针对这种情况，<code>MyBatis</code>提供了 <code>choose</code>元素，它有点像 Java 中的<code>switch</code> 语句 我们来看一个简单的例子：</p>
+<pre><code>&lt;select id=&quot;findActiveBlogLike&quot;
+     resultType=&quot;Blog&quot;&gt;
+  SELECT * FROM BLOG WHERE state = ‘ACTIVE’
+  &lt;choose&gt;
+        &lt;when test=&quot;title != null&quot;&gt;
+            AND title like #{title}
+        &lt;/when&gt;
+        &lt;when test=&quot;author != null and author.name != null&quot;&gt;
+            AND author_name like #{author.name}
+        &lt;/when&gt;
+        &lt;otherwise&gt;
+            AND featured = 1
+        &lt;/otherwise&gt;
+  &lt;/choose&gt;
+&lt;/select&gt;
+</code></pre><h3 id="where（简化SQL语句中where条件判断）"><a href="#where（简化SQL语句中where条件判断）" class="headerlink" title="where（简化SQL语句中where条件判断）"></a>where（简化SQL语句中where条件判断）</h3><p>在上面的案例中小伙伴们可能都发现了一个问题，就是我们在添加查询条件的时候，在查询条件之前都先添加了<code>where 1=1</code>，然后后面直接在这之后再追加and什么什么的，那么每次这样来写显然有点麻烦，有没有简单一点的方案呢？当然有，我们可以通过where元素简化SQL语句中的where条件，如下：</p>
+<pre><code>&lt;select id=&quot;getUser3&quot; resultMap=&quot;u&quot;&gt;
+        SELECT * FROM user2
+        &lt;where&gt;
+            &lt;choose&gt;
+                &lt;when test=&quot;id!=null&quot;&gt;
+                    AND id=#{id}
+                &lt;/when&gt;
+                &lt;when test=&quot;address!=null&quot;&gt;
+                    AND address=#{address}
+                &lt;/when&gt;
+                &lt;when test=&quot;username!=null&quot;&gt;
+                    AND user_name LIKE concat(#{username},&apos;%&apos;)
+                &lt;/when&gt;
+                &lt;otherwise&gt;
+                    AND 10&gt;id
+                &lt;/otherwise&gt;
+            &lt;/choose&gt;
+        &lt;/where&gt;
+ &lt;/select&gt;
+</code></pre><p>这样，只有where元素中有条件成立，才会将where关键字组装到SQL中，这样就比前一种方式简单许多。</p>
+<h3 id="trim（替换和添加）"><a href="#trim（替换和添加）" class="headerlink" title="trim（替换和添加）"></a>trim（替换和添加）</h3><p><code>trim</code>t元素就意味着我们需要去掉一些特殊的字符串，<code>prefix</code>代表的语句中的前缀，而<code>prefixOverrides</code>代表的是你需要去掉的那种字符串，我们可以将and替换为where，如下：</p>
+<pre><code>&lt;select id=&quot;getUser4&quot; resultMap=&quot;map&quot;&gt;
+        SELECT * FROM user2
+        &lt;!--这个语句中是把AND换成where，下面的写法基本与where是等效的--&gt;
+        &lt;trim prefix=&quot;where&quot; prefixOverrides=&quot;and&quot;&gt;
+            AND id=1
+        &lt;/trim&gt;
+&lt;/select&gt;
+</code></pre><p>这个最终执行的sql是<code>SELECT * FROM user2 where id=1</code>。</p>
+<h3 id="set（主要用于更新）"><a href="#set（主要用于更新）" class="headerlink" title="set（主要用于更新）"></a>set（主要用于更新）</h3><p>set是我们在更新表的时候使用的元素，通过set元素，我们可以逐字段的修改一条数据，如下：</p>
+<pre><code>&lt;update id=&quot;update&quot;&gt;
+        UPDATE user2
+        &lt;set&gt;
+            &lt;if test=&quot;username!=null&quot;&gt;
+                user_name=#{username},
+            &lt;/if&gt;
+            &lt;if test=&quot;password!=null&quot;&gt;
+                password=#{password}
+            &lt;/if&gt;
+        &lt;/set&gt;
+        WHERE id=#{id}
+&lt;/update&gt;
+</code></pre><p>在set元素中，如果遇到了逗号，系统会自动将之去除。</p>
+<h3 id="foreach（主要用于IN语句中）"><a href="#foreach（主要用于IN语句中）" class="headerlink" title="foreach（主要用于IN语句中）"></a>foreach（主要用于IN语句中）</h3><p><strong><code>foreach</code>元素用来遍历集合</strong> ，比如我想查询多个城市的人，我的sql语句可能是这样<code>SELECT * FROM user2 WHERE address IN（&#39;西安&#39;，&#39;北京&#39;）</code>，我在查询的时候可能只是传入了一个list集合，该集合中有西安和北京两个查询条件，那我如何将这个集合组装成一个sql语句呢？很简单，如下：</p>
+<pre><code>&lt;!--foreach用于迭代数据的元素
+    open表示开始的符号
+    close表示结束符号
+    seprator表示元素间的分隔符
+    items表示迭代的数组
+--&gt;
+&lt;select id=&quot;getUserInCities&quot; resultMap=&quot;BaseResultMap&quot;&gt;
+        SELECT * FROM user2
+        WHERE address IN
+        &lt;foreach collection=&quot;cities&quot; index=&quot;index&quot; open=&quot;(&quot; separator=&quot;,&quot; close=&quot;)&quot; item=&quot;city&quot;&gt;
+            #{city}
+        &lt;/foreach&gt;
+ &lt;/select&gt;
+</code></pre><p><code>collection</code>表示传入的参数中集合的名称，<code>index</code>表示是当前元素在集合中的下标，<code>open</code>和<code>close</code>则表示如何将集合中的数据包装起来，<code>separator</code>表示分隔符，<code>item</code>则表示循环时的当前元素。这样一段配置最终组合成的sql就是<code>SELECT * FROM user2 WHERE address IN（&#39;西安&#39;，&#39;北京&#39;）</code>。</p>
+<blockquote>
+<p>注意 你可以将任何可迭代对象（如 List、Set 等）、Map 对象或者数组对象传递给<code>*foreach*</code>作为集合参数。当使用可迭代对象或者数组时，index 是当前迭代的次数，item 的值是本次迭代获取的元素。当使用 Map 对象（或者 Map.Entry 对象的集合）时，index 是键，item 是值</p>
+</blockquote>
+<h3 id="bind（预定义变量）"><a href="#bind（预定义变量）" class="headerlink" title="bind（预定义变量）"></a>bind（预定义变量）</h3><p>使用bind元素我们可以预先定义一些变量，然后在查询语句中使用，如下：</p>
+<pre><code>&lt;select id=&quot;getUserByName&quot; resultMap=&quot;&quot;&gt;
+        &lt;bind name=&quot;un&quot; value=&quot;username+&apos;%&apos;&quot;&gt;&lt;/bind&gt;
+            SELECT* FROM user2 WHERE user_name LIKE #{un}
+&lt;/select&gt;
+</code></pre><h3 id="OGNL（Object-Graph-Navigation-Language-）表达式"><a href="#OGNL（Object-Graph-Navigation-Language-）表达式" class="headerlink" title="OGNL（Object-Graph Navigation Language ）表达式"></a>OGNL（Object-Graph Navigation Language ）表达式</h3><p>在<code>Mybatis</code>的动态SQL和${}形式的参数中都用到了OGNL表达式，所以我们有必要了解OGNL的简单用法。Mybatis常用的OGNL表达式如下：</p>
+<table>
+<thead>
+<tr>
+<th>OGNL表达式</th>
+<th>含义  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>e1 or e2</td>
+<td></td>
+</tr>
+<tr>
+<td>e1 and e2</td>
+<td></td>
+</tr>
+<tr>
+<td>e1 == e2 或 e1 eq e2</td>
+<td></td>
+</tr>
+<tr>
+<td>e1 != e2 或 e1 neq e2</td>
+<td></td>
+</tr>
+<tr>
+<td>e1 lt e2（小于）</td>
+<td></td>
+</tr>
+<tr>
+<td>e1 lte e2（小于等于，gt（大于），gte（大于等于））</td>
+<td></td>
+</tr>
+<tr>
+<td>e1 + e2、e1*e2、e1/e2、e1-e2、e1%e2</td>
+<td></td>
+</tr>
+<tr>
+<td>!e 或 not e</td>
+<td>非  </td>
+</tr>
+<tr>
+<td>e.method(args)</td>
+<td>调用对象方法  </td>
+</tr>
+<tr>
+<td>e.property</td>
+<td>对象属性值  </td>
+</tr>
+<tr>
+<td>e1[e2]</td>
+<td>按索引取值（List、数组和）  </td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://blog.csdn.net/u012702547" target="_blank" rel="external">https://blog.csdn.net/u012702547</a></p>
+<p><a href="http://www.mybatis.org/mybatis-3/zh/dynamic-sql.html" target="_blank" rel="external">http://www.mybatis.org/mybatis-3/zh/dynamic-sql.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mybatis/" rel="tag">#Mybatis</a>
+          
+            <a href="/tags/动态SQL/" rel="tag">#动态SQL</a>
+          
+            <a href="/tags/使用方法/" rel="tag">#使用方法</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Producers_Consumers.html" rel="next" title="生产者和消费者">
+                <i class="fa fa-chevron-left"></i> 生产者和消费者
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">124</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#if条件（简单的条件判断）"><span class="nav-number">1.</span> <span class="nav-text">if条件（简单的条件判断）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#test属性"><span class="nav-number">1.1.</span> <span class="nav-text">test属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#choose（选择其中的一项）"><span class="nav-number">2.</span> <span class="nav-text">choose（选择其中的一项）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#where（简化SQL语句中where条件判断）"><span class="nav-number">3.</span> <span class="nav-text">where（简化SQL语句中where条件判断）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trim（替换和添加）"><span class="nav-number">4.</span> <span class="nav-text">trim（替换和添加）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set（主要用于更新）"><span class="nav-number">5.</span> <span class="nav-text">set（主要用于更新）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#foreach（主要用于IN语句中）"><span class="nav-number">6.</span> <span class="nav-text">foreach（主要用于IN语句中）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bind（预定义变量）"><span class="nav-number">7.</span> <span class="nav-text">bind（预定义变量）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OGNL（Object-Graph-Navigation-Language-）表达式"><span class="nav-number">8.</span> <span class="nav-text">OGNL（Object-Graph Navigation Language ）表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
