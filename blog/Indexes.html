@@ -84,27 +84,21 @@
 
 
 
-<meta name="description" content="通俗点讲
-聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据
-非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
+<meta name="description" content="聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
 <meta property="og:type" content="article">
 <meta property="og:title" content="聚族索引和非聚族索引">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Indexes.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="通俗点讲
-聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据
-非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
+<meta property="og:description" content="聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-d53a5ce9cecf22f3.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-5244179cc19a1c21.PNG">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-5772dddedb909374.PNG">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-ee09c38aeb148cd0.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-75ad3e0e24d55317.png">
-<meta property="og:updated_time" content="2019-03-31T11:41:15.957Z">
+<meta property="og:updated_time" content="2019-03-31T11:44:12.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聚族索引和非聚族索引">
-<meta name="twitter:description" content="通俗点讲
-聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据
-非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
+<meta name="twitter:description" content="聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/10154499-d53a5ce9cecf22f3.png">
 
 
@@ -336,10 +330,7 @@
       
 
       
-        <h2 id="通俗点讲"><a href="#通俗点讲" class="headerlink" title="通俗点讲"></a>通俗点讲</h2><ul>
-<li>聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据</li>
-<li>非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因</li>
-</ul>
+        <p>聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据<br>非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因</p>
 <a id="more"></a>
 <p>澄清一个概念：innodb中，在聚簇索引之上创建的索引称之为辅助索引，辅助索引访问数据总是需要二次查找，非聚簇索引都是辅助索引，像复合索引、前缀索引、唯一索引，辅助索引叶子节点存储的不再是行的物理位置，而是主键值</p>
 <h2 id="何时使用聚簇索引与非聚簇索引"><a href="#何时使用聚簇索引与非聚簇索引" class="headerlink" title="何时使用聚簇索引与非聚簇索引"></a>何时使用聚簇索引与非聚簇索引</h2><p><img src="https://upload-images.jianshu.io/upload_images/10154499-d53a5ce9cecf22f3.png" alt=""></p>
@@ -424,6 +415,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/Producers_Consumers.html" rel="prev" title="生产者和消费者">
+                生产者和消费者 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -490,7 +485,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-count">50</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -507,7 +502,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">118</span>
+                <span class="site-state-item-count">121</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -574,7 +569,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通俗点讲"><span class="nav-number">1.</span> <span class="nav-text">通俗点讲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时使用聚簇索引与非聚簇索引"><span class="nav-number">2.</span> <span class="nav-text">何时使用聚簇索引与非聚簇索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚簇索引具有唯一性"><span class="nav-number">3.</span> <span class="nav-text">聚簇索引具有唯一性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个误区：把主键自动设为聚簇索引"><span class="nav-number">4.</span> <span class="nav-text">一个误区：把主键自动设为聚簇索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合图再仔细点看"><span class="nav-number">5.</span> <span class="nav-text">结合图再仔细点看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚簇索引的优势"><span class="nav-number">6.</span> <span class="nav-text">聚簇索引的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚簇索引的劣势"><span class="nav-number">7.</span> <span class="nav-text">聚簇索引的劣势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么主键通常建议使用自增id"><span class="nav-number">8.</span> <span class="nav-text">为什么主键通常建议使用自增id</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql中聚簇索引的设定"><span class="nav-number">9.</span> <span class="nav-text">mysql中聚簇索引的设定</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#何时使用聚簇索引与非聚簇索引"><span class="nav-number">1.</span> <span class="nav-text">何时使用聚簇索引与非聚簇索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚簇索引具有唯一性"><span class="nav-number">2.</span> <span class="nav-text">聚簇索引具有唯一性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个误区：把主键自动设为聚簇索引"><span class="nav-number">3.</span> <span class="nav-text">一个误区：把主键自动设为聚簇索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合图再仔细点看"><span class="nav-number">4.</span> <span class="nav-text">结合图再仔细点看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚簇索引的优势"><span class="nav-number">5.</span> <span class="nav-text">聚簇索引的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚簇索引的劣势"><span class="nav-number">6.</span> <span class="nav-text">聚簇索引的劣势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么主键通常建议使用自增id"><span class="nav-number">7.</span> <span class="nav-text">为什么主键通常建议使用自增id</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql中聚簇索引的设定"><span class="nav-number">8.</span> <span class="nav-text">mysql中聚簇索引的设定</span></a></li></ol></div>
             
           </div>
         </section>
