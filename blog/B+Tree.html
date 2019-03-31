@@ -1,0 +1,811 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="B+,树,mysql," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="1.前言B树是为磁盘或其他直接存取的辅助存储设备而设计的一种平衡搜索树。B树类似于红黑树，但它们在降低磁盘I/O操作数方面要更好一些。现在许多数据库系统使用B树或者B树的变种(B+树和B*树)来存储信息。B树用的比较普遍，许多书籍、博客都有详细的介绍，对于B树的严格定义也相对统一。B+树是B树的一种变形，它把所有的卫星数据都存储在叶节点中，内部节点只存放关键字和孩子指针，因此最大化了内部节点的分支">
+<meta property="og:type" content="article">
+<meta property="og:title" content="B+树原理">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/B+Tree.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="1.前言B树是为磁盘或其他直接存取的辅助存储设备而设计的一种平衡搜索树。B树类似于红黑树，但它们在降低磁盘I/O操作数方面要更好一些。现在许多数据库系统使用B树或者B树的变种(B+树和B*树)来存储信息。B树用的比较普遍，许多书籍、博客都有详细的介绍，对于B树的严格定义也相对统一。B+树是B树的一种变形，它把所有的卫星数据都存储在叶节点中，内部节点只存放关键字和孩子指针，因此最大化了内部节点的分支">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/698554-2794a1aca0faa087">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/698554-26b5b73a96c86943">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/698554-2e77d47b3650fc19">
+<meta property="og:updated_time" content="2019-03-31T13:16:58.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="B+树原理">
+<meta name="twitter:description" content="1.前言B树是为磁盘或其他直接存取的辅助存储设备而设计的一种平衡搜索树。B树类似于红黑树，但它们在降低磁盘I/O操作数方面要更好一些。现在许多数据库系统使用B树或者B树的变种(B+树和B*树)来存储信息。B树用的比较普遍，许多书籍、博客都有详细的介绍，对于B树的严格定义也相对统一。B+树是B树的一种变形，它把所有的卫星数据都存储在叶节点中，内部节点只存放关键字和孩子指针，因此最大化了内部节点的分支">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/698554-2794a1aca0faa087">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/B+Tree.html"/>
+
+  <title> B+树原理 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                B+树原理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-01-19T15:32:31+08:00" content="2019-01-19">
+              2019-01-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/B+Tree.html" class="leancloud_visitors" data-flag-title="B+树原理">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>B树是为磁盘或其他直接存取的辅助存储设备而设计的一种平衡搜索树。B树类似于红黑树，但它们在降低磁盘I/O操作数方面要更好一些。现在许多数据库系统使用B树或者B树的变种(B+树和B*树)来存储信息。B树用的比较普遍，许多书籍、博客都有详细的介绍，对于B树的严格定义也相对统一。<br>B+树是B树的一种变形，它把所有的卫星数据都存储在叶节点中，内部节点只存放关键字和孩子指针，因此最大化了内部节点的分支因子，所以B+树的遍历也更加高效(B树需要以中序的方式遍历节点，而B+树只需把所有叶子节点串成链表就可以从头到尾遍历)。  </p>
+<a id="more"></a>
+<p>以下先放一张我所依据的B+树的图示(这张图有所简化，下面讲完定义后会贴一张更加详细的图，两图本质并无差异)：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/698554-2794a1aca0faa087" alt=""></p>
+<h2 id="2-定义"><a href="#2-定义" class="headerlink" title="2.定义"></a>2.定义</h2><p>B+树的定义我没有找到官方的定义(如果有找到的人望告知我)，有些定义在论坛还有争议，但是这些并没有多大影响，只是一点小小的差异，下面的定义中有涉及争议的部分我会提及。</p>
+<h4 id="B-树的定义如下："><a href="#B-树的定义如下：" class="headerlink" title="B+树的定义如下："></a>B+树的定义如下：</h4><p>每个节点node有下面的属性： n个关键字key[1],key[2], … ,key[n]，以非降序存放，使得key[1]≤key[2]≤…≤key[n]；<br>isRoot，一个布尔值，如果node是根节点，则为TRUE；否则为FALSE；<br>isLeaf，一个布尔值，如果node是叶子节点，则为TRUE；否则为FALSE；<br>Node*类型的parent指针，指向该节点的父节点</p>
+<p>每个内部节点还包含 <strong>n个</strong> 指向其孩子children[0],children[1], … , children[n]，叶子节点没有孩子。（注：此处有争议，B+树到底是与B树n-1个关键字有n棵子树保持一致，还是B+树n个关键字的结点中含有n棵子树；两种定义都可以，只要自己实现的时候统一用一种就行。如无特殊说明，以下的都是后者：<strong>即n个关键字对应n棵子树</strong> ）；<br>内部节点的关键字对存储在各子树中的关键字范围加以分割：如果key[i]为任意一个存储在内部节点中的关键字，childNum[i]为该节点的对应下标的子树指针指向的节点的任意一个关键字，那么<strong>key[1] ≤ childNum[1] &lt; key[2] ≤ childNum[2] &lt; key[3] ≤ childNum[3] &lt; … &lt; key[n] ≤ childNum[n]</strong><br>内部节点并不存储真正的信息，而是保存其叶子节点的最小值作为索引。比如下图，标注1和标注2都是内部节点，里面保存的并不是真正的信息，而是标注3所示的节点中的最小值。(注：此处有争议以最大值作为索引，同样也是不影响的争议)</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/698554-26b5b73a96c86943" alt=""></p>
+<p>任何和关键字相联系的<strong>“卫星数据(satellite information)”</strong>将与关键字一样存放在叶子节点中，一般地，可能只是为每个关键字对应的”卫星数据”存放一个指针，指针指向存放实际数据的磁盘页，匹配了某个叶子节点的关键字即可通过该指针找到其他对应数据。</p>
+<p>每个叶子节点还有指向下一个节点的指针next，方便遍历整棵B+树。<br>每个叶子节点具有相同的深度，即树的高度h。<br>每个节点所包含的关键字个数有上界和下界，用一个被B+树的 <strong>最小度数(minmum degree)</strong> 的固定整数t≥2来表示这些界。<br>除了根节点以外的每个节点必须至少有t个关键字。因此，除了根节点以外的每个内部节点至少有t个孩子。<br>每个节点至多有2t个关键字，因此，一个内部节点至多可有2t个孩子。当一个节点恰好有2t个关键字时，称该节点是 <strong>满的</strong> 。  </p>
+<p><strong>结合以上的具体定义，下面这张图更加详细的描述了一棵具体的B+树</strong>  </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/698554-2e77d47b3650fc19" alt=""></p>
+<h2 id="3-注意点"><a href="#3-注意点" class="headerlink" title="3.注意点"></a>3.注意点</h2><p>在B+树的学习与实现过程中，也遇到不少的疑惑之处，现记录如下，持续更新：<br>内部节点并不存储真正的信息，而是保存其叶子节点的最小值作为索引。每次插入删除都进行更新(此时用到parent指针)，保持最新状态。<br>关于所有叶子节点都处于同一深度是如何实现的？这与B+树具体的插入和删除算法有关。简单解释一下插入时的情况，根据插入值的大小，逐步向下直到对应的叶子节点。如果叶子节点关键字个数小于2t，则直接插入值或者更新卫星数据；如果插入之前叶子节点已经满了，则分裂该叶子节点成两半，并把中间值提上到父节点的关键字中，如果这导致父节点满了的话，则把该父节点分裂，如此递归向上。所以树高是一层层的增加的，叶子节点永远都在同一深度。下面是我实现的B+树中的插入代码的片段：</p>
+<pre><code>public void insert(Comparable key, Object obj, BPlusTree tree)
+{
+    // 叶子节点则插入
+    if (isLeaf) {
+        // 不需要分裂直接插入
+        if (containsKeyword(key) || keywords.size() &lt; tree.getDegree()) {
+            insertInNotFull(key, obj);
+            // 直接插入
+            if (parent != null) {
+                parent.updateAfterInsert(tree);     // 更新父节点的信息(将最小的值存到父节点的关键字中作为索引)
+            }
+        } else {    // 需要分裂成左右两个节点
+            splitNode(key, obj, tree);
+        }
+    } else {        // 如果不是叶子节点则继续往下搜索
+        Node leafNode = downToLeaf(key); // 逐步向下到对应的叶子节点
+        leafNode.insert(key, obj, tree);
+    }
+}
+</code></pre><h2 id="4-结语"><a href="#4-结语" class="headerlink" title="4.结语"></a>4.结语</h2><p>B+树还有一个最大的好处，方便扫库，B树必须用中序遍历的方法按序扫库，而B+树直接从叶子结点挨个扫一遍就完了，B+树支持range-query非常方便，而B树不支持。这是数据库选用B+树的最主要原因。</p>
+<p>参考文献<br>[1].《算法导论》原书第3版中文版<br>[2].维基百科B+树条目<br><a href="https://link.jianshu.com?t=https://zh.wikipedia.org/wiki/B%2B%E6%A0%91" target="_blank" rel="external">https://zh.wikipedia.org/wiki/B%2B%E6%A0%91</a><br>[3].很详细的一篇B树、B+树、R树的博客<br><a href="https://link.jianshu.com?t=http://blog.csdn.net/v_july_v/article/details/6530142" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/6530142</a><br>[4].数据库实现的扼要说明<br><a href="https://link.jianshu.com?t=http://www.ruanyifeng.com/blog/2014/07/database_implementation.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2014/07/database_implementation.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/B/" rel="tag">#B+</a>
+          
+            <a href="/tags/树/" rel="tag">#树</a>
+          
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/EJB_Bean_LifeCycle.html" rel="next" title="EJB的sessionBean和entityBean的生命周期">
+                <i class="fa fa-chevron-left"></i> EJB的sessionBean和entityBean的生命周期
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">132</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-定义"><span class="nav-number">2.</span> <span class="nav-text">2.定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-树的定义如下："><span class="nav-number">2.0.1.</span> <span class="nav-text">B+树的定义如下：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-注意点"><span class="nav-number">3.</span> <span class="nav-text">3.注意点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-结语"><span class="nav-number">4.</span> <span class="nav-text">4.结语</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
