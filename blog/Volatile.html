@@ -1,0 +1,945 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Lock,Volatile," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="简述：volatile是轻量级的synchronized,它在多处理器开发中保证了共享变量的“可见性”，可见性的意思是一个线程修改一个共享变量时，另一个线程可以读到这个修改的值，如果volatile使用恰当的话，它比synchronized的使用成本更低，因为它不会引起线程的上下文切换和调度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Volatile关键字">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Volatile.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="简述：volatile是轻量级的synchronized,它在多处理器开发中保证了共享变量的“可见性”，可见性的意思是一个线程修改一个共享变量时，另一个线程可以读到这个修改的值，如果volatile使用恰当的话，它比synchronized的使用成本更低，因为它不会引起线程的上下文切换和调度。">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Volatile1.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Volatile2.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Volatile3.png">
+<meta property="og:updated_time" content="2019-03-31T13:28:44.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Volatile关键字">
+<meta name="twitter:description" content="简述：volatile是轻量级的synchronized,它在多处理器开发中保证了共享变量的“可见性”，可见性的意思是一个线程修改一个共享变量时，另一个线程可以读到这个修改的值，如果volatile使用恰当的话，它比synchronized的使用成本更低，因为它不会引起线程的上下文切换和调度。">
+<meta name="twitter:image" content="https://luisstruggle.github.io/images/Volatile1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Volatile.html"/>
+
+  <title> Volatile关键字 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Volatile关键字
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-02-26T11:12:32+08:00" content="2019-02-26">
+              2019-02-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/Volatile.html" class="leancloud_visitors" data-flag-title="Volatile关键字">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>简述：volatile是轻量级的synchronized,它在多处理器开发中保证了共享变量的“可见性”，可见性的意思是一个线程修改一个共享变量时，另一个线程可以读到这个修改的值，如果volatile使用恰当的话，它比synchronized的使用成本更低，因为它不会引起线程的上下文切换和调度。</p>
+<a id="more"></a>
+<p>在了解volatile关键字在java中的使用之前，我们需要先连接几个概念</p>
+<p>java内存模型</p>
+<p>java内存模型规定所有的变量都存放在主内存当中，每个线程在执行的时候，会从主内存当中拷贝一份到自己的工作内存当中，线程对变量的读取，操作都是在工作内存当中执行的，不同线程之间也不能相互访问其他线程的工作内存，那么线程之间的变量传递需要通过主内存来实现共享。那么什么时候把修改过得变量更新到主内存当中去，就是多线程场景下需要解决的问题，否则将会造成数据的不一致。</p>
+<p><img src="/images/Volatile1.png" alt=""></p>
+<p>而volatile关键字就是为了解决数据一致性的问题，通俗来说就是线程A对变量的修改，会直接刷新到主内存，线程B当中，在对变量进行读取的时候，发现变量是volatile关键字修饰的变量，直接放弃从工作内存当中读取，而是从主内存中读取</p>
+<p>从上面的一段分析来看，volatile关键字是可以保证变量的一致性的，我们看下下面的这段代码</p>
+<pre><code>public class Test {
+    public volatile int inc = 0;
+
+    public void increase() {
+        inc++;
+    }
+
+    public static void main(String[] args) {
+        final Test test = new Test();
+        for(int i=0;i&lt;10;i++){
+            new Thread(){
+                public void run() {
+                    for(int j=0;j&lt;1000;j++)
+                        test.increase();
+                };
+            }.start();
+        }
+
+        while(Thread.activeCount()&gt;1)  //保证前面的线程都执行完
+            Thread.yield();
+        System.out.println(test.inc);
+    }
+}
+</code></pre><p>Q:上述代码每次的执行结果都是1000吗？</p>
+<p>A:不一定</p>
+<p>虽然我们对变量使用了volatile关键字修饰，也保证了每次变量发生变化时，都会刷新到主内存，并且通知其他线程，你的工作内存当中这个缓存变量失效了，你要从主内存中获取最新的，那为什么还是会发生这个数据小于1000的情况呢？原因就是i++这个操作不具有原子性。</p>
+<p>我们假设线程A在正在执行i++这个操作，由于这个操作不是原子性的，如果线程A在执行i++这个操作过程中发生了阻塞，而i这个变量还没刷新到主内存中去，这个时候线程B也刚好要执行i++这个操作，那么线程B从主内存拿到的数据，就不是线程A中i++之后的数据，而且i++之前i的值，因此就会造成最终结果小于1000的这种情况。</p>
+<p>那么什么是原子性操作？</p>
+<p>java当中原子性操作就是，要么执行成功，要么执行失败，不会存在执行过程中被中断，在java内存模型当中，只有读取元素，赋值（将指定的数值赋值如i=4）操作是原子性操作,其他的操作基本上都不是原子性操作，如果想要实现大面积的原子性操作，建议是使用synchronized关键字或者lock加锁，这样就能保证同一段代码，在某一个时刻只有一个线程在访问。</p>
+<p>内存可见性</p>
+<p>普通变量：对于读操作会先从工作内存当中读取，如果工作内存当中没有，会从主内存当中拷贝一份到工作内存，然后再进行读取，对于写操作，会直接操作工作内存当中的副本，什么时候写入到主内存中是不确定的，这种情况下，其他线程就无法获取到这个变量的最新值。</p>
+<p>volatile变量：<br>在读操作时，JMM会把工作内存当中的变量设置为无效，要求线程直接从主内存当中读取；写操作时，会把修改过的变量更新到主内存中去，其他线程就会拿到主内存当中地最新值。</p>
+<p>关于指令重排序</p>
+<p>在执行程序时，为了提高性能，编译器和处理器常常会对指令做重排序，指令重排序分为以下三种</p>
+<p>1、编译器优化的重排序，编译器在不改变单线程语义的前提下，可以重新安排语句的执行顺序。</p>
+<p>2、指令级并行的重排序，如果数据之间不存在依赖性，处理器可以改变语句对应机器的执行顺序</p>
+<p>3、内存系统的重排序，由于处理器使用缓存和读/写缓存，这使得加载和存储操作看上去可能是乱序在执行。</p>
+<p>java 源代码到最终执行指令序列，会分别经理以下三种重排序</p>
+<p>源代码 —–》编译器优化重排序—-》指令级并行重排序—–》内存系统重排序——》最终执行的重排序</p>
+<p>关于指令重排序的一个例子</p>
+<pre><code>public class RecordExample {
+    int a = 0;
+    boolean flag = false;
+
+    public void writer() {
+        a = 1;  // 1
+        flag = true; // 2
+    }
+    public void reader() {
+        if(flag){  //3
+            int i = a * a; //4
+        }
+    }
+}
+</code></pre><p>flag 是一个变量，用来标记a 是否已经被写入，假设有两个线程A和B，A线程执行writer()方法，然后B线程执行reader()方法，线程B在执行4的时候，能否看到线程A在操作1 对变量的写入呢？</p>
+<p>不一定，由于操作1和操作2没有数据依赖关系，编译器和处理器可以对这两个操作进行重排序，同样，操作3和操作4也没有数据依赖关系（只有控制依赖关系，编译器和处理器会猜测执行和克服控制相关性对并行度的影响），编译器和处理器也可以对这两个操作进行重排序。</p>
+<p>下面我们来分析下不同场景下的操作结果</p>
+<p>情景一：线程A 先执行操作2，然后线程B 判断flag的值，为true，然后执行操作4，i的值等于0，然后线程A 执行操作2，这种情况下，我们的程序就出了问题</p>
+<p>情景二：线程B 先执行 a <em> a, 然后把计算的结果存放到一个名为重排序缓冲的硬件缓冲中，当操作3的判断为true,再把计算结果写入到变量i当中。这个过程的执行顺序是： 线程B先计算 a</em>a 的值，然后线程A 执行writer方法，将a = 1，复制，然后修改flag的值，线程B 判断flag=true ,将之前计算好的数据，赋给i ,可以看出对操作3 和操作4进行了重排序</p>
+<p>这时候我们再来看volatile关键字的作用，他会禁止对变量的重排序，这里其实是有两层意思</p>
+<p>1、当程序在对volatile变量进行读或者写时，那么它前面的代码一定是执行完了，其结果对后面的操作是可见的</p>
+<p>2、在进行指令优化时，不能对volatile变量的访问放在后面执行，也不能对volatile变量后面的变量访问放在前面执行</p>
+<pre><code>//x、y为非volatile变量
+//flag为volatile变量
+
+x = 2;        //语句1
+y = 0;        //语句2
+flag = true;  //语句3
+x = 4;         //语句4
+y = -1;       //语句5
+</code></pre><p>以上执行顺序，语句1、2一定会在语句3前面执行，语句4、5一定会在语句3前面执行，而语句1、2的执行顺序是不确定的</p>
+<pre><code>//线程1:
+context = loadContext();   //语句1
+inited = true;             //语句2
+
+//线程2:
+while(!inited ){
+  sleep()
+}
+doSomethingwithconfig(context);
+</code></pre><p>对于以上代码，如果inited没有volatile修饰的话它的执行顺序可能是这样的</p>
+<p>语句2的执行是在语句1 前面，这个时候线程2 拿到inited的值是true, 而loadContext并没有执行结束，但是如果将inited 加上volatile关键字，语句1 一定是在语句2前面执行，线程2 在判断时，loadContext已经执行结束了</p>
+<p>volatile的最佳实践</p>
+<p>1、修改boolean类型的变量，来作为信号灯</p>
+<pre><code>public class ServerHandler {
+    private volatile isopen;
+    public void run() {
+        if (isopen) {
+           //促销逻辑
+        } else {
+          //正常逻辑
+        }
+    }
+    public void setIsopen(boolean isopen) {
+        this.isopen = isopen
+    }
+}
+</code></pre><p>2、单例模式情况下，doubleCheck</p>
+<pre><code>class Singleton{
+    private volatile static Singleton instance = null;
+
+    private Singleton() {
+
+    }
+
+    public static Singleton getInstance() {
+        if(instance==null) {
+            synchronized (Singleton.class) {
+                if(instance==null)
+                    instance = new Singleton();
+            }
+        }
+        return instance;
+    }
+}
+</code></pre><p>对于Singleton这个变量为什么使用volatile修饰，因为new Singleton这个操作并不是原子的，它实际上执行了以下几个操作</p>
+<p>1、给instance 分配内存</p>
+<p>2、调用Singleton的init方法，实现参数的构建操作</p>
+<p>3、将instance执向分配的内存</p>
+<p>对于上面的操作，其执行顺序有可能是1-2-3，也有可能是1-3-2，如果是1-3-2，instance的值不为null，但是init方法还没有执行完，其他的线程在调用时，发现不为null,直接返回，那就就会抛出异常。</p>
+<p>volatile的内存语义</p>
+<p>1、线程A写入一个volatile变量，实质上是线程A向接下来将要读这个volatile变量的某个线程发出了（其对共享变量所做修改的）消息。</p>
+<p>2、线程B读一个volatile变量，实质上是线程B接收到了某个线程发出的（在写这个volatile变量之前对共享变量所做的修改的）消息</p>
+<p>3、线程A写一个volatile变量，随后线程B读这个volatile变量，这个过程实质上是线程A通过主内存向线程B发送消息。</p>
+<p>volatile修饰的共享变量在进行汇编时，会多出来一个lock前缀，lock前缀在多核处理器下会引发两件事</p>
+<p>1、当前处理器缓存行地数据写入到系统内存</p>
+<p>2、这个写会内存的操作会使其他CPU里缓存了改地址的数据无效</p>
+<p>如果对声明了volatile的变量进行写操作，JVM就会向处理器发送一条Lock前缀的指令，将这个变量所在的缓存行的数据写会到主内存中。在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己的缓存的值是否过期，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存设置成无效。</p>
+<p>volatile内存语义的实现</p>
+<p>为了实现volatile的内存语义，编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排序。下面是JMM采取保守策略</p>
+<p>1、在每个volatile写操作的前面插入一个StoreStore屏障。</p>
+<p>2、在每个volatile写操作的后面插入一个StoreLoad屏障。</p>
+<p>3、在每个volatile读操作的后面插入一个LoadLoad屏障。</p>
+<p>4、在每个volatile读操作的后面插入一个LoadStore屏障。</p>
+<p>针对上面屏障的作用我们分别来记录下，如果代码流程是这样子的</p>
+<p>普通读</p>
+<p>|</p>
+<p>普通写</p>
+<p>|</p>
+<p>StoreStore屏障（禁止上面的普通写和volatile写重排序）</p>
+<p>|</p>
+<p>volatile写</p>
+<p>|</p>
+<p>StoreLoad屏障 （防止volatile写与下面的可能有的volatile读/写重排序）</p>
+<p>总结来说就是：StoreStore屏障保证volatile写之前，前面的普通读写已经对任意处理器可见，storeLoad屏障是避免当前volatile写与后面可能有的volatile读/写指令重排序。因为编译器不能判断，在执行完volatile之后是否需要插入一个StoreLoad屏障，为了实现volatile的内存语义，JMM采取了保守策略：在每个volatile写后面，或者在volatile读前面插入StoreLoad屏障，由于比较常见的模式是：一个线程写volatile变量，多个线程读同一个volatile变量。因此选择在写入之后，插入一个StoreLoad屏障，来提升效率。</p>
+<p>在保守策略下：volatile读插入内存屏障后生成的指令序列图是</p>
+<p>volatile读</p>
+<p>|</p>
+<p>LoadLoad屏障（禁止下面所有的普通读操作和上面的volatile读重排序）</p>
+<p>|</p>
+<p>LoadStore屏障（禁止下面所有的普通写操作和上面的volatile读重排序）</p>
+<p>|</p>
+<p>普通读</p>
+<p>|</p>
+<p>普通写</p>
+<p>在实际执行过程中，只要不改变volatile写-读的内存语义，编译器可以根据实际情况省略掉不必要的屏障。</p>
+<p><img src="/images/Volatile2.png" alt=""></p>
+<p><img src="/images/Volatile3.png" alt=""></p>
+<p>参考：<a href="http://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="external">Java并发编程：volatile关键字解析</a></p>
+<p><a href="https://www.jianshu.com/p/195ae7c77afe" target="_blank" rel="external">java volatile关键字解惑</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/Lock/" rel="tag">#Lock</a>
+          
+            <a href="/tags/Volatile/" rel="tag">#Volatile</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/B+Tree.html" rel="next" title="B+树原理">
+                <i class="fa fa-chevron-left"></i> B+树原理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">133</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
