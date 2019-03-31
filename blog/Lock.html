@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法,Hash,分布式,缓存," />
+  <meta name="keywords" content="Lock,乐观锁,悲观锁," />
 
 
 
@@ -84,21 +84,19 @@
 
 
 
-<meta name="description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。">
+<meta name="description" content="悲观锁
+悲观锁(Pessimistic Lock),顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一致性hash算法，解决分布式下缓存问题">
-<meta property="og:url" content="https://luisstruggle.github.io/blog/Hash.html">
+<meta property="og:title" content="悲观锁与乐观锁">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Lock.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。">
-<meta property="og:image" content="https://img-blog.csdn.net/20180125210623356?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="https://img-blog.csdn.net/20180125211206004?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="https://img-blog.csdn.net/20180125212525338?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="https://img-blog.csdn.net/20180125213406703?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2019-03-30T09:51:36.100Z">
+<meta property="og:description" content="悲观锁
+悲观锁(Pessimistic Lock),顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。">
+<meta property="og:updated_time" content="2019-03-31T13:49:05.042Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一致性hash算法，解决分布式下缓存问题">
-<meta name="twitter:description" content="一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20180125210623356?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="悲观锁与乐观锁">
+<meta name="twitter:description" content="悲观锁
+悲观锁(Pessimistic Lock),顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。">
 
 
 
@@ -119,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Hash.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Lock.html"/>
 
-  <title> 一致性hash算法，解决分布式下缓存问题 | 奋斗的青春 </title>
+  <title> 悲观锁与乐观锁 | 奋斗的青春 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -261,7 +259,7 @@
             
             
               
-                一致性hash算法，解决分布式下缓存问题
+                悲观锁与乐观锁
               
             
           </h1>
@@ -273,8 +271,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-07-25T15:56:32+08:00" content="2018-07-25">
-              2018-07-25
+            <time itemprop="dateCreated" datetime="2019-03-14T09:24:32+08:00" content="2019-03-14">
+              2019-03-14
             </time>
           </span>
 
@@ -307,7 +305,7 @@
 
           
           
-             <span id="/blog/Hash.html" class="leancloud_visitors" data-flag-title="一致性hash算法，解决分布式下缓存问题">
+             <span id="/blog/Lock.html" class="leancloud_visitors" data-flag-title="悲观锁与乐观锁">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -329,26 +327,78 @@
       
 
       
-        <p>一直性Hash算法在很多场景下都有应用，尤其是在分布式缓存系统中，经常用其来进行缓存的访问的负载均衡，比如：redis等<k,v>非关系数据库作为缓存系统。我们首先来看一下采用取模方式进行缓存的问题。</k,v></p>
+        <h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><blockquote>
+<p>悲观锁(Pessimistic Lock),顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。</p>
+</blockquote>
 <a id="more"></a>
-<h1 id="一致性Hash算法的使用场景"><a href="#一致性Hash算法的使用场景" class="headerlink" title="一致性Hash算法的使用场景"></a>一致性Hash算法的使用场景</h1><p>假设我们的将10台redis部署为我们的缓存系统，存储<k,v>数据，存储方式是：hash(k)%10，用来将数据分散到各个redis存储系统中。这样做，最大的问题就在于：如果此缓存系统扩展（比如：增加或减少redis服务器的数量），节点故障宕机等将会带来很高的代价。比如：我们业务量增大了，需要扩展我们的缓存系统，再增加一台redis作为缓存服务器，那么后来的数据<k,v>的散列方式变为了：hash(k)%11。我们可以看到，如果我们要查找扩展之前的数据，利用hash(k)%11，则会找不到对应的存储服务器。<br><strong>所以这个时候大量的数据失效了（访问不到了）。</strong><br>这时候，我们就要进行数据的重现散列，如果是将redis作为存储系统，则需要<br>进行数据迁移，然后进行恢复，但是这个时候就意味着每次增减服务器的时候，集群就需要大量的通信，进行数据迁移，这个开销是非常大的。如果只是缓存，那么缓存就都失效了。这会形成缓存击穿，导致数据库压力巨大，可能会导致应用的崩溃。</k,v></k,v></p>
-<h1 id="一致性Hash算法的原理"><a href="#一致性Hash算法的原理" class="headerlink" title="一致性Hash算法的原理"></a>一致性Hash算法的原理</h1><p>因为对于hash(k)的范围在int范围，所以我们将0~2^32作为一个环。其步骤为：</p>
-<p>1，求出每个服务器的hash（服务器ip）值，将其配置到一个 0~2^n 的圆环上（n通常取32）。</p>
-<p>2，用同样的方法求出待存储对象的主键 hash值，也将其配置到这个圆环上，然后从数据映射到的位置开始顺时针查找，将数据分布到找到的第一个服务器节点上。</p>
-<p>其分布如图：</p>
-<p><img src="https://img-blog.csdn.net/20180125210623356?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="">  </p>
-<p>这是一致性hash算法的基本原理，接下来我们看一下，此算法是如何解决 我们上边 说的<br>缓存系统的扩展或者节点宕机导致的缓存失效的问题。比如:再加入一个redis节点：</p>
-<p><img src="https://img-blog.csdn.net/20180125211206004?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="">  </p>
-<p>如上图，当我们加入redis node5之后，影响的范围只有黄色标出的那部分，不会造成全局的变动。</p>
-<p>除了上边的优点，其实还有一个优点：对于热点数据，如果发现node1访问量明显很大，负载高于其他节点，这就说明node1存储的数据是热点数据。这时候，为了减少node1的负载，我们可以在热点数据位置再加入一个node，用来分担热点数据的压力。</p>
-<h1 id="雪崩效应"><a href="#雪崩效应" class="headerlink" title="雪崩效应"></a>雪崩效应</h1><p>接下来我们来看一下，当有节点宕机时会有什么问题。如下图：</p>
-<p><img src="https://img-blog.csdn.net/20180125212525338?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="">  </p>
-<p>如上图，当B节点宕机后，原本存储在B节点的k1，k2将会迁移到节点C上，这可能会导致很大的问题。如果B上存储的是热点数据，将数据迁移到C节点上，然后C需要承受B+C的数据，也承受不住，也挂了。。。。然后继续CD都挂了。这就造成了雪崩效应。</p>
-<p>上面会造成雪崩效应的原因分析：<br>如果不存在热点数据的时候，每台机器的承受的压力是M/2(假设每台机器的最高负载能力为M)，原本是不会有问题的，但是，这个时候A服务器由于有热点数据挂了，然后A的数据迁移至B，导致B所需要承受的压力变为M（还不考虑热点数据访问的压力），所以这个失败B是必挂的，然后C至少需要承受1.5M的压力。。。。然后大家一起挂。。。<br>所以我们通过上面可以看到，之所以会大家一起挂，原因在于如果一台机器挂了，那么它的压力全部被分配到一台机器上，导致雪崩。</p>
-<p>怎么解决雪崩问题呢，这时候需要引入虚拟节点来进行解决。</p>
-<h1 id="虚拟节点"><a href="#虚拟节点" class="headerlink" title="虚拟节点"></a>虚拟节点</h1><p>虚拟节点，我们可以针对每个实际的节点，虚拟出多个虚拟节点，用来映射到圈上的位置，进行存储对应的数据。如下图：</p>
-<p><img src="https://img-blog.csdn.net/20180125213406703?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzY3OTc0NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="">  </p>
-<p>如上图：A节点对应A1，A2，BCD节点同理。这时候，如果A节点挂了，A节点的数据迁移情况是:A1数据会迁移到C2，A2数据迁移到D1。这就相当于A的数据被C和D分担了，这就避免了雪崩效应的发送，而且虚拟节点我们可以自定义设置，使其适用于我们的应用。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>以MySQL InnoDB为例:</p>
+<p>商品goods表中有一个字段status，status为1代表商品未被下单，status为2代表商品已经被下单，那么我们对某个商品下单时必须确保该商品status为1。假设商品的id为1。</p>
+<pre><code>如果不采用锁，那么操作方法如下：
+//1.查询出商品信息
+select status from t_goods where id=1;
+//2.根据商品信息生成订单
+insert into t_orders (id,goods_id) values (null,1);
+//3.修改商品status为2
+update t_goods set status=2;
+
+上面这种场景在高并发访问的情况下很可能会出现问题。
+前面已经提到，只有当goods status为1时才能对该商品下单，上面第一步操作中，查询出来的商品status为1。但是当我们执行第三步Update操作的时候，有可能出现其他人先一步对商品下单把goods status修改为2了，但是我们并不知道数据已经被修改了，这样就可能造成同一个商品被下单2次，使得数据不一致。所以说这种方式是不安全的。
+
+使用悲观锁来实现：
+在上面的场景中，商品信息从查询出来到修改，中间有一个处理订单的过程，使用悲观锁的原理就是，当我们在查询出goods信息后就把当前的数据锁定，直到我们修改完毕后再解锁。那么在这个过程中，因为goods被锁定了，就不会出现有第三者来对其进行修改了。
+
+注：要使用悲观锁，我们必须关闭mysql数据库的自动提交属性，因为MySQL默认使用autocommit模式，也就是说，当你执行一个更新操作后，MySQL会立刻将结果进行提交。
+
+我们可以使用命令设置MySQL为非autocommit模式：
+set autocommit=0;
+设置完autocommit后，我们就可以执行我们的正常业务了。具体如下：
+//0.开始事务
+begin;/begin work;/start transaction; (三者选一就可以)
+//1.查询出商品信息
+select status from t_goods where id=1 for update;
+//2.根据商品信息生成订单
+insert into t_orders (id,goods_id) values (null,1);
+//3.修改商品status为2
+update t_goods set status=2;
+//4.提交事务
+commit;/commit work;
+
+
+上面的第一步我们执行了一次查询操作：select status from t_goods where id=1 for update;
+与普通查询不一样的是，我们使用了select…for update的方式，这样就通过数据库实现了悲观锁。此时在t_goods表中，id为1的 那条数据就被我们锁定了，其它的事务必须等本次事务提交之后才能执行。这样我们可以保证当前的数据不会被其它事务修改。
+</code></pre><p><strong>备注：</strong> <em>使用select for update会把数据给锁住，不过我们需要注意一些锁的级别，MySQL InnoDB默认行级锁。行级锁都是基于索引的，如果一条SQL语句用不到索引是不会使用行级锁的，会使用表级锁把整张表锁住，这点需要注意。</em></p>
+<h4 id="优点与不足"><a href="#优点与不足" class="headerlink" title="优点与不足"></a>优点与不足</h4><pre><code>悲观并发控制实际上是“先取锁再访问”的保守策略，为数据处理的安全提供了保证。但是在效率方面，处理加锁的机制会让数据库产生额外的开销，还有增加产生死锁的机会；另外，在只读型事务处理中由于不会产生冲突，也没必要使用锁，这样做只能增加系统负载；还有会降低了并行性，一个事务如果锁定了某行数据，其他事务就必须等待该事务处理完才可以处理那行数据。
+</code></pre><p>乐观锁</p>
+<blockquote>
+<p>乐观锁(Optimistic Lock),顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。乐观锁适用于多读的应用类型，这样可以提高吞吐量，像数据库如果提供类似于write_condition机制的其实都是提供的乐观锁。</p>
+</blockquote>
+<pre><code>相对于悲观锁，在对数据库进行处理的时候，乐观锁并不会使用数据库提供的锁机制。一般的实现乐观锁的方式就是记录数据版本。
+</code></pre><p>数据版本：</p>
+<p>为数据增加的一个版本标识。当读取数据时，将版本标识的值一同读出，数据每更新一次，同时对版本标识进行更新。当我们提交更新的时候，判断数据库表对应记录的当前版本信息与第一次取出来的版本标识进行比对，如果数据库表当前版本号与第一次取出来的版本标识值相等，则予以更新，否则认为是过期数据。</p>
+<pre><code>实现数据版本有两种方式，第一种是使用版本号，第二种是使用时间戳。
+</code></pre><p>使用版本号实现乐观锁</p>
+<pre><code>使用版本号时，可以在数据初始化时指定一个版本号，每次对数据的更新操作都对版本号执行+1操作。并判断当前版本号是不是该数据的最新的版本号。
+
+1.查询出商品信息
+select (status,status,version) from t_goods where id=#{id}
+2.根据商品信息生成订单
+3.修改商品status为2
+update t_goods 
+set status=2,version=version+1
+where id=#{id} and version=#{version};
+</code></pre><h4 id="优点与不足-1"><a href="#优点与不足-1" class="headerlink" title="优点与不足"></a>优点与不足</h4><p>乐观并发控制相信事务之间的数据竞争(data race)的概率是比较小的，因此尽可能直接做下去，直到提交的时候才去锁定，所以不会产生任何锁和死锁。但如果直接简单这么做，还是有可能会遇到不可预期的结果，例如两个事务都读取了数据库的某一行，经过修改以后写回数据库，这时就遇到了问题。</p>
+<h3 id="行级锁与死锁"><a href="#行级锁与死锁" class="headerlink" title="行级锁与死锁"></a>行级锁与死锁</h3><p>MyISAM中是不会产生死锁的，因为MyISAM总是一次性获得所需的全部锁，要么全部满足，要么全部等待。而在InnoDB中，锁是逐步获得的，就造成了死锁的可能。</p>
+<p>在MySQL中，行级锁并不是直接锁记录，而是锁索引。索引分为主键索引和非主键索引两种，如果一条sql语句操作了主键索引，MySQL就会锁定这条主键索引；如果一条语句操作了非主键索引，MySQL会先锁定该非主键索引，再锁定相关的主键索引。在UPDATE、DELETE操作时，MySQL不仅锁定WHERE条件扫描过的所有索引记录，而且会锁定相邻的键值，即所谓的next-key locking。</p>
+<p>当两个事务同时执行，一个锁住了主键索引，在等待其他相关索引。另一个锁定了非主键索引，在等待主键索引。这样就会发生死锁。</p>
+<p>发生死锁后，InnoDB一般都可以检测到，并使一个事务释放锁回退，另一个获取锁完成事务。</p>
+<h4 id="有多种方法可以避免死锁，这里只介绍常见的三种"><a href="#有多种方法可以避免死锁，这里只介绍常见的三种" class="headerlink" title="有多种方法可以避免死锁，这里只介绍常见的三种"></a>有多种方法可以避免死锁，这里只介绍常见的三种</h4><ol>
+<li><p>如果不同程序会并发存取多个表，尽量约定以相同的顺序访问表，可以大大降低死锁机会；</p>
+</li>
+<li><p>在同一个事务中，尽可能做到一次锁定所需要的所有资源，减少死锁产生概率；</p>
+</li>
+<li><p>对于非常容易产生死锁的业务部分，可以尝试使用升级锁定颗粒度，通过表级锁定来减少死锁产生的概率；</p>
+</li>
+</ol>
 
       
     </div>
@@ -371,13 +421,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag">#算法</a>
+            <a href="/tags/Lock/" rel="tag">#Lock</a>
           
-            <a href="/tags/Hash/" rel="tag">#Hash</a>
+            <a href="/tags/乐观锁/" rel="tag">#乐观锁</a>
           
-            <a href="/tags/分布式/" rel="tag">#分布式</a>
-          
-            <a href="/tags/缓存/" rel="tag">#缓存</a>
+            <a href="/tags/悲观锁/" rel="tag">#悲观锁</a>
           
         </div>
       
@@ -386,17 +434,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/Evaluation-concept.html" rel="next" title="准确率(accuracy),精确率(Precision)和召回率(Recall),AP,mAP的概念">
-                <i class="fa fa-chevron-left"></i> 准确率(accuracy),精确率(Precision)和召回率(Recall),AP,mAP的概念
+              <a href="/blog/GIT_SVN.html" rel="next" title="Git和Svn的区别">
+                <i class="fa fa-chevron-left"></i> Git和Svn的区别
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/NIO.html" rel="prev" title="IO多路复用机制解析">
-                IO多路复用机制解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -548,7 +592,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性Hash算法的使用场景"><span class="nav-number">1.</span> <span class="nav-text">一致性Hash算法的使用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性Hash算法的原理"><span class="nav-number">2.</span> <span class="nav-text">一致性Hash算法的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#雪崩效应"><span class="nav-number">3.</span> <span class="nav-text">雪崩效应</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟节点"><span class="nav-number">4.</span> <span class="nav-text">虚拟节点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#悲观锁"><span class="nav-number">1.</span> <span class="nav-text">悲观锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">1.1.</span> <span class="nav-text">使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点与不足"><span class="nav-number">1.1.1.</span> <span class="nav-text">优点与不足</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点与不足-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">优点与不足</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行级锁与死锁"><span class="nav-number">1.2.</span> <span class="nav-text">行级锁与死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有多种方法可以避免死锁，这里只介绍常见的三种"><span class="nav-number">1.2.1.</span> <span class="nav-text">有多种方法可以避免死锁，这里只介绍常见的三种</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
