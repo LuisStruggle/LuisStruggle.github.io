@@ -92,15 +92,15 @@
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="把redis作为缓存使用已经是司空见惯，但是使用redis后也可能会碰到一系列的问题，尤其是数据量很大的时候，经典的几个问题如下：
 (一)缓存和数据库间数据一致性问题分布式环境下（单机就不用说了）非常容易出现缓存和数据库间的数据一致性问题，针对这一点的话，只能说，如果你的项目对缓存的要求是强一致性的，那么请不要使用缓存。我们只能采取合适的策略来降低缓存和数据库间数据不一致的概率，而无法保证两者间的">
-<meta property="og:image" content="https://img-blog.csdn.net/20180601221002889">
-<meta property="og:image" content="https://img-blog.csdn.net/20180601221013466">
-<meta property="og:image" content="https://img-blog.csdn.net/20180601221026433">
-<meta property="og:updated_time" content="2019-03-31T10:23:28.746Z">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Redis_Concurrent1.jpg">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Redis_Concurrent2.jpg">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Redis_Concurrent3.jpg">
+<meta property="og:updated_time" content="2019-03-31T10:33:55.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的并发问题分析">
 <meta name="twitter:description" content="把redis作为缓存使用已经是司空见惯，但是使用redis后也可能会碰到一系列的问题，尤其是数据量很大的时候，经典的几个问题如下：
 (一)缓存和数据库间数据一致性问题分布式环境下（单机就不用说了）非常容易出现缓存和数据库间的数据一致性问题，针对这一点的话，只能说，如果你的项目对缓存的要求是强一致性的，那么请不要使用缓存。我们只能采取合适的策略来降低缓存和数据库间数据不一致的概率，而无法保证两者间的">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20180601221002889">
+<meta name="twitter:image" content="https://luisstruggle.github.io/images/Redis_Concurrent1.jpg">
 
 
 
@@ -421,11 +421,11 @@ public class BloomFilterTest {
   return create(funnel, expectedInsertions, 0.03); // FYI, for 3%, we always get 5 hash functions
 }
 </code></pre><p>我们可调用BloomFilter的这个方法显式的指定误判率：</p>
-<p><img src="https://img-blog.csdn.net/20180601221002889" alt=""></p>
+<p><img src="/images/Redis_Concurrent1.jpg" alt=""></p>
 <pre><code>private static BloomFilter&lt;Integer&gt; bloomFilter = BloomFilter.create(Funnels.integerFunnel(), capacity,0.01);
 </code></pre><p>我们断点跟踪下，误判率为0.02和默认的0.03时候的区别:</p>
-<p><img src="https://img-blog.csdn.net/20180601221013466" alt=""></p>
-<p><img src="https://img-blog.csdn.net/20180601221026433" alt=""></p>
+<p><img src="/images/Redis_Concurrent2.jpg" alt=""></p>
+<p><img src="/images/Redis_Concurrent3.jpg" alt=""></p>
 <p>对比两个出错率可以发现，误判率为0.02时数组大小为8142363，0.03时为7298440，误判率降低了0.01，BloomFilter维护的数组大小也减少了843923，可见BloomFilter默认的误判率0.03是设计者权衡系统性能后得出的值。要注意的是，布隆过滤器不支持删除操作。用在这边解决缓存穿透问题就是：</p>
 <pre><code>public String getByKey(String key) {
     // 通过key获取value
@@ -504,6 +504,10 @@ public class BloomFilterTest {
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/Redis_Solve.html" rel="prev" title="redis中穿透与雪崩的预防及解决">
+                redis中穿透与雪崩的预防及解决 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -570,7 +574,7 @@ public class BloomFilterTest {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
