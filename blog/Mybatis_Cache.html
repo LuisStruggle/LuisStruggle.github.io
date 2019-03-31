@@ -1,0 +1,1107 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="原理,Mybatis,cache," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言MyBatis是常见的Java数据库访问层框架。在日常工作中，开发人员多数情况下是使用MyBatis的默认缓存配置，但是MyBatis缓存机制有一些不足之处，在使用中容易引起脏数据，形成一些潜在的隐患。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis缓存机制">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Mybatis_Cache.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="前言MyBatis是常见的Java数据库访问层框架。在日常工作中，开发人员多数情况下是使用MyBatis的默认缓存配置，但是MyBatis缓存机制有一些不足之处，在使用中容易引起脏数据，形成一些潜在的隐患。">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache1.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache2.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache3.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache4.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache5.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache6.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache7.png">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Mybatis_Cache8.png">
+<meta property="og:updated_time" content="2019-03-31T12:52:06.903Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mybatis缓存机制">
+<meta name="twitter:description" content="前言MyBatis是常见的Java数据库访问层框架。在日常工作中，开发人员多数情况下是使用MyBatis的默认缓存配置，但是MyBatis缓存机制有一些不足之处，在使用中容易引起脏数据，形成一些潜在的隐患。">
+<meta name="twitter:image" content="https://luisstruggle.github.io/images/Mybatis_Cache1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Mybatis_Cache.html"/>
+
+  <title> Mybatis缓存机制 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mybatis缓存机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-12-23T10:23:32+08:00" content="2018-12-23">
+              2018-12-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/Mybatis_Cache.html" class="leancloud_visitors" data-flag-title="Mybatis缓存机制">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>MyBatis是常见的Java数据库访问层框架。在日常工作中，开发人员多数情况下是使用MyBatis的默认缓存配置，但是MyBatis缓存机制有一些不足之处，在使用中容易引起脏数据，形成一些潜在的隐患。</p>
+<a id="more"></a>
+<h1 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h1><p>默认情况下，MyBatis只开启一级缓存。一级缓存只是相对于同一个SqlSession而言的，如果是相同的SQL语句，会优先命中一级缓存，避免直接对数据库进行查询，提高性能。</p>
+<p>每个SqlSession中持有了Executor，每个Executor中有一个LocalCache。当用户发起查询时，MyBatis根据当前执行的语句生成MappedStatement，在Local Cache进行查询，如果缓存命中的话，直接返回结果给用户，如果缓存没有命中的话，查询数据库，结果写入Local Cache，最后返回结果给用户。</p>
+<p>一般只需在MyBatis的配置文件中，添加如下语句，就可以使用一级缓存。共有两个选项，SESSION或者STATEMENT，默认是SESSION级别，即在一个MyBatis会话中执行的所有语句，都会共享这一个缓存。一种是STATEMENT级别，可以理解为缓存只对当前执行的这一个Statement有效。</p>
+<pre><code>&lt;cache eviction=&quot;LRU&quot; flushInterval=&quot;120000&quot; size=&quot;1024&quot; readOnly=&quot;true&quot;/&gt;
+</code></pre><p>前面我们提到，一级缓存只是相对于同一个SqlSession而言的，如果是相同的SQL语句，会优先命中一级缓存，那我们来验证一下，</p>
+<pre><code>public static void main(String[] args) throws IOException{
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(&quot;spring/SqlMapConfig.xml&quot;));
+
+        SqlSession session1 = sqlSessionFactory.openSession(true);
+
+        UserDao dao = session1.getMapper(UserDao.class);
+
+        logger.debug(&quot;开始查询用户信息&quot;);
+
+        logger.info(dao.findUserById(&quot;A001&quot;).toString());
+
+        logger.debug(&quot;再次查询用户信息&quot;);
+
+        logger.info(dao.findUserById(&quot;A001&quot;).toString());
+
+    }
+</code></pre><p>上述代码很简单，在同一个SqlSession内根据相同的id连续查询同一个用户信息，运行结果如下图：<br><img src="/images/Mybatis_Cache1.png" alt="这里写图片描述"></p>
+<p>那我们在未开启二级缓存的前提下，使用不同的SqlSession查询信息，代码如下，</p>
+<pre><code>public static void main(String[] args) throws IOException{
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(&quot;spring/SqlMapConfig.xml&quot;));
+
+        SqlSession session1 = sqlSessionFactory.openSession(true);
+
+        UserDao dao = session1.getMapper(UserDao.class);
+
+        logger.debug(&quot;开始查询用户信息&quot;);
+
+        logger.info(dao.findUserById(&quot;A001&quot;).toString());
+
+        SqlSession session2 = sqlSessionFactory.openSession(true);
+
+        dao = session2.getMapper(UserDao.class);
+
+        logger.debug(&quot;再次查询用户信息&quot;);
+
+        logger.info(dao.findUserById(&quot;A001&quot;).toString());
+
+    }
+</code></pre><p>运行结果如下图：<br><img src="/images/Mybatis_Cache2.png" alt="这里写图片描述"></p>
+<p>上述两次运行结果确实验证了一级缓存的作用范围为SqlSession，那我们如果在SqlSession内对同一份数据有修改操作，运行结果如何呢？代码如下：</p>
+<pre><code>public static void main(String[] args) throws IOException{
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(&quot;spring/SqlMapConfig.xml&quot;));
+
+        SqlSession session1 = sqlSessionFactory.openSession(true);
+
+        UserDao dao = session1.getMapper(UserDao.class);
+
+        logger.debug(&quot;开始查询用户信息&quot;);
+
+        logger.info(dao.findUserById(&quot;A001&quot;).toString());
+
+        logger.debug(&quot;新增用户信息&quot;);
+
+        dao.addUser(new User(&quot;A002&quot;,&quot;Cathy&quot;,24));
+
+        logger.debug(&quot;再次查询用户信息&quot;);
+
+        logger.info(dao.findUserById(&quot;A001&quot;).toString());
+
+    }
+</code></pre><p>上述代码在两次查询操作之间，新增了一条记录，看一下运行结果：<br><img src="/images/Mybatis_Cache3.png" alt="这里写图片描述"></p>
+<p>由此可见，在一次数据库会话中，如果对数据库发生了修改操作，一级缓存会失效。那如果在不同的数据库会话中，情况又有何不一样？代码如下：</p>
+<pre><code>public static void main(String[] args) throws IOException{
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(&quot;spring/SqlMapConfig.xml&quot;));
+
+        SqlSession session1 = sqlSessionFactory.openSession(true);
+
+        UserDao dao1 = session1.getMapper(UserDao.class);
+
+        logger.debug(&quot;开始查询用户信息&quot;);
+
+        logger.info(dao1.findUserById(&quot;A001&quot;).toString());
+
+        logger.debug(&quot;新启回话，修改用户信息&quot;);
+
+        SqlSession session2 = sqlSessionFactory.openSession(true);
+
+        UserDao dao2 = session2.getMapper(UserDao.class);
+
+        dao2.updateUserById(new User(&quot;A001&quot;,&quot;Alex&quot;,30));
+
+        logger.debug(&quot;再次查询用户信息&quot;);
+
+        logger.info(dao1.findUserById(&quot;A001&quot;).toString());
+
+    }
+</code></pre><p>上述代码在连续两次查询之间新启一个数据库会话修改相应数据，运行结果如下：<br><img src="/images/Mybatis_Cache4.png" alt="这里写图片描述"></p>
+<p>数据库中的信息已经有所变化，但是第二次的查询结果却没有体现，出现了脏读的现象，所以也从侧面证明了一级缓存只在数据库会话内部共享。</p>
+<h1 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h1><p>二级缓存是SqlSessionFactory层面的，各个SqlSession共享二级缓存。要正确的使用二级缓存，需完成如下配置的，</p>
+<pre><code>&lt;setting name=&quot;cacheEnabled&quot; value=&quot;TRUE&quot;/&gt;
+</code></pre><p>在MyBatis的映射XML中配置cache或者 cache-ref 。cache标签用于声明这个namespace使用二级缓存，并且可以自定义配置。</p>
+<pre><code>&lt;cache eviction=&quot;LRU&quot; flushInterval=&quot;120000&quot; size=&quot;1024&quot; readOnly=&quot;true&quot;/&gt;
+</code></pre><p>配置上述信息后，我们看一下二级缓存真的有那么神奇么？代码如下：</p>
+<pre><code>public static void main(String[] args) throws IOException{
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(&quot;spring/SqlMapConfig.xml&quot;));
+
+        SqlSession session1 = sqlSessionFactory.openSession(true);
+
+        UserDao dao1 = session1.getMapper(UserDao.class);
+
+        logger.debug(&quot;开始查询用户信息&quot;);
+
+        logger.info(dao1.findUserById(&quot;A001&quot;).toString());
+
+        //session1.commit();
+
+        SqlSession session2 = sqlSessionFactory.openSession(true);
+
+        UserDao dao2 = session2.getMapper(UserDao.class);
+
+        logger.debug(&quot;再次查询用户信息&quot;);
+
+        logger.info(dao2.findUserById(&quot;A001&quot;).toString());
+
+    }
+</code></pre><p>代码功能很简单，使用不同的SqlSession查询条件相同的记录，我们看一下结果：<br><img src="/images/Mybatis_Cache5.png" alt="这里写图片描述"></p>
+<p>运行结果好像并没有走到缓存上，这是为何？其实是因为事务未提交，我们加上事务提交的逻辑（上述代码中被注释的那一行），看一下运行结果：<br><img src="/images/Mybatis_Cache6.png" alt="这里写图片描述"></p>
+<p>从上图可知，sqlsession2的查询使用了缓存，并且缓存的命中率是0.5。那我们再来看一下update操作是否会刷新该namespace下的二级缓存。代码如下：</p>
+<pre><code>public static void main(String[] args) throws IOException{
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(&quot;spring/SqlMapConfig.xml&quot;));
+
+        SqlSession session1 = sqlSessionFactory.openSession(true);
+        SqlSession session2 = sqlSessionFactory.openSession(true);
+        SqlSession session3 = sqlSessionFactory.openSession(true);
+
+
+        UserDao dao1 = session1.getMapper(UserDao.class);
+        UserDao dao2 = session2.getMapper(UserDao.class);
+        UserDao dao3 = session3.getMapper(UserDao.class);
+
+        logger.debug(&quot;开始查询用户信息&quot;);
+        logger.info(dao1.findUserById(&quot;A001&quot;).toString());
+        session1.commit();
+
+        logger.debug(&quot;再次查询用户信息&quot;);
+        logger.info(dao2.findUserById(&quot;A001&quot;).toString());
+
+        logger.debug(&quot;修改用户信息&quot;);
+        dao3.updateUserById(new User(&quot;A001&quot;,&quot;Alex&quot;,35));
+        session3.commit();
+
+        logger.debug(&quot;第三次查询用户信息&quot;);
+        logger.info(dao2.findUserById(&quot;A001&quot;).toString());
+    }
+</code></pre><p>上述代码在第三次查询之前修改了数据库信息，看一下运行结果：<br><img src="/images/Mybatis_Cache7.png" alt="这里写图片描述"></p>
+<p>可见update操作会刷新该namespace下的二级缓存。</p>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><p>众所周知，SqlSession对外提供了用户和数据库之间交互需要的所有方法，隐藏了底层的细节。默认实现类是DefaultSqlSession。Executor作为SqlSession的四大对象之一，承担了数据库操作有关的职责。如下图所示，Executor有若干个实现类，为Executor赋予了不同的能力，细心的读者可以发现Executor使用了装饰者模式。<br><img src="/images/Mybatis_Cache8.png" alt="这里写图片描述"></p>
+<p>BaseExecutor是一个实现了Executor接口的抽象类，具体的操作委托给子类进行执行。看一下BaseExecutor的内部实现：</p>
+<pre><code>public abstract class BaseExecutor implements Executor {
+……
+protected ConcurrentLinkedQueue&lt;BaseExecutor.DeferredLoad&gt; deferredLoads;
+protected PerpetualCache localCache;
+……
+}
+</code></pre><p>在BaseExecutor内部有一个名为localCache的成员变量，再看一下PerpetualCache的内部结构：</p>
+<pre><code>public class PerpetualCache implements Cache {
+private String id;
+private Map&lt;Object, Object&gt; cache = new HashMap();
+……
+}
+</code></pre><p>在初始化SqlSesion时，会使用Configuration类创建一个全新的Executor，作为DefaultSqlSession构造函数的参数，创建Executor代码如下所示：</p>
+<pre><code>public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
+    executorType = executorType == null ? this.defaultExecutorType : executorType;
+    executorType = executorType == null ? ExecutorType.SIMPLE : executorType;
+    Object executor;
+    if (ExecutorType.BATCH == executorType) {
+        executor = new BatchExecutor(this, transaction);
+    } else if (ExecutorType.REUSE == executorType) {
+        executor = new ReuseExecutor(this, transaction);
+    } else {
+        executor = new SimpleExecutor(this, transaction);
+    }
+
+    // 尤其可以注意这里，如果二级缓存开关开启的话，是使用CahingExecutor装饰BaseExecutor的子类
+    if (this.cacheEnabled) {
+        executor = new CachingExecutor((Executor)executor);
+    }
+
+    Executor executor = (Executor)this.interceptorChain.pluginAll(executor);
+    return executor;
+}
+</code></pre><p>SqlSession创建完毕后，根据Statment的不同类型，会进入SqlSession的不同方法中，如果是Select语句的话，最后会执行到SqlSession的selectList，代码如下所示：</p>
+<pre><code>public &lt;E&gt; List&lt;E&gt; selectList(String statement, Object parameter, RowBounds rowBounds) {
+    try {
+      MappedStatement ms = configuration.getMappedStatement(statement);
+      return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
+    } catch (Exception e) {
+      throw ExceptionFactory.wrapException(&quot;Error querying database.  Cause: &quot; + e, e);
+    } finally {
+      ErrorContext.instance().reset();
+    }
+  }
+
+public &lt;E&gt; List&lt;E&gt; query(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+    BoundSql boundSql = ms.getBoundSql(parameter);
+    CacheKey key = createCacheKey(ms, parameter, rowBounds, boundSql);
+    return query(ms, parameter, rowBounds, resultHandler, key, boundSql);
+ }
+
+public CacheKey createCacheKey(MappedStatement ms, Object parameterObject, RowBounds rowBounds, BoundSql boundSql) {
+    ……
+    CacheKey cacheKey = new CacheKey();
+    cacheKey.update(ms.getId());
+    cacheKey.update(rowBounds.getOffset());
+    cacheKey.update(rowBounds.getLimit());
+    cacheKey.update(boundSql.getSql());
+    ……
+    return cacheKey;
+  }
+</code></pre><p>上述代码会根据传入的参数生成CacheKey，将MappedStatement的Id、sql的offset、Sql的limit、Sql本身以及Sql中的参数传入了CacheKey这个类，最终构成CacheKey。<br>由上可知只要两条SQL的下列五个值相同，即可以认为是相同的SQL。</p>
+<pre><code>Statement Id + Offset + Limmit + Sql + Params
+</code></pre><p>如果查不到的话，就从数据库查，在queryFromDatabase中，会对localcache进行写入。</p>
+<pre><code>list = resultHandler == null ? (List&lt;E&gt;) localCache.getObject(key) : null;
+  if (list != null) {
+    handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
+  } else {
+    list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
+  }
+</code></pre><p>最后会判断一级缓存级别是否是STATEMENT级别，如果是的话，就清空缓存，这也就是STATEMENT级别的一级缓存无法共享localCache的原因。</p>
+<pre><code>if (configuration.getLocalCacheScope() == LocalCacheScope.STATEMENT) {
+    clearLocalCache();
+  }
+</code></pre><p>此外，SqlSession的insert方法和delete方法，都会统一走update的流程，</p>
+<pre><code>public int update(String statement, Object parameter) {
+    try {
+      dirty = true;
+      MappedStatement ms = configuration.getMappedStatement(statement);
+      return executor.update(ms, wrapCollection(parameter));
+    } catch (Exception e) {
+      throw ExceptionFactory.wrapException(&quot;Error updating database.  Cause: &quot; + e, e);
+    } finally {
+      ErrorContext.instance().reset();
+    }
+  }
+
+public int update(MappedStatement ms, Object parameter) throws SQLException {
+  ErrorContext.instance().resource(ms.getResource()).activity(&quot;executing an update&quot;).object(ms.getId());
+    if (closed) {
+      throw new ExecutorException(&quot;Executor was closed.&quot;);
+    }
+    clearLocalCache();
+    return doUpdate(ms, parameter);
+  }
+</code></pre><p>由此可见，每次执行update前都会清空localCache。至此，一级缓存的工作流程讲解以及源码分析完毕。</p>
+<p>我们再来看二级缓存，之前提到，如果二级缓存开关开启的话，是使用CahingExecutor装饰BaseExecutor的子类，在委托具体职责给delegate之前，实现了二级缓存的查询和写入功能。进入CahingExecutor的query方法：</p>
+<pre><code>public &lt;E&gt; List&lt;E&gt; query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)
+      throws SQLException {
+    Cache cache = ms.getCache();
+    if (cache != null) {
+      //判断是否需要刷新缓存，在默认的设置中SELECT语句不会刷新缓存，insert/update/delte会刷新缓存
+      flushCacheIfRequired(ms);
+      if (ms.isUseCache() &amp;&amp; resultHandler == null) {
+        ensureNoOutParams(ms, parameterObject, boundSql);
+        @SuppressWarnings(&quot;unchecked&quot;)
+        //MyBatis的CachingExecutor持有了TransactionalCacheManager，即此处代码中的tcm。
+        //在getObject方法中，会把获取值的职责一路传递，最终到PerpetualCache。
+        //CachingExecutor继续往下走，如果查询到数据，则调用tcm.putObject方法，往缓存中放入值。
+        //tcm的put方法也不是直接操作缓存，只是在把这次的数据和key放入待提交的Map中。
+        List&lt;E&gt; list = (List&lt;E&gt;) tcm.getObject(cache, key);
+        if (list == null) {
+          list = delegate.&lt;E&gt; query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+          tcm.putObject(cache, key, list); // issue #578 and #116
+        }
+        return list;
+      }
+    }
+    return delegate.&lt;E&gt; query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+  }
+</code></pre><p>如果不调用commit方法的话，并不会对二级缓存造成直接的影响。因此我们看看Sqlsession的commit方法中做了什么。</p>
+<pre><code>public void commit(boolean force) {
+      ……
+      executor.commit(isCommitOrRollbackRequired(force));
+      dirty = false;
+      ……
+}
+
+//CachingExecutor的commit方法
+public void commit(boolean required) throws SQLException {
+    delegate.commit(required);
+    tcm.commit();
+}
+
+//TransactionalCacheManager的commit方法
+public void commit() {
+    for (TransactionalCache txCache : transactionalCaches.values()) {
+      txCache.commit();
+    }
+}
+
+//TransactionalCache的commit方法
+public void commit() {
+    if (clearOnCommit) {
+      delegate.clear();
+    }
+    flushPendingEntries();
+    reset();
+}
+
+//TransactionalCache的flushPendingEntries方法
+private void flushPendingEntries() {
+    for (Map.Entry&lt;Object, Object&gt; entry : entriesToAddOnCommit.entrySet()) {
+      delegate.putObject(entry.getKey(), entry.getValue());
+    }
+    for (Object entry : entriesMissedInCache) {
+      if (!entriesToAddOnCommit.containsKey(entry)) {
+        delegate.putObject(entry, null);
+      }
+    }
+}
+</code></pre><p>在flushPendingEntries中，将待提交的Map进行循环处理，委托给包装的Cache类，进行putObject的操作。后续的查询操作会重复执行这套流程。如果是insert|update|delete的话，会统一进入CachingExecutor的update方法，其中调用了flushCacheIfRequired方法</p>
+<pre><code>private void flushCacheIfRequired(MappedStatement ms) {
+    Cache cache = ms.getCache();
+    if (cache != null &amp;&amp; ms.isFlushCacheRequired()) {      
+      tcm.clear(cache);
+    }
+  }
+</code></pre><p>在二级缓存执行流程后就会进入一级缓存的执行流程，因此不再赘述。</p>
+<p>参考：<a href="https://blog.csdn.net/tjreal/article/details/79922523" target="_blank" rel="external">https://blog.csdn.net/tjreal/article/details/79922523</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/原理/" rel="tag">#原理</a>
+          
+            <a href="/tags/Mybatis/" rel="tag">#Mybatis</a>
+          
+            <a href="/tags/cache/" rel="tag">#cache</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Mybatis_Dynamic_SQL.html" rel="next" title="Mybatis动态SQL的使用方法">
+                <i class="fa fa-chevron-left"></i> Mybatis动态SQL的使用方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">52</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">125</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级缓存"><span class="nav-number">2.</span> <span class="nav-text">一级缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二级缓存"><span class="nav-number">3.</span> <span class="nav-text">二级缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码分析"><span class="nav-number">4.</span> <span class="nav-text">源码分析</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
