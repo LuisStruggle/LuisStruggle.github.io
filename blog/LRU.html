@@ -1,0 +1,951 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,缓存,LRU," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="LRULRU（Least Recently Used）是一种常见的页面置换算法，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LRU缓存算法">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/LRU.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="LRULRU（Least Recently Used）是一种常见的页面置换算法，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。">
+<meta property="og:image" content="https://luisstruggle.github.io/images/LRU1.jpg">
+<meta property="og:image" content="https://luisstruggle.github.io/images/LRU2.jpg">
+<meta property="og:image" content="https://luisstruggle.github.io/images/LRU3.jpg">
+<meta property="og:updated_time" content="2019-04-08T02:37:30.868Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LRU缓存算法">
+<meta name="twitter:description" content="LRULRU（Least Recently Used）是一种常见的页面置换算法，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。">
+<meta name="twitter:image" content="https://luisstruggle.github.io/images/LRU1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/LRU.html"/>
+
+  <title> LRU缓存算法 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                LRU缓存算法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-04-02T18:54:43+08:00" content="2019-04-02">
+              2019-04-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/LRU.html" class="leancloud_visitors" data-flag-title="LRU缓存算法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><p>LRU（Least Recently Used）是一种常见的<a href="https://baike.baidu.com/item/%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95/7626091" target="_blank" rel="external">页面置换算法</a>，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。</p>
+<a id="more"></a>
+<p>常见的页面置换算法有如下几种：</p>
+<ul>
+<li>LRU 最近最久未使用</li>
+<li>FIFO 先进先出置换算法 类似队列</li>
+<li>OPT 最佳置换算法 （理想中存在的）</li>
+<li>NRU Clock置换算法</li>
+<li>LFU 最少使用置换算法</li>
+<li>PBA 页面缓冲算法</li>
+</ul>
+<h3 id="LRU原理"><a href="#LRU原理" class="headerlink" title="LRU原理"></a>LRU原理</h3><p>LRU的设计原理就是，当数据在最近一段时间经常被访问，那么它在以后也会经常被访问。这就意味着，如果经常访问的数据，我们需要然其能够快速命中，而不常访问的数据，我们在容量超出限制内，要将其淘汰。</p>
+<p>当我们的数据按照如下顺序进行访问时，<code>LRU</code>的工作原理如下：</p>
+<p><img src="/images/LRU1.jpg" alt=""></p>
+<p>正如上面图所表示的意思：每次访问的数据都会放在栈顶，当访问的数据不在内存中，且栈内数据存储满了，我们就要选择移除栈底的元素，因为在栈底部的数据访问的频率是比较低的。所以要将其淘汰。</p>
+<h3 id="LRU的实现"><a href="#LRU的实现" class="headerlink" title="LRU的实现"></a>LRU的实现</h3><p>如何来设计一款LRU算法呢？对于这种类似序列的结构我们一般可以选择链表或者是数组来构建。</p>
+<p><strong>差异对比：</strong></p>
+<ul>
+<li><code>数组</code> 查询比较快，但是对于增删来说是一个不是一个好的选择</li>
+<li><code>链表</code> 查询比较慢，但是对于增删来说十分方便O(1)时间复杂度内搞定</li>
+</ul>
+<p>有没有办法既能够让其搜索快，又能够快速进行增删操作。<br>我们可以选择 <strong>链表+hash表</strong> ，hash表的搜索可以达到0(1)时间复杂度，这样就完美的解决我们搜索时间慢的问题了</p>
+<h4 id="1-基于链表-Hash表"><a href="#1-基于链表-Hash表" class="headerlink" title="1. 基于链表+Hash表"></a>1. 基于链表+Hash表</h4><p>Hash表，在Java中HashMap是我们的不二选择<br>链表，Node一个双向链表的实现，Node中存放的是数结构如下：</p>
+<pre><code>class Node&lt;K,V&gt;{
+    private K key;
+    private V value;
+    private Node&lt;K,V&gt; prev;
+    private Node&lt;K,V&gt; next;
+}
+</code></pre><p>我们通过HashMap中<code>key</code>存储Node的<code>key</code>,<code>value</code>存储Node来建立Map对Node的映射关系。我们将HashMap看作是一张检索表，我们可以可以快速的检索到我们需要定位的Node</p>
+<p><strong>下图展示这个结构:</strong><br><img src="/images/LRU2.jpg" alt=""></p>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><p><strong>大致思路:</strong></p>
+<ol>
+<li><p>构建双向链表节点ListNode，应包含<code>key,value,prev,next</code>这几个基本属性</p>
+</li>
+<li><p>对于Cache对象来说，我们需要规定缓存的容量，所以在初始化时，设置容量大小，然后实例化双向链表的head,tail，并让<code>head.next-&gt;tail tail.prev-&gt;head</code>，这样我们的双向链表构建完成</p>
+</li>
+<li><p>对于get操作,我们首先查阅hashmap，如果存在的话，直接将Node从当前位置移除，然后插入到链表的首部，在链表中实现删除直接让node的前驱节点指向后继节点，很方便.如果不存在，那么直接返回Null</p>
+</li>
+<li><p>对于put操作，比较麻烦。</p>
+</li>
+</ol>
+<p><img src="/images/LRU3.jpg" alt=""></p>
+<pre><code>package code.fragment;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class LRUCache&lt;V&gt; {
+
+    /**
+     * 容量
+     */
+    private int capacity = 1024;
+    /**
+     * Node记录表
+     */
+    private Map&lt;String, ListNode&lt;String, V&gt;&gt; table = new ConcurrentHashMap&lt;&gt;();
+    /**
+     * 双向链表头部
+     */
+    private ListNode&lt;String, V&gt; head;
+    /**
+     * 双向链表尾部
+     */
+    private ListNode&lt;String, V&gt; tail;
+
+
+    public LRUCache(int capacity) {
+        this();
+        this.capacity = capacity;
+    }
+
+
+    public LRUCache() {
+        head = new ListNode&lt;&gt;();
+        tail = new ListNode&lt;&gt;();
+        head.next = tail;
+        head.prev = null;
+        tail.prev = head;
+        tail.next = null;
+    }
+
+
+    public V get(String key) {
+
+        ListNode&lt;String, V&gt; node = table.get(key);
+        //如果Node不在表中，代表缓存中并没有
+        if (node == null) {
+            return null;
+        }
+        //如果存在，则需要移动Node节点到表头
+
+
+        //截断链表，node.prev -&gt; node  -&gt; node.next ====&gt; node.prev -&gt; node.next
+        //         node.prev &lt;- node &lt;- node.next  ====&gt;  node.prev &lt;- node.next
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+
+        //移动节点到表头
+        node.next = head.next;
+        head.next.prev = node;
+        node.prev = head;
+        head.next = node;
+        //存在缓存表
+        table.put(key, node);
+        return node.value;
+    }
+
+
+    public void put(String key, V value) {
+        ListNode&lt;String, V&gt; node = table.get(key);
+        //如果Node不在表中，代表缓存中并没有
+        if (node == null) {
+            if (table.size() == capacity) {
+                //超过容量了 ,首先移除尾部的节点
+                table.remove(tail.prev.key);
+                tail.prev = tail.next;
+                tail.next = null;
+                tail = tail.prev;
+
+            }
+            node = new ListNode&lt;&gt;();
+            node.key = key;
+            node.value = value;
+            table.put(key, node);
+        }
+        //如果存在，则需要移动Node节点到表头
+        node.next = head.next;
+        head.next.prev = node;
+        node.prev = head;
+        head.next = node;
+
+
+    }
+
+    /**
+     * 双向链表内部类
+     */
+    public static class ListNode&lt;K, V&gt; {
+        private K key;
+        private V value;
+        ListNode&lt;K, V&gt; prev;
+        ListNode&lt;K, V&gt; next;
+
+        public ListNode(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+
+        public ListNode() {
+
+        }
+    }
+
+
+    public static void main(String[] args) {
+        LRUCache&lt;ListNode&gt; cache = new LRUCache&lt;&gt;(4);
+        ListNode&lt;String, Integer&gt; node1 = new ListNode&lt;&gt;(&quot;key1&quot;, 1);
+        ListNode&lt;String, Integer&gt; node2 = new ListNode&lt;&gt;(&quot;key2&quot;, 2);
+        ListNode&lt;String, Integer&gt; node3 = new ListNode&lt;&gt;(&quot;key3&quot;, 3);
+        ListNode&lt;String, Integer&gt; node4 = new ListNode&lt;&gt;(&quot;key4&quot;, 4);
+        ListNode&lt;String, Integer&gt; node5 = new ListNode&lt;&gt;(&quot;key5&quot;, 5);
+        cache.put(&quot;key1&quot;, node1);
+        cache.put(&quot;key2&quot;, node2);
+        cache.put(&quot;key3&quot;, node3);
+        cache.put(&quot;key4&quot;, node4);
+        cache.get(&quot;key2&quot;);
+        cache.put(&quot;key5&quot;, node5);
+        cache.get(&quot;key2&quot;);
+    }
+}
+</code></pre><p>参考：<a href="https://blog.csdn.net/qq_26440803/article/details/83795122" target="_blank" rel="external">https://blog.csdn.net/qq_26440803/article/details/83795122</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/缓存/" rel="tag">#缓存</a>
+          
+            <a href="/tags/LRU/" rel="tag">#LRU</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Matrix_Path.html" rel="next" title="矩阵中的路径">
+                <i class="fa fa-chevron-left"></i> 矩阵中的路径
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">143</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU"><span class="nav-number">1.</span> <span class="nav-text">LRU</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LRU原理"><span class="nav-number">1.1.</span> <span class="nav-text">LRU原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LRU的实现"><span class="nav-number">1.2.</span> <span class="nav-text">LRU的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-基于链表-Hash表"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 基于链表+Hash表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
