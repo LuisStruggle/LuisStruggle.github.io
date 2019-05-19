@@ -1,0 +1,807 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Dubbo,资源,分布式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、搭建系统篇
+Dubbo剖析-搭建一个简单的分布式系统（1）
+Dubbo剖析-搭建一个简单的分布式系统（2）
+Dubbo剖析-监控平台的搭建与使用
+Dubbo剖析-管理控制台的搭建与使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo学习资源">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Dubbo.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="一、搭建系统篇
+Dubbo剖析-搭建一个简单的分布式系统（1）
+Dubbo剖析-搭建一个简单的分布式系统（2）
+Dubbo剖析-监控平台的搭建与使用
+Dubbo剖析-管理控制台的搭建与使用">
+<meta property="og:updated_time" content="2019-05-19T05:09:05.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dubbo学习资源">
+<meta name="twitter:description" content="一、搭建系统篇
+Dubbo剖析-搭建一个简单的分布式系统（1）
+Dubbo剖析-搭建一个简单的分布式系统（2）
+Dubbo剖析-监控平台的搭建与使用
+Dubbo剖析-管理控制台的搭建与使用">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Dubbo.html"/>
+
+  <title> Dubbo学习资源 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Dubbo学习资源
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-05-17T13:06:43+08:00" content="2019-05-17">
+              2019-05-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习资源/" itemprop="url" rel="index">
+                    <span itemprop="name">学习资源</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/blog/Dubbo.html" class="leancloud_visitors" data-flag-title="Dubbo学习资源">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>一、搭建系统篇</strong></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484242&amp;idx=1&amp;sn=1c0cfc6e7748e0060d4aee3401e75669&amp;chksm=fc7fc1d0cb0848c65e9f4cd92bea0d2589110e7345cbe395a005b93a551bbbccae9d459b36d2&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-搭建一个简单的分布式系统（1）</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484247&amp;idx=1&amp;sn=9d7087b97f00516f112ab4c86c88fc1c&amp;chksm=fc7fc1d5cb0848c3719aaa00b4f92b129019e37cdd905a214f9df53ce5da8ea9bc8bf9c9bf2f&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-搭建一个简单的分布式系统（2）</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484267&amp;idx=1&amp;sn=d55b2e737dc8b57306dcbe54f2efa931&amp;chksm=fc7fc1e9cb0848ffa980f85ae29c8608312102cda516ec9e10845a8d0c30f72925cf6ecd71fd&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-监控平台的搭建与使用</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484259&amp;idx=1&amp;sn=973942b17654476fe835f46ed484eb80&amp;chksm=fc7fc1e1cb0848f7a4504e5341c835b837bd7df8e9eafaa5210bf4676f1cd1291ff9a895828e&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-管理控制台的搭建与使用</a></p>
+<a id="more"></a>
+<p><strong>二、特性介绍使用篇</strong></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484277&amp;idx=1&amp;sn=a0292055122b31aa33c1585a28db6126&amp;chksm=fc7fc1f7cb0848e154ae5623006ca9201dc0e21f59400f96f346d7c7170d01776b4fc233d82e&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-服务分组与服务版本号</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484256&amp;idx=1&amp;sn=0bc0e433dafdeb32b1d1bff86efc944f&amp;chksm=fc7fc1e2cb0848f402f7f2d70fcda1b874fa5c721292cc3cb570859ce29107a4e467b5e35c7a&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-服务直连</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484253&amp;idx=1&amp;sn=09455f2bd7c7c4d7817b14b4e441ca14&amp;chksm=fc7fc1dfcb0848c9f7f41c260b7d28b7751653dd7cbd9ab907f96afea7e48ec54fca18f5713d&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-服务消费端异步调用</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484250&amp;idx=1&amp;sn=b681a70f11b1fd5f3f6741d81a8278d8&amp;chksm=fc7fc1d8cb0848ceeceebeac1ef546ebc07799f1b7d0deef33d49ce9ad321b7e17b17be86224&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-服务消费端泛化调用</a></p>
+<p><strong>三、原理篇</strong></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484281&amp;idx=1&amp;sn=bc74ef5b113e6f86acf683c4048bd6c6&amp;chksm=fc7fc1fbcb0848ede0a27458fca4ff5fef6bca1cbf15a9e51c753ad6ad61c73437e6faec8163&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-Dubbo整体架构分析</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484320&amp;idx=1&amp;sn=8a5ce2b398243d6c8e198a73de864293&amp;chksm=fc7fc122cb084834e2ebf15a703adeb76b408ee6c407ef44a95c4ddd5545b3ca6ee35b98359e&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-服务提供方实现类到Invoker的转换</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484323&amp;idx=1&amp;sn=a7cc9d8e4f1f4192b9aae54d8cf54ddf&amp;chksm=fc7fc121cb084837e03256ae10e96e5b9f23b9f1a11a809d62e2bf7718361a9c00b49bd1d1c5&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-服务提供方Invoker到Exporter的转换</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484326&amp;idx=1&amp;sn=8e2a10007ebce3b12d09b3e9ba0a1a07&amp;chksm=fc7fc124cb084832e0f345fe9287ca55fb4d4ad34f5cc3fba28163743724482d50f3e5409732&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-服务消费方远程服务到Invoker的转换</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484352&amp;idx=1&amp;sn=d03618f4e7b1f640450e29e3be9d4f5b&amp;chksm=fc7fc142cb084854cbd7966208ed3b36cf7ea3f766c70c4710dd410e4a60fdb953b0044c92a4&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析</a><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484329&amp;idx=1&amp;sn=423ce425da46951f2fb5897fb05ee82e&amp;chksm=fc7fc12bcb08483d7e961f5758b48523a75613f97bf4679ed449b6d343524fa3c250895f0558&amp;scene=21#wechat_redirect" target="_blank" rel="external">-服务消费方Invoker到客户端接口的转换</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484286&amp;idx=1&amp;sn=666b4e1c5e220aa3ef118b954dfdfa4f&amp;chksm=fc7fc1fccb0848eab1526f962a046aa577e76f0092b5f0eaa8cf89c800f7c205b64a9f76eed9&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-增强SPI的实现</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484292&amp;idx=1&amp;sn=bb59ae4aa1a5380e4c8c825a539775b2&amp;chksm=fc7fc106cb08481062a98400d9ca288ca801c31a70f7f81eec2a13aec6dba6a0832599f603b7&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-增强SPI中扩展点自动包装的实现</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484355&amp;idx=1&amp;sn=ff41fbbe05ca164fe107e5215f35789c&amp;chksm=fc7fc141cb0848570c218a77ba65317081e861f5a083adbfdf87082e7aa511d18034ca37b6eb&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-负载均衡</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484352&amp;idx=1&amp;sn=d03618f4e7b1f640450e29e3be9d4f5b&amp;chksm=fc7fc142cb084854cbd7966208ed3b36cf7ea3f766c70c4710dd410e4a60fdb953b0044c92a4&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-集群容错</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzU2MTA1OTgyMQ==&amp;mid=2247484358&amp;idx=1&amp;sn=be85d62a69f05fee4ec280b62f652cde&amp;chksm=fc7fc144cb084852ceede3eee653035272ac157e86a2bc3df5f04c6214fc8f2dca8d990c2a35&amp;scene=21#wechat_redirect" target="_blank" rel="external">Dubbo剖析-线程模型</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Dubbo/" rel="tag">#Dubbo</a>
+          
+            <a href="/tags/资源/" rel="tag">#资源</a>
+          
+            <a href="/tags/分布式/" rel="tag">#分布式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Digital_Signature.html" rel="next" title="数字签名">
+                <i class="fa fa-chevron-left"></i> 数字签名
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">69</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">158</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ymNLl5v61aLg5GswDJBE3T8k-gzGzoHsz", "jbGAVFGl8tYzkYEKy9v5xRFq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
