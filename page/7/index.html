@@ -258,6 +258,128 @@
             
               
                 
+                <a class="post-title-link" href="/blog/Producers_Consumers.html" itemprop="url">
+                  生产者和消费者
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-12-05T13:13:23+08:00" content="2018-12-05">
+              2018-12-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Java生产者消费者是最基础的线程同步问题，java岗面试中还是很容易遇到的，之前没写过多线程的代码，面试中被问到很尬啊，面完回来恶补下。在网上查到大概有5种生产者消费者的写法，分别如下。</p>
+<ol>
+<li>用synchronized对存储加锁，然后用object原生的wait() 和 notify()做同步。</li>
+<li>用concurrent.locks.Lock，然后用condition的await() 和signal()做同步。</li>
+<li>直接使用concurrent.BlockingQueue。</li>
+<li>使用PipedInputStream/PipedOutputStream。</li>
+<li>使用信号量semaphore。 </li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/Producers_Consumers.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/blog/Indexes.html" itemprop="url">
                   聚族索引和非聚族索引
                 </a>
@@ -698,123 +820,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/Redis_Concurrent.html" itemprop="url">
-                  Redis的并发问题分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-11-03T21:47:49+08:00" content="2018-11-03">
-              2018-11-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术篇/" itemprop="url" rel="index">
-                    <span itemprop="name">技术篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>把redis作为缓存使用已经是司空见惯，但是使用redis后也可能会碰到一系列的问题，尤其是数据量很大的时候，经典的几个问题如下：</p>
-<h3 id="一-缓存和数据库间数据一致性问题"><a href="#一-缓存和数据库间数据一致性问题" class="headerlink" title="(一)缓存和数据库间数据一致性问题"></a><strong>(一)缓存和数据库间数据一致性问题</strong></h3><p>分布式环境下（单机就不用说了）非常容易出现缓存和数据库间的数据一致性问题，针对这一点的话，只能说，如果你的项目对缓存的要求是强一致性的，那么请不要使用缓存。我们只能采取合适的策略来降低缓存和数据库间数据不一致的概率，而无法保证两者间的强一致性。合适的策略包括<br>合适的缓存更新策略，更新数据库后要及时更新缓存、缓存失败时增加重试机制，例如MQ模式的消息队列。</p>
-<hr>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/Redis_Concurrent.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -860,7 +865,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-count">80</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -877,7 +882,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">175</span>
+                <span class="site-state-item-count">177</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -1,0 +1,690 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="分布式,ID,生成方案," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="UUIDUUID 是 通用唯一识别码（Universally Unique Identifier）的缩写，是一种软件建构的标准，亦为开放软件基金会组织在分布式计算环境领域的一部分。其目的，是让分布式系统中的所有元素，都能有唯一的辨识信息，而不需要通过中央控制端来做辨识信息的指定。如此一来，每个人都可以创建不与其它人冲突的UUID。在这样的情况下，就不需考虑数据库创建时的名称重复问题。目前最广泛应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式id几种生成方案">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Distributed_Id.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="UUIDUUID 是 通用唯一识别码（Universally Unique Identifier）的缩写，是一种软件建构的标准，亦为开放软件基金会组织在分布式计算环境领域的一部分。其目的，是让分布式系统中的所有元素，都能有唯一的辨识信息，而不需要通过中央控制端来做辨识信息的指定。如此一来，每个人都可以创建不与其它人冲突的UUID。在这样的情况下，就不需考虑数据库创建时的名称重复问题。目前最广泛应用">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Distributed_Id1.webp">
+<meta property="og:image" content="https://luisstruggle.github.io/images/Distributed_Id2.webp">
+<meta property="og:updated_time" content="2019-10-06T14:17:45.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式id几种生成方案">
+<meta name="twitter:description" content="UUIDUUID 是 通用唯一识别码（Universally Unique Identifier）的缩写，是一种软件建构的标准，亦为开放软件基金会组织在分布式计算环境领域的一部分。其目的，是让分布式系统中的所有元素，都能有唯一的辨识信息，而不需要通过中央控制端来做辨识信息的指定。如此一来，每个人都可以创建不与其它人冲突的UUID。在这样的情况下，就不需考虑数据库创建时的名称重复问题。目前最广泛应用">
+<meta name="twitter:image" content="https://luisstruggle.github.io/images/Distributed_Id1.webp">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Distributed_Id.html"/>
+
+  <title> 分布式id几种生成方案 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                分布式id几种生成方案
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-10-06T17:41:43+08:00" content="2019-10-06">
+              2019-10-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/面试篇/" itemprop="url" rel="index">
+                    <span itemprop="name">面试篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h3><p>UUID 是 通用唯一识别码（Universally Unique Identifier）的缩写，是一种软件建构的标准，亦为开放软件基金会组织在分布式计算环境领域的一部分。其目的，是让分布式系统中的所有元素，都能有唯一的辨识信息，而不需要通过中央控制端来做辨识信息的指定。如此一来，每个人都可以创建不与其它人冲突的UUID。在这样的情况下，就不需考虑数据库创建时的名称重复问题。目前最广泛应用的UUID，是微软公司的全局唯一标识符（GUID），而其他重要的应用，则有Linux ext2/ext3文件系统、LUKS加密分区、GNOME、KDE、Mac OS X等等。另外我们也可以在e2fsprogs包中的UUID库找到实现。</p>
+<a id="more"></a>
+<p>UUID的标准形式包含32个16进制数字，以连字号分为五段，形式为8-4-4-4-12的32个字符，如：550e8400-e19b-41d4-a716-446655440000。</p>
+<p>1、Version 1：基于时间的UUID基于时间的UUID通过计算当前时间戳、随机数和机器MAC地址得到。由于在算法中使用了MAC地址，这个版本的UUID可以保证在全球范围的唯一性。但与此同时，使用MAC地址会带来安全性问题，这就是这个版本UUID受到批评的地方。如果应用只是在局域网中使用，也可以使用退化的算法，以IP地址来代替MAC地址－－Java的UUID往往是这样实现的（当然也考虑了获取MAC的难度）。</p>
+<p>2、Version 2：DCE安全的UUIDDCE（Distributed Computing Environment）安全的UUID和基于时间的UUID算法相同，但会把时间戳的前4位置换为POSIX的UID或GID。这个版本的UUID在实际中较少用到。</p>
+<p>3、Version 3：基于名字的UUID（MD5）基于名字的UUID通过计算名字和名字空间的MD5散列值得到。这个版本的UUID保证了：相同名字空间中不同名字生成的UUID的唯一性；不同名字空间中的UUID的唯一性；相同名字空间中相同名字的UUID重复生成是相同的。</p>
+<p>4、Version 4：随机UUID根据随机数，或者伪随机数生成UUID。这种UUID产生重复的概率是可以计算出来的，但随机的东西就像是买彩票：你指望它发财是不可能的，但狗屎运通常会在不经意中到来。</p>
+<p>5、Version 5：基于名字的UUID（SHA1）和版本3的UUID算法类似，只是散列值计算使用SHA1（Secure Hash Algorithm 1）算法。</p>
+<hr>
+<p>UUID的优点:</p>
+<p>通过本地生成，没有经过网络I/O，性能较快。</p>
+<p>无序，无法预测他的生成顺序。(当然这个也是他的缺点之一)</p>
+<p>UUID的缺点:</p>
+<p>128位二进制一般转换成36位的16进制，太长了只能用String存储，空间占用较多。</p>
+<p>不能生成递增有序的数字。</p>
+<h3 id="数据库主键自增"><a href="#数据库主键自增" class="headerlink" title="数据库主键自增"></a>数据库主键自增</h3><p>优点：<br>1、自增，趋势自增，作为聚集索引，提升查询效率。<br>2、节省磁盘空间。500W数据，UUID占5.4G,自增ID占2.5G。<br>3、查询，写入效率高：查询略优。写入效率自增ID是UUID的四倍。</p>
+<p>缺点：<br>1、导入旧数据时，可能会ID重复，导致导入失败。<br>2、分布式架构，多个Mysql实例可能会导致ID重复。</p>
+<p>PS：<br>1、单实例，单节点，由于InnoDB的特性，自增ID效率大于UUID。<br>2、20个节点一下小型分布式架构：为了实现快速部署，主键不重复，可以采用UUID。<br>3、20到200个节点：可以采用自增ID+步长的较快速方案。<br>4、200个以上节点的分布式架构：可以采用twitter的雪花算法全局自增ID。</p>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><p>当使用数据库来生成ID性能不够要求的时候，我们可以尝试使用Redis来生成ID。这主要依赖于Redis是单线程的，所以也可以用生成全局唯一的ID。可以用Redis的原子操作 INCR和INCRBY来实现。</p>
+<p>优点：<br>1、不依赖于数据库，灵活方便，且性能优于数据库。<br>2、数字ID天然排序，对分页或者需要排序的结果很有帮助。</p>
+<p>缺点：<br>1、由于redis是内存的KV数据库，即使有AOF和RDB，但是依然会存在数据丢失，有可能会造成ID重复。<br>2、依赖于redis，redis要是不稳定，会影响ID生成。</p>
+<h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><p>zookeeper做分布式一致性，没有啥好说的。</p>
+<h3 id="数据库分段-服务缓存ID"><a href="#数据库分段-服务缓存ID" class="headerlink" title="数据库分段+服务缓存ID"></a>数据库分段+服务缓存ID</h3><p><img src="/images/Distributed_Id1.webp" alt="Distributed_Id1"></p>
+<p>优点:<br>1、比主键递增性能高，能保证趋势递增。<br>2、如果DB宕机，proxServer由于有缓存依然可以坚持一段时间。</p>
+<p>缺点:<br>1、和主键递增一样，容易被人猜测。<br>2、DB宕机，虽然能支撑一段时间但是仍然会造成系统不可用。</p>
+<p>适用场景:需要趋势递增，并且ID大小可控制的，可以使用这套方案。</p>
+<p>当然这个方案也可以通过一些手段避免被人猜测，把ID变成是无序的，比如把我们生成的数据是一个递增的long型，把这个Long分成几个部分，比如可以分成几组三位数，几组四位数，然后在建立一个映射表，将我们的数据变成无序。</p>
+<h3 id="雪花算法-Snowflake"><a href="#雪花算法-Snowflake" class="headerlink" title="雪花算法-Snowflake"></a>雪花算法-Snowflake</h3><p>Snowflake是Twitter提出来的一个算法，其目的是生成一个64bit的整数:</p>
+<p>雪花算法简单描述：<br>1、最高位是符号位，始终为0，不可用。<br>2、41位的时间序列，精确到毫秒级，41位的长度可以使用69年。时间位还有一个很重要的作用是可以根据时间进行排序。<br>3、10位的机器标识，10位的长度最多支持部署1024个节点。<br>4、12位的计数序列号，序列号即一系列的自增id，可以支持同一节点同一毫秒生成多个ID序号，12位的计数序列号支持每个节点每毫秒产生4096个ID序号。</p>
+<p><img src="/images/Distributed_Id2.webp" alt="Distributed_Id2"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式/" rel="tag">#分布式</a>
+          
+            <a href="/tags/ID/" rel="tag">#ID</a>
+          
+            <a href="/tags/生成方案/" rel="tag">#生成方案</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/HashCode.html" rel="next" title="为什么String的hashCode选择 31 作为乘子?">
+                <i class="fa fa-chevron-left"></i> 为什么String的hashCode选择 31 作为乘子?
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/tx.jpg"
+               alt="LuisStruggle" />
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">177</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UUID"><span class="nav-number">1.</span> <span class="nav-text">UUID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库主键自增"><span class="nav-number">2.</span> <span class="nav-text">数据库主键自增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">3.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zookeeper"><span class="nav-number">4.</span> <span class="nav-text">Zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库分段-服务缓存ID"><span class="nav-number">5.</span> <span class="nav-text">数据库分段+服务缓存ID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雪花算法-Snowflake"><span class="nav-number">6.</span> <span class="nav-text">雪花算法-Snowflake</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
