@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,37 +63,35 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="机器学习,算法,GBDT,原理,决策树," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="机器学习,算法,GBDT,原理,决策树,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
-
-从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
+<meta name="description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。  从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
+<meta name="keywords" content="机器学习,算法,GBDT,原理,决策树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GBDT详解">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/GBDT-theory.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
-
-从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
+<meta property="og:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。  从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/927391/201607/927391-20160717135005498-1140287801.jpg">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503195611626?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
@@ -119,12 +117,10 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20170503231945499?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503232105319?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20170503233147438?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-08-02T06:24:31.678Z">
+<meta property="og:updated_time" content="2018-08-02T06:24:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GBDT详解">
-<meta name="twitter:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。
-
-从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
+<meta name="twitter:description" content="GBDT+FFM(FM)+Online Learing(FTRL)是kaggle比赛的重点方法，而且暑期实习面试的时候也有很多面试官问了，还是很有必要学习下的。  从Ensemble说起Bagging，Boosting和Stacking是集成学习的三种主要的形式。">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20170503195739515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -146,7 +142,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/GBDT-theory.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/GBDT-theory.html">
 
   <title> GBDT详解 | 奋斗的青春 </title>
 </head>
@@ -177,7 +173,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -204,7 +200,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -214,7 +210,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -224,7 +220,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -234,7 +230,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -244,7 +240,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -306,7 +302,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -372,41 +368,41 @@
 <p><img src="https://img-blog.csdn.net/20170503203033768?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="boosting tree"></p>
 <p>其中T表示决策树。</p>
 <p>对于回归问题的boosting tree的前向分步算法如下:</p>
-<p><img src="https://img-blog.csdn.net/20170503203732481?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p>其中<img src="https://img-blog.csdn.net/20170503203912904?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="">表示第m步之后的当前模型，此时需要求解:</p>
-<p><img src="https://img-blog.csdn.net/20170503204049238?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20170503203732481?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
+<p>其中<img src="https://img-blog.csdn.net/20170503203912904?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt>表示第m步之后的当前模型，此时需要求解:</p>
+<p><img src="https://img-blog.csdn.net/20170503204049238?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <p>对于回归问题可以使用平方误差作为损失函数L，即:</p>
-<p><img src="https://img-blog.csdn.net/20170503204146786?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20170503204146786?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <p>转换下就是:</p>
-<p><img src="https://img-blog.csdn.net/20170503204230927?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20170503204230927?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <p>其中<img src="https://img-blog.csdn.net/20170503204305082?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="residual">就是当前模型拟合产生的残差(residual)。</p>
-<p>对于不是平方误差的情况，可以采用泰勒展开来进行计算，具体的可以参考xgboost作者陈天奇的介绍。<br><a href="http://xgboost.readthedocs.io/en/latest/model.html" target="_blank" rel="external"><strong>boosted tree introduction</strong></a><br><a href="http://dataunion.org/15787.html" target="_blank" rel="external"><strong>boosted tree introduction 中文版</strong></a></p>
+<p>对于不是平方误差的情况，可以采用泰勒展开来进行计算，具体的可以参考xgboost作者陈天奇的介绍。<br><a href="http://xgboost.readthedocs.io/en/latest/model.html" target="_blank" rel="noopener"><strong>boosted tree introduction</strong></a><br><a href="http://dataunion.org/15787.html" target="_blank" rel="noopener"><strong>boosted tree introduction 中文版</strong></a></p>
 <p>这里我直接摘抄下:</p>
 <p><img src="https://img-blog.csdn.net/20170503205500261?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="object function"></p>
 <p>Obj表示object function，跟我们上面说的不一样的是，这里加上了正则，不过不影响理解。采用泰勒展开来近似:</p>
-<p><img src="https://img-blog.csdn.net/20170503205717163?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20170503205717163?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <h1 id="Gradient-Boosting"><a href="#Gradient-Boosting" class="headerlink" title="Gradient Boosting"></a>Gradient Boosting</h1><p>Boosting更像是一种思想, gradient boosting是一种boosting的方法. 它主要的思想是，<strong>每一次建立模型是在之前建立模型损失函数的梯度下降方向</strong>。</p>
 <p>统计学习方法中是这么说的：</p>
 <blockquote>
-<p>假设分步模型下当前模型是f(x)，利用损失函数L的负梯度在f(x)下的值作为boosting tree算法中的残差(residual)去拟合一个回归树。<br><img src="https://img-blog.csdn.net/20170503213606986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>假设分步模型下当前模型是f(x)，利用损失函数L的负梯度在f(x)下的值作为boosting tree算法中的残差(residual)去拟合一个回归树。<br><img src="https://img-blog.csdn.net/20170503213606986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 </blockquote>
-<p>所以大概算法是这样的:<br><img src="https://img-blog.csdn.net/20170503234004265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>所以大概算法是这样的:<br><img src="https://img-blog.csdn.net/20170503234004265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <blockquote>
 <p>2(a)表示计算损失函数的负梯度在当前模型的值，将其作为残差的估计值;<br>2(b)表示估计回归树叶子节点的区域，以拟合残差的近似值;<br>2(c)表示利用线性搜索估计叶子节点区域的值，使得损失函数最小化;<br>2(d)更新回归树;</p>
 </blockquote>
 <p>说的不好懂，没关系，下面还有个更具体的解释。</p>
-<p>假设:<br><img src="https://img-blog.csdn.net/20170503215003288?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>假设:<br><img src="https://img-blog.csdn.net/20170503215003288?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <p>其中P表示参数，F(x;P)表示以P为参数的x的函数，也就是预测函数，在分步模型中表示为加法。</p>
-<p><img src="https://img-blog.csdn.net/20160705105950067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p><img src="https://img-blog.csdn.net/20160705105950067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt>  </p>
 <p>写成梯度下降的方式就是下面的形式，也就是我们将要得到的模型fm(x)的参数{am,bm}能够使得fm的方向是之前得到的模型Fm-1(x)的损失函数下降最快的方向：</p>
-<p><img src="https://img-blog.csdn.net/20160705110221256?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p><img src="https://img-blog.csdn.net/20160705110221256?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt>  </p>
 <p>Gradient Boosting是boosting思想下的一种优化的方法，首先将函数分解为可加的形式（其实所有的函数都是可加的，只是是否好放在这个框架中，以及最终的效果如何），然后进行m次迭代，通过使得损失函数在梯度方向上减少，最终得到一个优秀的模型。<br><em>*每次模型在梯度方向上的减少的部分，可以认为是一个“小”的或者“弱”的模型</em>。，最终我们会通过加权(也就是每次在梯度方向上下降的距离）的方式将这些“弱”的模型合并起来，形成一个更好的模型。</p>
 <h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><p>一个树的定义可以分成两个部分: 结构部分和叶子权重部分。假设q是结构映射函数把输入映射到叶子的索引号上面去，w表示叶子节点的权重. 则树可以表示为:</p>
-<p><img src="https://img-blog.csdn.net/20170503223830287?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>定义树的复杂度：包含两个部分树的叶子节点的个数T和叶子节点的权重的平方，即：</p>
-<p><img src="https://img-blog.csdn.net/20170503231341377?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20170503223830287?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt><br>定义树的复杂度：包含两个部分树的叶子节点的个数T和叶子节点的权重的平方，即：</p>
+<p><img src="https://img-blog.csdn.net/20170503231341377?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <p>则此时的obj为:</p>
-<p><img src="https://img-blog.csdn.net/20170503231945499?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-<p><img src="https://img-blog.csdn.net/20170503232105319?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20170503231945499?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
+<p><img src="https://img-blog.csdn.net/20170503232105319?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 <p>此时单棵决策树的学习过程如下:</p>
 <blockquote>
 <p>(1) 枚举所有可能的树结构q<br>(2) 计算对应的分数(损失值)obj，obj越小越好<br>(3) 找到最佳的树结构，为每个叶子节点计算权值w</p>
@@ -426,11 +422,11 @@
 <li>算法每次迭代生成一颗新的决策树</li>
 <li>计算损失函数对每个样本的一阶导gi和二阶导hi</li>
 <li>通过贪心策略生成新的决策树，同时计算每个叶子节点的权重w</li>
-<li>把新生成的决策树f(x)添加到模型:<br><img src="https://img-blog.csdn.net/20170503233147438?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>为了防止过拟合添加了学习率参数(shrinkage)</li>
+<li>把新生成的决策树f(x)添加到模型:<br><img src="https://img-blog.csdn.net/20170503233147438?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR2F2aW5fX1pob3U=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt><br>为了防止过拟合添加了学习率参数(shrinkage)</li>
 </ol>
 </blockquote>
 <hr>
-<p><strong>参考博客</strong><br>1. <a href="http://dataunion.org/15787.html" target="_blank" rel="external"><strong>陈天奇的博客</strong></a><br>2. <a href="https://www.zybuluo.com/yxd/note/611571#gbdt算法" target="_blank" rel="external"><strong>GBDT算法原理解析</strong></a><br>3. <a href="http://blog.jobbole.com/88193/" target="_blank" rel="external"><strong>gradient boosting解析</strong></a><br>4. 统计学习方法(李航)<br>5. <a href="http://www.cnblogs.com/jasonfreak/p/5657196.html" target="_blank" rel="external">ensemble learning原理[推荐]</a><br>6. <a href="http://www.cnblogs.com/jasonfreak/p/5720137.html" target="_blank" rel="external">ensemble learning实战[推荐]</a><br>7. <a href="https://mlwave.com/kaggle-ensembling-guide/" target="_blank" rel="external">kaggle ensemble guide</a></p>
+<p><strong>参考博客</strong><br>1. <a href="http://dataunion.org/15787.html" target="_blank" rel="noopener"><strong>陈天奇的博客</strong></a><br>2. <a href="https://www.zybuluo.com/yxd/note/611571#gbdt算法" target="_blank" rel="noopener"><strong>GBDT算法原理解析</strong></a><br>3. <a href="http://blog.jobbole.com/88193/" target="_blank" rel="noopener"><strong>gradient boosting解析</strong></a><br>4. 统计学习方法(李航)<br>5. <a href="http://www.cnblogs.com/jasonfreak/p/5657196.html" target="_blank" rel="noopener">ensemble learning原理[推荐]</a><br>6. <a href="http://www.cnblogs.com/jasonfreak/p/5720137.html" target="_blank" rel="noopener">ensemble learning实战[推荐]</a><br>7. <a href="https://mlwave.com/kaggle-ensembling-guide/" target="_blank" rel="noopener">kaggle ensemble guide</a></p>
 
       
     </div>
@@ -528,7 +524,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -539,9 +535,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -648,7 +642,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

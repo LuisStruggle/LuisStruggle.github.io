@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Java,Lock,Volatile," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Java,Lock,Volatile,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,15 +85,17 @@
 
 
 <meta name="description" content="简述：volatile是轻量级的synchronized,它在多处理器开发中保证了共享变量的“可见性”，可见性的意思是一个线程修改一个共享变量时，另一个线程可以读到这个修改的值，如果volatile使用恰当的话，它比synchronized的使用成本更低，因为它不会引起线程的上下文切换和调度。">
+<meta name="keywords" content="Java,Lock,Volatile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Volatile关键字">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Volatile.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="简述：volatile是轻量级的synchronized,它在多处理器开发中保证了共享变量的“可见性”，可见性的意思是一个线程修改一个共享变量时，另一个线程可以读到这个修改的值，如果volatile使用恰当的话，它比synchronized的使用成本更低，因为它不会引起线程的上下文切换和调度。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://luisstruggle.github.io/images/Volatile1.png">
 <meta property="og:image" content="https://luisstruggle.github.io/images/Volatile2.png">
 <meta property="og:image" content="https://luisstruggle.github.io/images/Volatile3.png">
-<meta property="og:updated_time" content="2019-03-31T13:28:44.225Z">
+<meta property="og:updated_time" content="2019-03-31T13:28:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Volatile关键字">
 <meta name="twitter:description" content="简述：volatile是轻量级的synchronized,它在多处理器开发中保证了共享变量的“可见性”，可见性的意思是一个线程修改一个共享变量时，另一个线程可以读到这个修改的值，如果volatile使用恰当的话，它比synchronized的使用成本更低，因为它不会引起线程的上下文切换和调度。">
@@ -118,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Volatile.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Volatile.html">
 
   <title> Volatile关键字 | 奋斗的青春 </title>
 </head>
@@ -149,7 +151,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -176,7 +178,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -186,7 +188,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -196,7 +198,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -206,7 +208,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -216,7 +218,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -278,7 +280,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -324,7 +326,7 @@
 <p>在了解volatile关键字在java中的使用之前，我们需要先连接几个概念</p>
 <p>java内存模型</p>
 <p>java内存模型规定所有的变量都存放在主内存当中，每个线程在执行的时候，会从主内存当中拷贝一份到自己的工作内存当中，线程对变量的读取，操作都是在工作内存当中执行的，不同线程之间也不能相互访问其他线程的工作内存，那么线程之间的变量传递需要通过主内存来实现共享。那么什么时候把修改过得变量更新到主内存当中去，就是多线程场景下需要解决的问题，否则将会造成数据的不一致。</p>
-<p><img src="/images/Volatile1.png" alt=""></p>
+<p><img src="/images/Volatile1.png" alt></p>
 <p>而volatile关键字就是为了解决数据一致性的问题，通俗来说就是线程A对变量的修改，会直接刷新到主内存，线程B当中，在对变量进行读取的时候，发现变量是volatile关键字修饰的变量，直接放弃从工作内存当中读取，而是从主内存中读取</p>
 <p>从上面的一段分析来看，volatile关键字是可以保证变量的一致性的，我们看下下面的这段代码</p>
 <pre><code>public class Test {
@@ -483,10 +485,10 @@ doSomethingwithconfig(context);
 <p>|</p>
 <p>普通写</p>
 <p>在实际执行过程中，只要不改变volatile写-读的内存语义，编译器可以根据实际情况省略掉不必要的屏障。</p>
-<p><img src="/images/Volatile2.png" alt=""></p>
-<p><img src="/images/Volatile3.png" alt=""></p>
-<p>参考：<a href="http://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="external">Java并发编程：volatile关键字解析</a></p>
-<p><a href="https://www.jianshu.com/p/195ae7c77afe" target="_blank" rel="external">java volatile关键字解惑</a></p>
+<p><img src="/images/Volatile2.png" alt></p>
+<p><img src="/images/Volatile3.png" alt></p>
+<p>参考：<a href="http://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="noopener">Java并发编程：volatile关键字解析</a></p>
+<p><a href="https://www.jianshu.com/p/195ae7c77afe" target="_blank" rel="noopener">java volatile关键字解惑</a></p>
 
       
     </div>
@@ -580,7 +582,7 @@ doSomethingwithconfig(context);
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -591,9 +593,7 @@ doSomethingwithconfig(context);
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -700,7 +700,7 @@ doSomethingwithconfig(context);
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

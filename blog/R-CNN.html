@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,45 +63,44 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="原理,模型,RCNN," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="原理,模型,RCNN,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="https://blog.csdn.net/v1_vivian/article/details/78599229
-R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物体检测的鼻祖论文，其中fast-RCNN 以及faster-RCNN都是沿袭R-CNN的思路。今天又重新整理了一下当初阅读论文的笔记，希望自己能有新的理解吧。">
+<meta name="description" content="https://blog.csdn.net/v1_vivian/article/details/78599229 R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物体检测的鼻祖论文，其中fast-RCNN 以及faster-RCNN都是沿袭R-CNN的思路。今天又重新整理了一下当初阅读论文的笔记，希望自己能有新的理解吧。">
+<meta name="keywords" content="原理,模型,RCNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RCNN 原理学习">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/R-CNN.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="https://blog.csdn.net/v1_vivian/article/details/78599229
-R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物体检测的鼻祖论文，其中fast-RCNN 以及faster-RCNN都是沿袭R-CNN的思路。今天又重新整理了一下当初阅读论文的笔记，希望自己能有新的理解吧。">
+<meta property="og:description" content="https://blog.csdn.net/v1_vivian/article/details/78599229 R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物体检测的鼻祖论文，其中fast-RCNN 以及faster-RCNN都是沿袭R-CNN的思路。今天又重新整理了一下当初阅读论文的笔记，希望自己能有新的理解吧。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/2018050819433340?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3YxX3Zpdmlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180508195528802?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3YxX3Zpdmlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180508201458480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3YxX3Zpdmlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180508200634351?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3YxX3Zpdmlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180508200913879?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3YxX3Zpdmlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:updated_time" content="2018-10-27T08:31:52.886Z">
+<meta property="og:updated_time" content="2018-10-27T08:31:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RCNN 原理学习">
-<meta name="twitter:description" content="https://blog.csdn.net/v1_vivian/article/details/78599229
-R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物体检测的鼻祖论文，其中fast-RCNN 以及faster-RCNN都是沿袭R-CNN的思路。今天又重新整理了一下当初阅读论文的笔记，希望自己能有新的理解吧。">
+<meta name="twitter:description" content="https://blog.csdn.net/v1_vivian/article/details/78599229 R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物体检测的鼻祖论文，其中fast-RCNN 以及faster-RCNN都是沿袭R-CNN的思路。今天又重新整理了一下当初阅读论文的笔记，希望自己能有新的理解吧。">
 <meta name="twitter:image" content="https://img-blog.csdn.net/2018050819433340?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3YxX3Zpdmlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 
 
@@ -123,7 +122,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/R-CNN.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/R-CNN.html">
 
   <title> RCNN 原理学习 | 奋斗的青春 </title>
 </head>
@@ -154,7 +153,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -181,7 +180,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -191,7 +190,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -201,7 +200,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -211,7 +210,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -221,7 +220,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -283,7 +282,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -324,7 +323,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
       
 
       
-        <p><a href="https://blog.csdn.net/v1_vivian/article/details/78599229" target="_blank" rel="external">https://blog.csdn.net/v1_vivian/article/details/78599229</a></p>
+        <p><a href="https://blog.csdn.net/v1_vivian/article/details/78599229" target="_blank" rel="noopener">https://blog.csdn.net/v1_vivian/article/details/78599229</a></p>
 <p>R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物体检测的鼻祖论文，其中fast-RCNN 以及faster-RCNN都是沿袭R-CNN的思路。今天又重新整理了一下当初阅读论文的笔记，希望自己能有新的理解吧。</p>
 <a id="more"></a>
 <p>R-CNN（region with CNN features）论文：</p>
@@ -361,7 +360,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
 <h2 id="2-1模块设计"><a href="#2-1模块设计" class="headerlink" title="2.1模块设计"></a>2.1模块设计</h2><p><strong>区域推荐（region proposal）</strong><br>近来有很多研究都提出了产生类别无关区域推荐的方法。比如: objectness（物体性），selective search（选择性搜索），category-independent object proposals(类别无关物体推荐)，constrained parametric min-cuts（受限参最小剪切, CPMC)，multi-scal combinatorial grouping(多尺度联合分组)，以及Ciresan等人的方法，将CNN用在规律空间块裁剪上以检测有丝分裂细胞，也算是一种特殊的区域推荐类型。由于R-CNN对特定区域算法是不关心的，所以我们采用了选择性搜索以方便和前面的工作进行可控的比较。</p>
 <p><strong>特征提取（Feature extraction）</strong><br>我们使用Krizhevsky等人所描述的CNN的一个Caffe实现版本对每个推荐区域抽取一个4096维度的特征向量把一个输入为277<em>277大小的图片，通过五个卷积层和两个全连接层进行前向传播,最终得到一个4096-D的特征向量。读者可以参考AlexNet获得更多的网络架构细节。<br>为了计算region proposal的特征，我们首先要对图像进行转换，使得它符合CNNC的输入（架构中的CNNC只能接受固定大小：277</em>277）。这个变换有很多办法，我们使用了最简单的一种。无论候选区域是什么尺寸和宽高比，我们都把候选框变形成想要的尺寸。具体的，变形之前，我们现在候选框周围加上16的padding,再进行各向异性缩放。<br>这种形变使得mAp提高了3到5个百分点。在补充材料中，作者对比了各向异性和各向同性缩放缩放方法。</p>
 <blockquote>
-<p>【关于图像的各项同性 各向异性可以参考我的另一篇文章，那里有具体比较说明链接：<a href="https://blog.csdn.net/v1_vivian/article/details/80245397" target="_blank" rel="external">R-CNN中的各项同性各向异性</a>】。</p>
+<p>【关于图像的各项同性 各向异性可以参考我的另一篇文章，那里有具体比较说明链接：<a href="https://blog.csdn.net/v1_vivian/article/details/80245397" target="_blank" rel="noopener">R-CNN中的各项同性各向异性</a>】。</p>
 </blockquote>
 <h2 id="2-2测试阶段的物体检测"><a href="#2-2测试阶段的物体检测" class="headerlink" title="2.2测试阶段的物体检测"></a>2.2测试阶段的物体检测</h2><p>测试阶段，在测试图像上使用selective search抽取2000个推荐区域（实验中，我们使用了选择性搜索的快速模式）。然后变形每一个推荐区域，再通过CNN前向传播计算出特征。然后我们使用对每个类别训练出的SVM给整个特征向量中的每个类别单独打分。</p>
 <blockquote>
@@ -398,7 +397,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
 <h2 id="3-3-检测错误分析"><a href="#3-3-检测错误分析" class="headerlink" title="3.3 检测错误分析"></a>3.3 检测错误分析</h2><p>为了揭示出我们方法的错误之处，<br>我们使用Hoiem提出的优秀的检测分析工具，来理解调参是怎样改变他们，并且观察相对于DPM方法，我们的错误形式。这个分析方法全部的介绍超出了本篇文章的范围，我们建议读者查阅文献21来了解更加详细的介绍（例如“normalized AP”的介绍），由于这些分析是不太有关联性，所以我们放在图4和图5的题注中讨论。<br><img src="https://img-blog.csdn.net/20180508200634351?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3YxX3Zpdmlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <h2 id="3-4-Bounding-box回归"><a href="#3-4-Bounding-box回归" class="headerlink" title="3.4 Bounding-box回归"></a>3.4 Bounding-box回归</h2><p>基于错误分析，我们使用了一种简单的方法减小定位误差。受到DPM[17]中使用的约束框回归训练启发，我们训练了一个线性回归模型在给定一个选择区域的pool5特征时去预测一个新的检测窗口。详细的细节参考附录C。表1、表2和图4的结果说明这个简单的方法，修复了大量的错位检测，提升了3-4个百分点。</p>
 <blockquote>
-<p>Bounding-Box的具体内容可以参考我的另一篇文章，那里写的比较详细。<br> 链接：<a href="https://blog.csdn.net/v1_vivian/article/details/80292569" target="_blank" rel="external">边框回归：BoundingBox-Regression</a></p>
+<p>Bounding-Box的具体内容可以参考我的另一篇文章，那里写的比较详细。<br> 链接：<a href="https://blog.csdn.net/v1_vivian/article/details/80292569" target="_blank" rel="noopener">边框回归：BoundingBox-Regression</a></p>
 </blockquote>
 <h2 id="4-语义分割"><a href="#4-语义分割" class="headerlink" title="4. 语义分割"></a>4. 语义分割</h2><p>区域分类是语义分割的标准技术，这使得我们很容易将R-CNN应用到PASCAL VOC分割任务的挑战。为了和当前主流的语义分割系统（称为O2P，second-order pooling[4]）做对比，我们使用了一个开源的框架。O2P使用CPMC针对每张图片产生150个区域推荐，并预测每个区域的品质，对于每个类别，进行支撑向量回归（support vector regression，SVR）。他们的方法很高效，主要得益于CPMC区域的品质和多特征类型的强大二阶池化（second-second pooling，SIFT和LBP的增强变种）。我们也注意到Farabet等人[16]将CNN用作多尺度逐像素分类器，在几个高密度场景标注数据集（不包括PASCAL）上取得了不错的成绩。<br>我们学习[2,4]，将Hariharan等人提供的额外标注信息补充到PASCAL分割训练集中。设计选择和超参数都在VOC<br>2011验证集上进行交叉验证。最后的测试结果只执行了一次。  </p>
 <p><strong>用于分割的CNN特征</strong> 。<br>为了计算CPMC区域上的特征，我们执行了三个策略，每个策略都先将矩形窗口变形到227×227大小。第一个策略完全忽略区域的形状(full ignore)，直接在变形后的窗口上计算CNN特征，就和我们检测时做的一样。但是，这些特征忽略了区域的非矩形形状。两个区域也许包含相似的约束框却几乎没有重叠。因此，第二个策略(fg，foreground)只计算前景遮罩（foreground mask）的CNN特征，我们将所有的背景像素替换成平均输入，这样减除平均值后他们就会变成0。第三个策略(full+fg)，简单的并联全部（full）特征和前景（fg）特征；我们的实验验证了他们的互补性。</p>
@@ -497,7 +496,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -508,9 +507,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -601,7 +598,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面："><span class="nav-number">1.</span> <span class="nav-text">写在前面：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文翻译："><span class="nav-number"></span> <span class="nav-text">论文翻译：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要："><span class="nav-number">1.</span> <span class="nav-text">摘要：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-介绍："><span class="nav-number">2.</span> <span class="nav-text">1. 介绍：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-用RCNN做物体检测"><span class="nav-number">3.</span> <span class="nav-text">2. 用RCNN做物体检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1模块设计"><span class="nav-number">4.</span> <span class="nav-text">2.1模块设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2测试阶段的物体检测"><span class="nav-number">5.</span> <span class="nav-text">2.2测试阶段的物体检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3训练"><span class="nav-number">6.</span> <span class="nav-text">2.3训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-在PASCAL-VOC-2010-12上的结果"><span class="nav-number">7.</span> <span class="nav-text">2.4 在PASCAL VOC 2010-12上的结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-可视化、消融、模型的错误"><span class="nav-number">8.</span> <span class="nav-text">3. 可视化、消融、模型的错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-可视化学习到的特征"><span class="nav-number">9.</span> <span class="nav-text">3.1 可视化学习到的特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-消融研究-Ablation-studies"><span class="nav-number">10.</span> <span class="nav-text">3.2 消融研究(Ablation studies)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-检测错误分析"><span class="nav-number">11.</span> <span class="nav-text">3.3 检测错误分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-Bounding-box回归"><span class="nav-number">12.</span> <span class="nav-text">3.4 Bounding-box回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-语义分割"><span class="nav-number">13.</span> <span class="nav-text">4. 语义分割</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-结论"><span class="nav-number">14.</span> <span class="nav-text">5. 结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面："><span class="nav-number">1.</span> <span class="nav-text">写在前面：</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#论文翻译："><span class="nav-number"></span> <span class="nav-text">论文翻译：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要："><span class="nav-number">1.</span> <span class="nav-text">摘要：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-介绍："><span class="nav-number">2.</span> <span class="nav-text">1. 介绍：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-用RCNN做物体检测"><span class="nav-number">3.</span> <span class="nav-text">2. 用RCNN做物体检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1模块设计"><span class="nav-number">4.</span> <span class="nav-text">2.1模块设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2测试阶段的物体检测"><span class="nav-number">5.</span> <span class="nav-text">2.2测试阶段的物体检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3训练"><span class="nav-number">6.</span> <span class="nav-text">2.3训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-在PASCAL-VOC-2010-12上的结果"><span class="nav-number">7.</span> <span class="nav-text">2.4 在PASCAL VOC 2010-12上的结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-可视化、消融、模型的错误"><span class="nav-number">8.</span> <span class="nav-text">3. 可视化、消融、模型的错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-可视化学习到的特征"><span class="nav-number">9.</span> <span class="nav-text">3.1 可视化学习到的特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-消融研究-Ablation-studies"><span class="nav-number">10.</span> <span class="nav-text">3.2 消融研究(Ablation studies)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-检测错误分析"><span class="nav-number">11.</span> <span class="nav-text">3.3 检测错误分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-Bounding-box回归"><span class="nav-number">12.</span> <span class="nav-text">3.4 Bounding-box回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-语义分割"><span class="nav-number">13.</span> <span class="nav-text">4. 语义分割</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-结论"><span class="nav-number">14.</span> <span class="nav-text">5. 结论</span></a></li></ol></li></div>
             
           </div>
         </section>
@@ -617,7 +614,7 @@ R-CNN系列论文（R-CNN,fast-RCNN,faster-RCNN）是使用深度学习进行物
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

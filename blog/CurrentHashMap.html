@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="HashMap,CurrentHashMap,CVS,红黑树," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="HashMap,CurrentHashMap,CVS,红黑树,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,18 +85,20 @@
 
 
 <meta name="description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached）的核心其实就是在内存中维护一张大的哈希表。">
+<meta name="keywords" content="HashMap,CurrentHashMap,CVS,红黑树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CurrentHashMap">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/CurrentHashMap.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached）的核心其实就是在内存中维护一张大的哈希表。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8031371-134935184408ef0f.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8031371-44ed77820f471459.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8031371-0886d83c99bf0275.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8031371-b057a459fa1cbccf.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8031371-375330585a3e1869.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8031371-5ba8454d1bc6f3e7.png">
-<meta property="og:updated_time" content="2019-03-30T09:38:50.107Z">
+<meta property="og:updated_time" content="2019-03-30T09:38:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CurrentHashMap">
 <meta name="twitter:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached）的核心其实就是在内存中维护一张大的哈希表。">
@@ -121,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/CurrentHashMap.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/CurrentHashMap.html">
 
   <title> CurrentHashMap | 奋斗的青春 </title>
 </head>
@@ -152,7 +154,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -179,7 +181,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -189,7 +191,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -199,7 +201,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -209,7 +211,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -219,7 +221,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -281,7 +283,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -338,7 +340,7 @@
 </li>
 </ul>
 <p>哈希表上面的特性，哈希表的主干就是数组。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/8031371-134935184408ef0f.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8031371-134935184408ef0f.png" alt></p>
 <p>哈希表</p>
 <p>比如我们要新增或查找某个元素，我们通过把当前元素的关键字 通过某个函数映射到数组中的某个位置，通过数组下标一次定位就可完成操作。<br><strong>存储位置 = f(关键字)</strong><br>其中，这个函数f一般称为哈希函数，这个函数的设计好坏会直接影响到哈希表的优劣。<br>查找操作同理，先通过哈希函数计算出实际存储地址，然后从数组中对应地址取出即可。</p>
 <h3 id="二、哈希冲突"><a href="#二、哈希冲突" class="headerlink" title="二、哈希冲突"></a>二、哈希冲突</h3><p>通过哈希函数得出的实际存储地址相同怎么办？也就是说， <strong>当我们对某个元素进行哈希运算，得到一个存储地址，然后要进行插入的时候，发现已经被其他元素占用了</strong><br>，其实这就是所谓的哈希冲突，也叫哈希碰撞。</p>
@@ -369,7 +371,7 @@
             hash = h;
         }
 </code></pre><p>HashMap的整体结构如下:</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/8031371-44ed77820f471459.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8031371-44ed77820f471459.png" alt></p>
 <p>HashMap的结构</p>
 <ul>
 <li><p><strong>解决冲突的链表的长度影响到HashMap查询的效率</strong><br>简单来说，HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的，如果定位到的数组位置不含链表（当前entry的next指向null）,那么对于查找，添加等操作很快，仅需一次寻址即可；如果定位到的数组包含链表，对于添加操作，其时间复杂度为O(n)，首先遍历链表，存在即覆盖，否则新增；对于查找操作来讲，仍需遍历链表，然后通过key对象的equals方法逐一比对查找。所以，性能考虑，HashMap中的链表出现越少，性能才会越好。</p>
@@ -427,7 +429,7 @@ if ((e = p.next) == null) {
 <p>1.为什么HashMap的Entry数组长度默认为16呢?为什么数组长度一定要是2的n次幂呢？</p>
 </blockquote>
 <p>查看HashMap计算hashcode的方法获取存储的位置：<br>为了减少hash值的碰撞,需要实现一个尽量均匀分布的hash函数,在HashMap中通过利用key的hashcode值,来进行位运算</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/8031371-0886d83c99bf0275.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8031371-0886d83c99bf0275.png" alt></p>
 <p>存储的流程</p>
 <pre><code>/**
     * Returns index for hash code h.
@@ -473,7 +475,7 @@ void addEntry(int hash, K key, V value, int bucketIndex) {
 <li>如果插入的元素key的hashcode值相同，那么这些key也会被定位到Node数组的同一个格子里，如果不超过 <strong>8个</strong> 使用链表存储；</li>
 <li>超过8个，会调用treeifyBin函数，将链表转换为红黑树。那么即使所有key的hashcode完全相同，由于红黑树的特点，查找某个特定元素，也只需要O（logn）的开销。</li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/8031371-b057a459fa1cbccf.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8031371-b057a459fa1cbccf.png" alt></p>
 <p>JDK8的HashMap</p>
 <p>上图是示意图，主要是描述结构，不会达到这个状态的，因为这么多数据的时候早就扩容了。</p>
 <h3 id="put"><a href="#put" class="headerlink" title="put"></a>put</h3><ul>
@@ -489,7 +491,7 @@ void addEntry(int hash, K key, V value, int bucketIndex) {
 </blockquote>
 <p>HashMap在put的时候，插入的元素超过了容量（由负载因子决定）的范围就会触发扩容操作，就是rehash，这个会重新将原数组的内容重新hash到新的扩容数组中，在多线程的环境下，存在同时其他的元素也在进行put操作，如果hash值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在get时会出现死循环，所以HashMap是线程不安全的。</p>
 <h3 id="JDK7下的CurrentHashMap"><a href="#JDK7下的CurrentHashMap" class="headerlink" title="JDK7下的CurrentHashMap"></a>JDK7下的CurrentHashMap</h3><p>在JDK1.7版本中，ConcurrentHashMap的数据结构是由一个Segment数组和多个HashEntry组成，主要实现原理是实现了<strong>锁分离</strong> 的思路解决了多线程的安全问题，如下图所示：  </p>
-<p><img src="https://upload-images.jianshu.io/upload_images/8031371-375330585a3e1869.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8031371-375330585a3e1869.png" alt></p>
 <p>CurrentHashMap的结构</p>
 <p>Segment数组的意义就是将一个大的table分割成多个小的table来进行加锁，也就是上面的提到的锁分离技术，而每一个Segment元素存储的是HashEntry数组+链表，这个和HashMap的数据存储结构一样。</p>
 <blockquote>
@@ -520,7 +522,7 @@ while (cap &lt; c)
        final float loadFactor;
        Segment(float lf) { this.loadFactor = lf; }
    }
-</code></pre><p>从上Segment的继承体系可以看出，Segment实现了ReentrantLock,也就带有锁的功能，当执行put操作时，会进行第一次key的hash来定位Segment的位置，如果该Segment还没有初始化，即通过CAS操作进行赋值，然后进行第二次hash操作，找到相应的HashEntry的位置，这里会利用继承过来的锁的特性，在将数据插入指定的HashEntry位置时（链表的尾端），会通过继承ReentrantLock的tryLock（）方法尝试去获取锁，如果获取成功就直接插入相应的位置，如果已经有线程获取该Segment的锁，那当前线程会以<strong>自旋的方式(如果不了解自旋锁，请参考：</strong><a href="http://www.cnblogs.com/aspirant/p/8746255.html" target="_blank" rel="external">自旋锁原理及java自旋锁</a><strong>)</strong> 去继续的调用tryLock（）方法去获取锁，超过指定次数就挂起，等待唤醒.</p>
+</code></pre><p>从上Segment的继承体系可以看出，Segment实现了ReentrantLock,也就带有锁的功能，当执行put操作时，会进行第一次key的hash来定位Segment的位置，如果该Segment还没有初始化，即通过CAS操作进行赋值，然后进行第二次hash操作，找到相应的HashEntry的位置，这里会利用继承过来的锁的特性，在将数据插入指定的HashEntry位置时（链表的尾端），会通过继承ReentrantLock的tryLock（）方法尝试去获取锁，如果获取成功就直接插入相应的位置，如果已经有线程获取该Segment的锁，那当前线程会以<strong>自旋的方式(如果不了解自旋锁，请参考：</strong><a href="http://www.cnblogs.com/aspirant/p/8746255.html" target="_blank" rel="noopener">自旋锁原理及java自旋锁</a><strong>)</strong> 去继续的调用tryLock（）方法去获取锁，超过指定次数就挂起，等待唤醒.</p>
 <h3 id="get-1"><a href="#get-1" class="headerlink" title="get"></a>get</h3><p>ConcurrentHashMap的get操作跟HashMap类似，只是ConcurrentHashMap第一次需要经过一次hash定位到Segment的位置，然后再hash定位到指定的HashEntry，遍历该HashEntry下的链表进行对比，成功就返回，不成功就返回null</p>
 <h3 id="size-返回ConcurrentHashMap元素大小"><a href="#size-返回ConcurrentHashMap元素大小" class="headerlink" title="size 返回ConcurrentHashMap元素大小"></a>size 返回ConcurrentHashMap元素大小</h3><p>计算ConcurrentHashMap的元素大小是一个有趣的问题，因为他是并发操作的，就是在你计算size的时候，他还在并发的插入数据，可能会导致你计算出来的size和你实际的size有相差（在你return<br>size的时候，插入了多个数据），要解决这个问题，JDK1.7版本用两种方案</p>
 <pre><code>try {
@@ -549,7 +551,7 @@ finally {
 <p> 2、第二种方案是如果第一种方案不符合，他就会给每个Segment加上锁，然后计算ConcurrentHashMap的size返回.</p>
 </blockquote>
 <h3 id="JDK8的ConcurrentHashMap"><a href="#JDK8的ConcurrentHashMap" class="headerlink" title="JDK8的ConcurrentHashMap"></a>JDK8的ConcurrentHashMap</h3><p>JDK1.8的实现已经摒弃了Segment的概念，而是直接用Node数组+链表+红黑树的数据结构来实现，并发控制使用Synchronized和CAS来操作，整个看起来就像是优化过且线程安全的HashMap，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是为了兼容旧版本.</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/8031371-5ba8454d1bc6f3e7.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8031371-5ba8454d1bc6f3e7.png" alt></p>
 <p>JDK8的ConcurrentHashMap</p>
 <p>在深入JDK1.8的put和get实现之前要知道一些常量设计和数据结构，这些是构成ConcurrentHashMap实现结构的基础，下面看一下基本属性：</p>
 <pre><code>// node数组最大容量：2^30=1073741824
@@ -697,15 +699,15 @@ private transient volatile int sizeCtl;
 </li>
 <li><p>JDK1.8为什么使用内置锁synchronized来代替重入锁ReentrantLock，我觉得有以下几点<br>1.因为粒度降低了，在相对而言的低粒度加锁方式，synchronized并不比ReentrantLock差，在粗粒度加锁中ReentrantLock可能通过Condition来控制各个低粒度的边界，更加的灵活，而在低粒度中，Condition的优势就没有了<br>2.JVM的开发团队从来都没有放弃synchronized，而且基于JVM的synchronized优化空间更大，使用内嵌的关键字比使用API更加自然<br>3.在大量的数据操作下，对于JVM的内存压力，基于API的ReentrantLock会开销更多的内存，虽然不是瓶颈，但是也是一个选择依据<br>参考资料：</p>
 </li>
-<li><p><a href="https://www.cnblogs.com/chengxiao/p/6059914.html" target="_blank" rel="external">HashMap实现原理及源码分析</a></p>
+<li><p><a href="https://www.cnblogs.com/chengxiao/p/6059914.html" target="_blank" rel="noopener">HashMap实现原理及源码分析</a></p>
 </li>
-<li><p><a href="https://www.jianshu.com/p/1e9cf0ac07f4" target="_blank" rel="external">Hashmap死循环原因总结</a></p>
+<li><p><a href="https://www.jianshu.com/p/1e9cf0ac07f4" target="_blank" rel="noopener">Hashmap死循环原因总结</a></p>
 </li>
-<li><p><a href="https://www.cnblogs.com/aspirant/p/8623864.html" target="_blank" rel="external">ConcurrentHashMap原理分析（1.7与1.8）</a></p>
+<li><p><a href="https://www.cnblogs.com/aspirant/p/8623864.html" target="_blank" rel="noopener">ConcurrentHashMap原理分析（1.7与1.8）</a></p>
 </li>
-<li><p><a href="https://blog.csdn.net/qq_33589510/article/details/79962152" target="_blank" rel="external">CurrentHashMap原理与应用(JDK7)</a></p>
+<li><p><a href="https://blog.csdn.net/qq_33589510/article/details/79962152" target="_blank" rel="noopener">CurrentHashMap原理与应用(JDK7)</a></p>
 </li>
-<li><p><a href="https://blog.csdn.net/jianghuxiaojin/article/details/52006118" target="_blank" rel="external">java-并发-ConcurrentHashMap高并发机制-jdk1.8</a></p>
+<li><p><a href="https://blog.csdn.net/jianghuxiaojin/article/details/52006118" target="_blank" rel="noopener">java-并发-ConcurrentHashMap高并发机制-jdk1.8</a></p>
 </li>
 </ul>
 
@@ -803,7 +805,7 @@ private transient volatile int sizeCtl;
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -814,9 +816,7 @@ private transient volatile int sizeCtl;
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -907,7 +907,7 @@ private transient volatile int sizeCtl;
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、什么是哈希表"><span class="nav-number">1.</span> <span class="nav-text">一、什么是哈希表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、哈希冲突"><span class="nav-number">2.</span> <span class="nav-text">二、哈希冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、HashMap的实现原理"><span class="nav-number">3.</span> <span class="nav-text">三、HashMap的实现原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、HashMap的默认参数理解"><span class="nav-number"></span> <span class="nav-text">四、HashMap的默认参数理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、JDK8下的HashMap的实现"><span class="nav-number"></span> <span class="nav-text">五、JDK8下的HashMap的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#put"><span class="nav-number">1.</span> <span class="nav-text">put</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">2.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、CurrentHashMap的原理"><span class="nav-number">3.</span> <span class="nav-text">六、CurrentHashMap的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK7下的CurrentHashMap"><span class="nav-number">4.</span> <span class="nav-text">JDK7下的CurrentHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">5.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put操作"><span class="nav-number">6.</span> <span class="nav-text">put操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-1"><span class="nav-number">7.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-返回ConcurrentHashMap元素大小"><span class="nav-number">8.</span> <span class="nav-text">size 返回ConcurrentHashMap元素大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK8的ConcurrentHashMap"><span class="nav-number">9.</span> <span class="nav-text">JDK8的ConcurrentHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK8的Node"><span class="nav-number">10.</span> <span class="nav-text">JDK8的Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeNode"><span class="nav-number">11.</span> <span class="nav-text">TreeNode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeBin"><span class="nav-number">12.</span> <span class="nav-text">TreeBin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结和思考"><span class="nav-number">13.</span> <span class="nav-text">总结和思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、什么是哈希表"><span class="nav-number">1.</span> <span class="nav-text">一、什么是哈希表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、哈希冲突"><span class="nav-number">2.</span> <span class="nav-text">二、哈希冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、HashMap的实现原理"><span class="nav-number">3.</span> <span class="nav-text">三、HashMap的实现原理</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#四、HashMap的默认参数理解"><span class="nav-number"></span> <span class="nav-text">四、HashMap的默认参数理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、JDK8下的HashMap的实现"><span class="nav-number"></span> <span class="nav-text">五、JDK8下的HashMap的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#put"><span class="nav-number">1.</span> <span class="nav-text">put</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">2.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、CurrentHashMap的原理"><span class="nav-number">3.</span> <span class="nav-text">六、CurrentHashMap的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK7下的CurrentHashMap"><span class="nav-number">4.</span> <span class="nav-text">JDK7下的CurrentHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">5.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put操作"><span class="nav-number">6.</span> <span class="nav-text">put操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-1"><span class="nav-number">7.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-返回ConcurrentHashMap元素大小"><span class="nav-number">8.</span> <span class="nav-text">size 返回ConcurrentHashMap元素大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK8的ConcurrentHashMap"><span class="nav-number">9.</span> <span class="nav-text">JDK8的ConcurrentHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK8的Node"><span class="nav-number">10.</span> <span class="nav-text">JDK8的Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeNode"><span class="nav-number">11.</span> <span class="nav-text">TreeNode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeBin"><span class="nav-number">12.</span> <span class="nav-text">TreeBin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结和思考"><span class="nav-number">13.</span> <span class="nav-text">总结和思考</span></a></li></ol></li></div>
             
           </div>
         </section>
@@ -923,7 +923,7 @@ private transient volatile int sizeCtl;
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

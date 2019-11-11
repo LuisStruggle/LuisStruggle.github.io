@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="准确率,精确率,召回率,AP,mAP," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="准确率,精确率,召回率,AP,mAP,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,16 +85,18 @@
 
 
 <meta name="description" content="准确率(accuracy),精确率(Precision)和召回率(Recall)是信息检索，人工智能，和搜索引擎的设计中很重要的几个概念和指标。中文中这几个评价指标翻译各有不同，所以一般情况下推荐使用英文。">
+<meta name="keywords" content="准确率,精确率,召回率,AP,mAP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="准确率(accuracy),精确率(Precision)和召回率(Recall),AP,mAP的概念">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Evaluation-concept.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="准确率(accuracy),精确率(Precision)和召回率(Recall)是信息检索，人工智能，和搜索引擎的设计中很重要的几个概念和指标。中文中这几个评价指标翻译各有不同，所以一般情况下推荐使用英文。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/20141026151714993?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYXBwbGVtbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="og:image" content="https://img-blog.csdn.net/20180102202201398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSk5pbmdXZWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20180102202211913?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSk5pbmdXZWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20180102202219617?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSk5pbmdXZWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2019-03-30T08:59:16.839Z">
+<meta property="og:updated_time" content="2019-03-30T08:59:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="准确率(accuracy),精确率(Precision)和召回率(Recall),AP,mAP的概念">
 <meta name="twitter:description" content="准确率(accuracy),精确率(Precision)和召回率(Recall)是信息检索，人工智能，和搜索引擎的设计中很重要的几个概念和指标。中文中这几个评价指标翻译各有不同，所以一般情况下推荐使用英文。">
@@ -119,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Evaluation-concept.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Evaluation-concept.html">
 
   <title> 准确率(accuracy),精确率(Precision)和召回率(Recall),AP,mAP的概念 | 奋斗的青春 </title>
 </head>
@@ -150,7 +152,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -177,7 +179,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -187,7 +189,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -197,7 +199,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -207,7 +209,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -217,7 +219,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -279,7 +281,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -350,7 +352,7 @@
 </table>
 <p>positives(FP 负类判定为正类,”存伪”,例子中就是分明是男生却判断为女生,当下伪娘横行,这个错常有人犯)<br>未被检索到(Not Retrieved)| false negatives(FN 正类判定为负类,”去真”,例子中就是,分明是女生,这哥们却判断为男生–梁山伯同学犯的错就是这个)| true negatives(TN 负类判定为负类,也就是一个男生被判断为男生,像我这样的纯爷们一准儿就会在此处)  </p>
 <p>通过这张表,我们可以很容易得到例子中这几个分类的值:TP=20,FP=30,FN=0,TN=50.  </p>
-<p><img src="https://img-blog.csdn.net/20141026151714993?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYXBwbGVtbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="">  </p>
+<p><img src="https://img-blog.csdn.net/20141026151714993?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYXBwbGVtbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt>  </p>
 <p>精确率”与“召回率”的关系  </p>
 <p>“精确率”与“召回率”虽然没有必然的关系（从上面公式中可以看到），然而在大规模数据集合中，这两个指标却是相互制约的。  </p>
 <p>由于“检索策略”并不完美，希望更多相关的文档被检索到时，放宽“检索策略”时，往往也会伴随出现一些不相关的结果，从而使准确率受到影响。  </p>
@@ -528,7 +530,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -539,9 +541,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -648,7 +648,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

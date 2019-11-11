@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,53 +63,40 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="算法,排序,Algorithm," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="算法,排序,Algorithm,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="基本概念比较排序和非比较排序：
-
-常见的排序算法都是比较排序
-比较排序的时间复杂度通常为 O(n2) 或者 O(nlogn)，比较排序的时间复杂度下界就是 O(nlogn)  
-非比较排序包括计数排序、桶排序和基数排序， 非比较排序对数据有要求 ，因为数据本身包含了定位特征，所有才能不通过比较来确定元素的位置
-非比较排序的时间复杂度可以达到 O(n)，但是都需要额外的空间开销">
+<meta name="description" content="基本概念比较排序和非比较排序：  常见的排序算法都是比较排序 比较排序的时间复杂度通常为 O(n2) 或者 O(nlogn)，比较排序的时间复杂度下界就是 O(nlogn)   非比较排序包括计数排序、桶排序和基数排序， 非比较排序对数据有要求 ，因为数据本身包含了定位特征，所有才能不通过比较来确定元素的位置 非比较排序的时间复杂度可以达到 O(n)，但是都需要额外的空间开销">
+<meta name="keywords" content="算法,排序,Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="排序算法对比">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Sorting_Algorithm.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="基本概念比较排序和非比较排序：
-
-常见的排序算法都是比较排序
-比较排序的时间复杂度通常为 O(n2) 或者 O(nlogn)，比较排序的时间复杂度下界就是 O(nlogn)  
-非比较排序包括计数排序、桶排序和基数排序， 非比较排序对数据有要求 ，因为数据本身包含了定位特征，所有才能不通过比较来确定元素的位置
-非比较排序的时间复杂度可以达到 O(n)，但是都需要额外的空间开销">
+<meta property="og:description" content="基本概念比较排序和非比较排序：  常见的排序算法都是比较排序 比较排序的时间复杂度通常为 O(n2) 或者 O(nlogn)，比较排序的时间复杂度下界就是 O(nlogn)   非比较排序包括计数排序、桶排序和基数排序， 非比较排序对数据有要求 ，因为数据本身包含了定位特征，所有才能不通过比较来确定元素的位置 非比较排序的时间复杂度可以达到 O(n)，但是都需要额外的空间开销">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3415798-91502f4b46eef2e7.png">
-<meta property="og:updated_time" content="2019-03-31T14:07:03.692Z">
+<meta property="og:updated_time" content="2019-03-31T14:07:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序算法对比">
-<meta name="twitter:description" content="基本概念比较排序和非比较排序：
-
-常见的排序算法都是比较排序
-比较排序的时间复杂度通常为 O(n2) 或者 O(nlogn)，比较排序的时间复杂度下界就是 O(nlogn)  
-非比较排序包括计数排序、桶排序和基数排序， 非比较排序对数据有要求 ，因为数据本身包含了定位特征，所有才能不通过比较来确定元素的位置
-非比较排序的时间复杂度可以达到 O(n)，但是都需要额外的空间开销">
+<meta name="twitter:description" content="基本概念比较排序和非比较排序：  常见的排序算法都是比较排序 比较排序的时间复杂度通常为 O(n2) 或者 O(nlogn)，比较排序的时间复杂度下界就是 O(nlogn)   非比较排序包括计数排序、桶排序和基数排序， 非比较排序对数据有要求 ，因为数据本身包含了定位特征，所有才能不通过比较来确定元素的位置 非比较排序的时间复杂度可以达到 O(n)，但是都需要额外的空间开销">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3415798-91502f4b46eef2e7.png">
 
 
@@ -131,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Sorting_Algorithm.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Sorting_Algorithm.html">
 
   <title> 排序算法对比 | 奋斗的青春 </title>
 </head>
@@ -162,7 +149,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -189,7 +176,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -199,7 +186,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -209,7 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -219,7 +206,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -229,7 +216,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -291,7 +278,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -423,7 +410,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="https://upload-images.jianshu.io/upload_images/3415798-91502f4b46eef2e7.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3415798-91502f4b46eef2e7.png" alt></p>
 <p>Array Sorting Algorithms</p>
 <h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>通过与相邻元素的比较和交换来把小的数交换到最前面，或者把大的数交换到最后面。</p>
 <p>冒泡排序的时间复杂度为 <strong>O(n 2)</strong>。</p>
@@ -540,7 +527,7 @@ public int partition(int[] nums, int start, int end) {
 }
 </code></pre><p>分析：假设输入为 <code>4, 2, 5, 1, 3</code><br>第一轮递归后，变为 <code>3, 2, 1, 4, 5</code><br>第一轮递归后，变为 <code>1, 2, 3, 4, 5</code><br>以此类推</p>
 <h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><p>堆排序是借助堆来实现的选择排序。<br>注意：如果想升序排序就使用大顶堆，反之使用小顶堆。原因是堆顶元素需要交换到序列尾部。</p>
-<p>具体参见：<a href="https://www.jianshu.com/p/f7c1c62ee335" target="_blank" rel="external">堆的使用及相关LeetCode题目</a></p>
+<p>具体参见：<a href="https://www.jianshu.com/p/f7c1c62ee335" target="_blank" rel="noopener">堆的使用及相关LeetCode题目</a></p>
 <h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>归并排序使用了递归分治的思想。<br>把待排序列看成由两个有序的子序列，然后合并两个子序列，然后把子序列看成由两个有序序列…倒着来看，其实就是先两两合并，然后四四合并…最终形成有序序列。</p>
 <p>归并排序空间复杂度为 <strong>O(n)</strong> ，时间复杂度为 <strong>O(nlogn)</strong> 。</p>
 <p>代码如下：</p>
@@ -765,8 +752,8 @@ public static int getNBit(int x, int n) {
         return str.charAt(str.length() - n) - &apos;0&apos;;
 }
 </code></pre><hr>
-<p>引用：<br><a href="http://www.cnblogs.com/wxisme/p/5243631.html" target="_blank" rel="external">面试中的排序算法总结</a><br><a href="http://blog.csdn.net/daguairen/article/details/52611874" target="_blank" rel="external">各种排序算法总结和比较</a><br><a href="http://bigocheatsheet.com/" target="_blank" rel="external">Big-O Complexity Chart</a></p>
-<p>参考：<a href="https://www.jianshu.com/p/7df9d6206e72" target="_blank" rel="external">https://www.jianshu.com/p/7df9d6206e72</a></p>
+<p>引用：<br><a href="http://www.cnblogs.com/wxisme/p/5243631.html" target="_blank" rel="noopener">面试中的排序算法总结</a><br><a href="http://blog.csdn.net/daguairen/article/details/52611874" target="_blank" rel="noopener">各种排序算法总结和比较</a><br><a href="http://bigocheatsheet.com/" target="_blank" rel="noopener">Big-O Complexity Chart</a></p>
+<p>参考：<a href="https://www.jianshu.com/p/7df9d6206e72" target="_blank" rel="noopener">https://www.jianshu.com/p/7df9d6206e72</a></p>
 
       
     </div>
@@ -860,7 +847,7 @@ public static int getNBit(int x, int n) {
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -871,9 +858,7 @@ public static int getNBit(int x, int n) {
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -980,7 +965,7 @@ public static int getNBit(int x, int n) {
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="String,hashCode," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="String,hashCode,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,12 +85,14 @@
 
 
 <meta name="description" content="选择31的原因在详细说明 String hashCode 方法选择数字31的作为乘子的原因之前，我们先来看看 String hashCode 方法是怎样实现的，如下：123456789101112public int hashCode() &amp;#123;    int h = hash;    if (h == 0 &amp;amp;&amp;amp; value.length &amp;gt; 0) &amp;#123;">
+<meta name="keywords" content="String,hashCode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么String的hashCode选择 31 作为乘子?">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/HashCode.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="选择31的原因在详细说明 String hashCode 方法选择数字31的作为乘子的原因之前，我们先来看看 String hashCode 方法是怎样实现的，如下：123456789101112public int hashCode() &amp;#123;    int h = hash;    if (h == 0 &amp;amp;&amp;amp; value.length &amp;gt; 0) &amp;#123;">
-<meta property="og:updated_time" content="2019-10-06T13:58:39.846Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-06T13:58:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么String的hashCode选择 31 作为乘子?">
 <meta name="twitter:description" content="选择31的原因在详细说明 String hashCode 方法选择数字31的作为乘子的原因之前，我们先来看看 String hashCode 方法是怎样实现的，如下：123456789101112public int hashCode() &amp;#123;    int h = hash;    if (h == 0 &amp;amp;&amp;amp; value.length &amp;gt; 0) &amp;#123;">
@@ -114,7 +116,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/HashCode.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/HashCode.html">
 
   <title> 为什么String的hashCode选择 31 作为乘子? | 奋斗的青春 </title>
 </head>
@@ -145,7 +147,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -172,7 +174,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -182,7 +184,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -192,7 +194,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -202,7 +204,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -212,7 +214,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -274,7 +276,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -315,10 +317,10 @@
       
 
       
-        <h3 id="选择31的原因"><a href="#选择31的原因" class="headerlink" title="选择31的原因"></a>选择31的原因</h3><p>在详细说明 String hashCode 方法选择数字31的作为乘子的原因之前，我们先来看看 String hashCode 方法是怎样实现的，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> h = hash;</div><div class="line">    <span class="keyword">if</span> (h == <span class="number">0</span> &amp;&amp; value.length &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">char</span> val[] = value;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; value.length; i++) &#123;</div><div class="line">            h = <span class="number">31</span> * h + val[i];</div><div class="line">        &#125;</div><div class="line">        hash = h;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <h3 id="选择31的原因"><a href="#选择31的原因" class="headerlink" title="选择31的原因"></a>选择31的原因</h3><p>在详细说明 String hashCode 方法选择数字31的作为乘子的原因之前，我们先来看看 String hashCode 方法是怎样实现的，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h = hash;</span><br><span class="line">    <span class="keyword">if</span> (h == <span class="number">0</span> &amp;&amp; value.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> val[] = value;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; value.length; i++) &#123;</span><br><span class="line">            h = <span class="number">31</span> * h + val[i];</span><br><span class="line">        &#125;</span><br><span class="line">        hash = h;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<p>上面的代码就是 String hashCode 方法的实现，是不是很简单。实际上 hashCode 方法核心的计算逻辑只有三行，也就是代码中的 for 循环。我们可以由上面的 for 循环推导出一个计算公式，hashCode 方法注释中已经给出。如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">s[<span class="number">0</span>]*<span class="number">31</span>^(n-<span class="number">1</span>) + s[<span class="number">1</span>]*<span class="number">31</span>^(n-<span class="number">2</span>) + … + s[n-<span class="number">1</span>]</div></pre></td></tr></table></figure></p>
-<p>这里说明一下，上面的 s 数组即源码中的 val 数组，是 String 内部维护的一个 char 类型数组。这里我来简单推导一下这个公式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">假设 n=<span class="number">3</span></div><div class="line">i=<span class="number">0</span> -&gt; h = <span class="number">31</span> * <span class="number">0</span> + val[<span class="number">0</span>]</div><div class="line">i=<span class="number">1</span> -&gt; h = <span class="number">31</span> * (<span class="number">31</span> * <span class="number">0</span> + val[<span class="number">0</span>]) + val[<span class="number">1</span>]</div><div class="line">i=<span class="number">2</span> -&gt; h = <span class="number">31</span> * (<span class="number">31</span> * (<span class="number">31</span> * <span class="number">0</span> + val[<span class="number">0</span>]) + val[<span class="number">1</span>]) + val[<span class="number">2</span>]</div><div class="line">       h = <span class="number">31</span>*<span class="number">31</span>*<span class="number">31</span>*<span class="number">0</span> + <span class="number">31</span>*<span class="number">31</span>*val[<span class="number">0</span>] + <span class="number">31</span>*val[<span class="number">1</span>] + val[<span class="number">2</span>]</div><div class="line">       h = <span class="number">31</span>^(n-<span class="number">1</span>)*val[<span class="number">0</span>] + <span class="number">31</span>^(n-<span class="number">2</span>)*val[<span class="number">1</span>] + val[<span class="number">2</span>]</div></pre></td></tr></table></figure></p>
+<p>上面的代码就是 String hashCode 方法的实现，是不是很简单。实际上 hashCode 方法核心的计算逻辑只有三行，也就是代码中的 for 循环。我们可以由上面的 for 循环推导出一个计算公式，hashCode 方法注释中已经给出。如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s[<span class="number">0</span>]*<span class="number">31</span>^(n-<span class="number">1</span>) + s[<span class="number">1</span>]*<span class="number">31</span>^(n-<span class="number">2</span>) + … + s[n-<span class="number">1</span>]</span><br></pre></td></tr></table></figure></p>
+<p>这里说明一下，上面的 s 数组即源码中的 val 数组，是 String 内部维护的一个 char 类型数组。这里我来简单推导一下这个公式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">假设 n=<span class="number">3</span></span><br><span class="line">i=<span class="number">0</span> -&gt; h = <span class="number">31</span> * <span class="number">0</span> + val[<span class="number">0</span>]</span><br><span class="line">i=<span class="number">1</span> -&gt; h = <span class="number">31</span> * (<span class="number">31</span> * <span class="number">0</span> + val[<span class="number">0</span>]) + val[<span class="number">1</span>]</span><br><span class="line">i=<span class="number">2</span> -&gt; h = <span class="number">31</span> * (<span class="number">31</span> * (<span class="number">31</span> * <span class="number">0</span> + val[<span class="number">0</span>]) + val[<span class="number">1</span>]) + val[<span class="number">2</span>]</span><br><span class="line">       h = <span class="number">31</span>*<span class="number">31</span>*<span class="number">31</span>*<span class="number">0</span> + <span class="number">31</span>*<span class="number">31</span>*val[<span class="number">0</span>] + <span class="number">31</span>*val[<span class="number">1</span>] + val[<span class="number">2</span>]</span><br><span class="line">       h = <span class="number">31</span>^(n-<span class="number">1</span>)*val[<span class="number">0</span>] + <span class="number">31</span>^(n-<span class="number">2</span>)*val[<span class="number">1</span>] + val[<span class="number">2</span>]</span><br></pre></td></tr></table></figure></p>
 <p>上面的公式包括公式的推导并不是本文的重点，大家了解了解即可。接下来来说说本文的重点，即选择31的理由。从网上的资料来看，一般有如下两个原因：</p>
 <p>第一 31是一个不大不小的质数，是作为 hashCode 乘子的优选质数之一。另外一些相近的质数，比如37、41、43等等，也都是不错的选择。那么为啥偏偏选中了31呢？请看第二个原因。</p>
 <p>第二 31可以被 JVM 优化，31 * i = (i &lt;&lt; 5) - i。</p>
@@ -417,7 +419,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -428,9 +430,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -537,7 +537,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

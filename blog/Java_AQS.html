@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Java,AQS,Lock,Synchronizer," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Java,Lock,AQS,Synchronizer,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,13 +85,15 @@
 
 
 <meta name="description" content="AQS是AbstractQueuedSynchronizer的简称。AQS提供了一种实现阻塞锁和一系列依赖FIFO等待队列的同步器的框架，如下图所示。AQS为一系列同步器依赖于一个单独的原子变量（state）的同步器提供了一个非常有用的基础。子类们必须定义改变state变量的protected方法，这些方法定义了state是如何被获取或释放的。鉴于此，本类中的其他方法执行所有的排队和阻塞机制。子类">
+<meta name="keywords" content="Java,Lock,AQS,Synchronizer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java的AQS">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Java_AQS.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="AQS是AbstractQueuedSynchronizer的简称。AQS提供了一种实现阻塞锁和一系列依赖FIFO等待队列的同步器的框架，如下图所示。AQS为一系列同步器依赖于一个单独的原子变量（state）的同步器提供了一个非常有用的基础。子类们必须定义改变state变量的protected方法，这些方法定义了state是如何被获取或释放的。鉴于此，本类中的其他方法执行所有的排队和阻塞机制。子类">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/53727-ae36db58241c256b.png">
-<meta property="og:updated_time" content="2019-03-31T10:20:07.835Z">
+<meta property="og:updated_time" content="2019-03-31T10:20:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java的AQS">
 <meta name="twitter:description" content="AQS是AbstractQueuedSynchronizer的简称。AQS提供了一种实现阻塞锁和一系列依赖FIFO等待队列的同步器的框架，如下图所示。AQS为一系列同步器依赖于一个单独的原子变量（state）的同步器提供了一个非常有用的基础。子类们必须定义改变state变量的protected方法，这些方法定义了state是如何被获取或释放的。鉴于此，本类中的其他方法执行所有的排队和阻塞机制。子类">
@@ -116,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Java_AQS.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Java_AQS.html">
 
   <title> Java的AQS | 奋斗的青春 </title>
 </head>
@@ -147,7 +149,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -174,7 +176,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -184,7 +186,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -194,7 +196,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -204,7 +206,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -214,7 +216,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -276,7 +278,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -319,9 +321,9 @@
       
         <p>AQS是AbstractQueuedSynchronizer的简称。AQS提供了一种实现阻塞锁和一系列依赖FIFO等待队列的同步器的框架，如下图所示。AQS为一系列同步器依赖于一个单独的原子变量（state）的同步器提供了一个非常有用的基础。子类们必须定义改变state变量的protected方法，这些方法定义了state是如何被获取或释放的。鉴于此，本类中的其他方法执行所有的排队和阻塞机制。子类也可以维护其他的state变量，但是为了保证同步，必须原子地操作这些变量。</p>
 <a id="more"></a>
-<p><img src="https://upload-images.jianshu.io/upload_images/53727-ae36db58241c256b.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/53727-ae36db58241c256b.png" alt></p>
 <p>AbstractQueuedSynchronizer中对state的操作是原子的，且不能被继承。所有的同步机制的实现均依赖于对改变量的原子操作。为了实现不同的同步机制，我们需要创建一个非共有的（non-public internal）扩展了AQS类的内部辅助类来实现相应的同步逻辑。AbstractQueuedSynchronizer并不实现任何同步接口，它提供了一些可以被具体实现类直接调用的一些原子操作方法来重写相应的同步逻辑。AQS同时提供了互斥模式（exclusive）和共享模式（shared）两种不同的同步逻辑。一般情况下，子类只需要根据需求实现其中一种模式，当然也有同时实现两种模式的同步类，如<code>ReadWriteLock</code>。接下来将详细介绍AbstractQueuedSynchronizer的提供的一些具体实现方法。</p>
-<h4 id="state状态"><a href="#state状态" class="headerlink" title="state状态"></a>state状态</h4><p>AbstractQueuedSynchronizer维护了一个volatile int类型的变量，用户表示当前同步状态。volatile虽然不能保证操作的原子性，但是保证了当前变量state的可见性。至于<a href="https://www.jianshu.com/p/14fc9d34de33" target="_blank" rel="external">volatile</a>的具体语义，可以参考相关文章。state的访问方式有三种:</p>
+<h4 id="state状态"><a href="#state状态" class="headerlink" title="state状态"></a>state状态</h4><p>AbstractQueuedSynchronizer维护了一个volatile int类型的变量，用户表示当前同步状态。volatile虽然不能保证操作的原子性，但是保证了当前变量state的可见性。至于<a href="https://www.jianshu.com/p/14fc9d34de33" target="_blank" rel="noopener">volatile</a>的具体语义，可以参考相关文章。state的访问方式有三种:</p>
 <blockquote>
 <ul>
 <li><p>getState()</p>
@@ -816,7 +818,7 @@ protected final boolean compareAndSetState(int expect, int update) {
                 break;
         }
     }
-</code></pre><p>参考：<a href="https://link.jianshu.com?t=https%3A%2F%2Fwww.cnblogs.com%2Fwaterystone%2Fp%2F4920797.html" target="_blank" rel="external">https://www.cnblogs.com/waterystone/p/4920797.html</a></p>
+</code></pre><p>参考：<a href="https://link.jianshu.com?t=https%3A%2F%2Fwww.cnblogs.com%2Fwaterystone%2Fp%2F4920797.html" target="_blank" rel="noopener">https://www.cnblogs.com/waterystone/p/4920797.html</a></p>
 
       
     </div>
@@ -841,9 +843,9 @@ protected final boolean compareAndSetState(int expect, int update) {
           
             <a href="/tags/Java/" rel="tag">#Java</a>
           
-            <a href="/tags/AQS/" rel="tag">#AQS</a>
-          
             <a href="/tags/Lock/" rel="tag">#Lock</a>
+          
+            <a href="/tags/AQS/" rel="tag">#AQS</a>
           
             <a href="/tags/Synchronizer/" rel="tag">#Synchronizer</a>
           
@@ -912,7 +914,7 @@ protected final boolean compareAndSetState(int expect, int update) {
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -923,9 +925,7 @@ protected final boolean compareAndSetState(int expect, int update) {
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -1032,7 +1032,7 @@ protected final boolean compareAndSetState(int expect, int update) {
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

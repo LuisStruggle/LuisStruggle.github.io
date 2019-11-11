@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="算法,缓存,LRU," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="算法,缓存,LRU,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,15 +85,17 @@
 
 
 <meta name="description" content="LRULRU（Least Recently Used）是一种常见的页面置换算法，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。">
+<meta name="keywords" content="算法,缓存,LRU">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LRU缓存算法">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/LRU.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="LRULRU（Least Recently Used）是一种常见的页面置换算法，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://luisstruggle.github.io/images/LRU1.jpg">
 <meta property="og:image" content="https://luisstruggle.github.io/images/LRU2.jpg">
 <meta property="og:image" content="https://luisstruggle.github.io/images/LRU3.jpg">
-<meta property="og:updated_time" content="2019-04-08T02:37:30.868Z">
+<meta property="og:updated_time" content="2019-04-08T02:37:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LRU缓存算法">
 <meta name="twitter:description" content="LRULRU（Least Recently Used）是一种常见的页面置换算法，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。">
@@ -118,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/LRU.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/LRU.html">
 
   <title> LRU缓存算法 | 奋斗的青春 </title>
 </head>
@@ -149,7 +151,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -176,7 +178,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -186,7 +188,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -196,7 +198,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -206,7 +208,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -216,7 +218,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -278,7 +280,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -319,7 +321,7 @@
       
 
       
-        <h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><p>LRU（Least Recently Used）是一种常见的<a href="https://baike.baidu.com/item/%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95/7626091" target="_blank" rel="external">页面置换算法</a>，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。</p>
+        <h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><p>LRU（Least Recently Used）是一种常见的<a href="https://baike.baidu.com/item/%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95/7626091" target="_blank" rel="noopener">页面置换算法</a>，在计算中，所有的文件操作都要放在内存中进行，然而计算机内存大小是固定的，所以我们不可能把所有的文件都加载到内存，因此我们需要制定一种策略对加入到内存中的文件进项选择。</p>
 <a id="more"></a>
 <p>常见的页面置换算法有如下几种：</p>
 <ul>
@@ -332,7 +334,7 @@
 </ul>
 <h3 id="LRU原理"><a href="#LRU原理" class="headerlink" title="LRU原理"></a>LRU原理</h3><p>LRU的设计原理就是，当数据在最近一段时间经常被访问，那么它在以后也会经常被访问。这就意味着，如果经常访问的数据，我们需要然其能够快速命中，而不常访问的数据，我们在容量超出限制内，要将其淘汰。</p>
 <p>当我们的数据按照如下顺序进行访问时，<code>LRU</code>的工作原理如下：</p>
-<p><img src="/images/LRU1.jpg" alt=""></p>
+<p><img src="/images/LRU1.jpg" alt></p>
 <p>正如上面图所表示的意思：每次访问的数据都会放在栈顶，当访问的数据不在内存中，且栈内数据存储满了，我们就要选择移除栈底的元素，因为在栈底部的数据访问的频率是比较低的。所以要将其淘汰。</p>
 <h3 id="LRU的实现"><a href="#LRU的实现" class="headerlink" title="LRU的实现"></a>LRU的实现</h3><p>如何来设计一款LRU算法呢？对于这种类似序列的结构我们一般可以选择链表或者是数组来构建。</p>
 <p><strong>差异对比：</strong></p>
@@ -349,7 +351,7 @@
     private Node&lt;K,V&gt; next;
 }
 </code></pre><p>我们通过HashMap中<code>key</code>存储Node的<code>key</code>,<code>value</code>存储Node来建立Map对Node的映射关系。我们将HashMap看作是一张检索表，我们可以可以快速的检索到我们需要定位的Node</p>
-<p><strong>下图展示这个结构:</strong><br><img src="/images/LRU2.jpg" alt=""></p>
+<p><strong>下图展示这个结构:</strong><br><img src="/images/LRU2.jpg" alt></p>
 <h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><p><strong>大致思路:</strong></p>
 <ol>
 <li><p>构建双向链表节点ListNode，应包含<code>key,value,prev,next</code>这几个基本属性</p>
@@ -361,7 +363,7 @@
 <li><p>对于put操作，比较麻烦。</p>
 </li>
 </ol>
-<p><img src="/images/LRU3.jpg" alt=""></p>
+<p><img src="/images/LRU3.jpg" alt></p>
 <pre><code>package code.fragment;
 
 import java.util.Map;
@@ -492,7 +494,7 @@ public class LRUCache&lt;V&gt; {
         cache.get(&quot;key2&quot;);
     }
 }
-</code></pre><p>参考：<a href="https://blog.csdn.net/qq_26440803/article/details/83795122" target="_blank" rel="external">https://blog.csdn.net/qq_26440803/article/details/83795122</a></p>
+</code></pre><p>参考：<a href="https://blog.csdn.net/qq_26440803/article/details/83795122" target="_blank" rel="noopener">https://blog.csdn.net/qq_26440803/article/details/83795122</a></p>
 
       
     </div>
@@ -586,7 +588,7 @@ public class LRUCache&lt;V&gt; {
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -597,9 +599,7 @@ public class LRUCache&lt;V&gt; {
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -706,7 +706,7 @@ public class LRUCache&lt;V&gt; {
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

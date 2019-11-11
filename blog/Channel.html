@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,41 +63,35 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="特征图,Channel,卷积网络," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="特征图,Channel,卷积网络,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="卷积网络中的通道(Channel)和特征图
-冬天到了，动物们又进入了交配…哦不，冬眠的季节。
-每天被冻得什么都不想干，只想吃饭睡觉数星星。
-
-今天介绍卷积网络中一个很重要的概念， 通道（Channel） ，也有叫 特征图（feature map） 的。">
+<meta name="description" content="卷积网络中的通道(Channel)和特征图 冬天到了，动物们又进入了交配…哦不，冬眠的季节。 每天被冻得什么都不想干，只想吃饭睡觉数星星。  今天介绍卷积网络中一个很重要的概念， 通道（Channel） ，也有叫 特征图（feature map） 的。">
+<meta name="keywords" content="特征图,Channel,卷积网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="卷积网络中的通道(Channel)和特征图">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Channel.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="卷积网络中的通道(Channel)和特征图
-冬天到了，动物们又进入了交配…哦不，冬眠的季节。
-每天被冻得什么都不想干，只想吃饭睡觉数星星。
-
-今天介绍卷积网络中一个很重要的概念， 通道（Channel） ，也有叫 特征图（feature map） 的。">
+<meta property="og:description" content="卷积网络中的通道(Channel)和特征图 冬天到了，动物们又进入了交配…哦不，冬眠的季节。 每天被冻得什么都不想干，只想吃饭睡觉数星星。  今天介绍卷积网络中一个很重要的概念， 通道（Channel） ，也有叫 特征图（feature map） 的。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4787675-2490d0f5c452e4d4.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4787675-64fb86764c822a09.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4787675-113395c5cd2bb0f0.png">
@@ -105,14 +99,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4787675-28a6825f0b5e9735.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4787675-b2f38a620c8ed086.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4787675-f6784fcbac46b581.png">
-<meta property="og:updated_time" content="2018-08-31T13:13:59.325Z">
+<meta property="og:updated_time" content="2018-08-31T13:14:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卷积网络中的通道(Channel)和特征图">
-<meta name="twitter:description" content="卷积网络中的通道(Channel)和特征图
-冬天到了，动物们又进入了交配…哦不，冬眠的季节。
-每天被冻得什么都不想干，只想吃饭睡觉数星星。
-
-今天介绍卷积网络中一个很重要的概念， 通道（Channel） ，也有叫 特征图（feature map） 的。">
+<meta name="twitter:description" content="卷积网络中的通道(Channel)和特征图 冬天到了，动物们又进入了交配…哦不，冬眠的季节。 每天被冻得什么都不想干，只想吃饭睡觉数星星。  今天介绍卷积网络中一个很重要的概念， 通道（Channel） ，也有叫 特征图（feature map） 的。">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/4787675-2490d0f5c452e4d4.jpg">
 
 
@@ -134,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Channel.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Channel.html">
 
   <title> 卷积网络中的通道(Channel)和特征图 | 奋斗的青春 </title>
 </head>
@@ -165,7 +155,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -192,7 +182,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -202,7 +192,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -212,7 +202,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -222,7 +212,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -232,7 +222,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -294,7 +284,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -347,37 +337,37 @@
 <p>一般大家说通道指的是图片的色彩通道，而特征图是卷积过滤器的输出结果。但实际上，两者本质上是相同的，都是表示之前输入上某个特征分布的数据。</p>
 <p>那么先来看看为什么可以说它们是相同的。</p>
 <h4 id="数码相机中的“卷积”"><a href="#数码相机中的“卷积”" class="headerlink" title="数码相机中的“卷积”"></a>数码相机中的“卷积”</h4><p>通道这个概念最初指的是电子图片中 <strong>RGB</strong> 通道，或者 <strong>CMYK</strong><br>通道这样的配色方案，比如说一张RGB的64x64的图片，可以用一个64x64x3的张量来表示。这里的3指的就是通道，分别为红色(Red)、绿色(Green)、蓝色(Blue)三个通道。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4787675-2490d0f5c452e4d4.jpg" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4787675-2490d0f5c452e4d4.jpg" alt></p>
 <p>因为这三种颜色是三原色，所以基本上可以合成任何人眼可分辨的颜色。而三个通道的图片也基本上可以表示所有图片了。</p>
 <p>在计算机视觉处理中，一般图片数据除了是单通道的灰度图片外，就是RGB通道的彩色图片了。</p>
 <p>对RGB图片进行卷积操作后，根据过滤器的数量就可以产生更多的通道。事实上，多数情况还是叫后面的卷积层中的通道为，特征图。但实际上在张量表示下，特征图和前面提到的通道差不多，有时候后面的也都叫通道了。我是被吴教授带歪的（警察叔叔，就是他！）。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4787675-64fb86764c822a09.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4787675-64fb86764c822a09.png" alt></p>
 <p>当把通道和特征图当成是一个东西，然后来看RGB图片中的通道是怎么获得的就会非常有意思了。</p>
 <p>首先通道需要卷积操作来完成，也就是说我们 <strong>需要三个过滤器来生成RGB通道</strong> 。那么这个过滤器是什么呢，又是以什么为输入呢。</p>
 <p>这时候如果来看数码相机的原理就明白了。数码相机中最核心的部分是 <strong>CCD</strong> ，也叫电子耦合组件。</p>
 <p>数码相机成像最关键的部分是CCD中的感光层。CCD中在感光层前面一般会有一个“ <strong>分层滤色片</strong><br>”，如果是RGB原色分色法的话，就是通过红绿蓝三种颜色的滤色片，射进来的光转换成三原色光，之后在感光层将穿过滤色片的光源转换成电子信号，信号传送到处理芯片，就可以还原成我们所获得的电子图片了。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4787675-113395c5cd2bb0f0.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4787675-113395c5cd2bb0f0.png" alt></p>
 <p>拿以上数码相机成像过程来类比卷积的话，就会发现，这里的红绿蓝三色的滤光片，正好可以类比成卷积中的过滤器，外界射进来的光就是输入，<br><strong>通过这三个特征过滤器，获得了一个三通道的输出</strong> 。</p>
 <p>那么卷积核大小是多大呢，这里可以说是感光元件上一个像素大小，而原始的射入的光的精度则是光子级别的，对这个光的一个像素大小的范围进行卷积，获得这个范围当前过滤器捕捉特征的强度。也就是绿光、红光、蓝光的强度。</p>
 <h4 id="通道与特征"><a href="#通道与特征" class="headerlink" title="通道与特征"></a>通道与特征</h4><p>这样看来，图片中的通道就是某种意义上的特征图。一个通道是对某个特征的检测， <strong>通道中某一处数值的强弱就是对当前特征强弱的反应</strong> 。</p>
 <p>如一个蓝色通道中，如果是256级的话，那么一个像素如果是255的话那么就表示蓝色度很大。从这个角度来看灰度图片的话，就会发现其实灰度图片就是一个白色过滤器生成的特征图。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4787675-00b4442b63cc1b6d.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4787675-00b4442b63cc1b6d.png" alt></p>
 <p>于是卷积网络中的特征图，也能够很直接地理解为通道了。</p>
 <p>之后通过对一定范围的特征图进行卷积，可以将多个特征组合出来的模式抽取成一个特征，获得下一个特征图。之后再继续，对特征图进行卷积，特征之间继续组合，获得更复杂的特征图。</p>
 <p>又因为池化层的存在，会不断提取一定范围内最强烈的特征，并且缩小张量的大小，使得大范围内的特征组合也能够捕捉到。</p>
-<p>对单个特征图进行视觉化的话，会发现它是在对什么特征进行捕捉。最近一个很有意思的<a href="https://link.jianshu.com?t=https://distill.pub/2017/feature-visualization/" target="_blank" rel="external">Blog文章</a>就展示了这方面的结果，很有意思。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4787675-28a6825f0b5e9735.png" alt=""></p>
+<p>对单个特征图进行视觉化的话，会发现它是在对什么特征进行捕捉。最近一个很有意思的<a href="https://link.jianshu.com?t=https://distill.pub/2017/feature-visualization/" target="_blank" rel="noopener">Blog文章</a>就展示了这方面的结果，很有意思。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4787675-28a6825f0b5e9735.png" alt></p>
 <p>通过特征角度来看卷积网络的话，那么1x1卷积也就很好理解了。即使1x1卷积前后的张量大小完全不变，比如说16x16x64 -&gt;<br>16x16x64这样的卷积，看上去好像是没有变化。但实际上，可能通过特征之间的互动，已经由之前的64个特征图组成了新的64个特征图。</p>
 <p>有时候我理解一个这样的1x1卷积操作，就会把它当成是一次 <strong>对之前特征的整理</strong> 。</p>
 <h4 id="通道的终点"><a href="#通道的终点" class="headerlink" title="通道的终点"></a>通道的终点</h4><p>这样子不停卷积下去，直到最后一层，剩下一个一维向量时，每个标量代表着一个通道，捕捉到的特征又是什么呢。</p>
 <p>如果是物体分类任务的话，就正是我们需要输出判别的一个个物体类别。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4787675-b2f38a620c8ed086.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4787675-b2f38a620c8ed086.png" alt></p>
 <p>比如说第一个数是代表猫特征，第二个数代表狗特征，第三个代表人… 这个时候去从里面选数值最大那个当做分类的种类就好了。</p>
 <p>到这里可能仔细的人会注意，最后几层不是没卷积操作吗，而是全连接网络。</p>
 <p>一个概念上需要澄清的是，虽然说1x1卷积，而且也从融合特征角度，给了它特殊的理解。但如果再仔细看看的话，就会发现实际上 <strong>1x1卷积就是全连接网络</strong><br>。所以我们可以把最后的1x1网络当成某种程度上的1x1卷积。</p>
 <p>上面的网络最后几层，将张量展平然后输入全连接网络。因为剩下的特征图中都保留了很重要的信息，为了利用所有的信息，并且让它们获得足够的交互，所以直接输入全连接网络，获得最后的特征向量。</p>
 <p>这个特征向量能够用来干什么呢。一个很有趣的应用案例是Siamese网络。输入一张脸，输出一个128的特征向量，于是这个向量就类似于ID号码。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4787675-f6784fcbac46b581.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4787675-f6784fcbac46b581.png" alt></p>
 <p>之后再输入一张脸，得到一个特征向量，这时候只需要比较一下获得的两个特征向量就能够知道这两张脸是不是同一个人。</p>
 <p>如果将最后的特征向量视觉化，或许我们还能发现，向量中每个标量所代表的特征，比如说眼睛之间的间距，肤色…</p>
 <p>用本文的通道来说的话，最后获得了一个128个通道向量表示。</p>
@@ -474,7 +464,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -485,9 +475,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -594,7 +582,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

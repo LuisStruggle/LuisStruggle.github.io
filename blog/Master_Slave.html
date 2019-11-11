@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Master,Slave,Redis," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Master,Slave,Redis,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,15 +85,17 @@
 
 
 <meta name="description" content="必备知识：https://blog.csdn.net/sinat_32366329/article/details/81160282">
+<meta name="keywords" content="Master,Slave,Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis的主从复制">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Master_Slave.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="必备知识：https://blog.csdn.net/sinat_32366329/article/details/81160282">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://luisstruggle.github.io/images/Master_Slave1.png">
 <meta property="og:image" content="https://luisstruggle.github.io/images/Master_Slave2.png">
 <meta property="og:image" content="https://luisstruggle.github.io/images/Master_Slave3.png">
-<meta property="og:updated_time" content="2019-03-30T14:12:28.894Z">
+<meta property="og:updated_time" content="2019-03-30T14:12:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的主从复制">
 <meta name="twitter:description" content="必备知识：https://blog.csdn.net/sinat_32366329/article/details/81160282">
@@ -118,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Master_Slave.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Master_Slave.html">
 
   <title> Redis的主从复制 | 奋斗的青春 </title>
 </head>
@@ -149,7 +151,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -176,7 +178,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -186,7 +188,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -196,7 +198,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -206,7 +208,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -216,7 +218,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -278,7 +280,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -319,7 +321,7 @@
       
 
       
-        <p>必备知识：<a href="https://blog.csdn.net/sinat_32366329/article/details/81160282" target="_blank" rel="external">https://blog.csdn.net/sinat_32366329/article/details/81160282</a></p>
+        <p>必备知识：<a href="https://blog.csdn.net/sinat_32366329/article/details/81160282" target="_blank" rel="noopener">https://blog.csdn.net/sinat_32366329/article/details/81160282</a></p>
 <a id="more"></a>
 <h2 id="旧版复制功能的实现"><a href="#旧版复制功能的实现" class="headerlink" title="旧版复制功能的实现"></a>旧版复制功能的实现</h2><p>Redis的复制功能可以分为 <strong>同步</strong> 和 <strong>命令传播</strong> 两个操作：</p>
 <p><strong>同步</strong> 操作用于将从服务器的数据库状态更新至主服务器当前所处的状态。</p>
@@ -332,7 +334,7 @@
 <li>当主服务器的BGSAVE命令执行完毕，主服务器将生成的RDB文件发送给从服务器，从服务器接收并加载这个RDB文件，将自己的数据库状态更新至主服务器执行BGSAVE命令是的数据库状态。</li>
 <li>主服务器将记录在缓冲区里面的所有写命令发送给从服务器，从服务器执行这些写命令，将自己的数据库状态更新至主服务器当前所处的状态。</li>
 </ol>
-<h3 id="同步图解过程"><a href="#同步图解过程" class="headerlink" title="同步图解过程"></a>同步图解过程</h3><p><img src="/images/Master_Slave1.png" alt=""></p>
+<h3 id="同步图解过程"><a href="#同步图解过程" class="headerlink" title="同步图解过程"></a>同步图解过程</h3><p><img src="/images/Master_Slave1.png" alt></p>
 <h2 id="命令传播"><a href="#命令传播" class="headerlink" title="命令传播"></a>命令传播</h2><p>在同步操作完毕后，主从服务器两者的数据库状态达到一致，但是如果客户端发送写命令给主服务器时，将导致主从服务器状态不一致。</p>
 <p>为了让主从服务器数据一致，主服务器需要对从服务器执行命令传播操作：主服务器会将自己执行的那条写命令，发送给从服务器执行，当从服务器执行了该写命令后，主从服务器将再次回到一致状态。</p>
 <h2 id="旧版复制功能的缺陷2-8以前"><a href="#旧版复制功能的缺陷2-8以前" class="headerlink" title="旧版复制功能的缺陷2.8以前"></a>旧版复制功能的缺陷2.8以前</h2><p>在Redis中，从服务器对主服务器的复制可以分为以下两种情况：</p>
@@ -340,7 +342,7 @@
 <li>初次复制：从服务器以前没有复制过任何主服务器。或者上次复制的主服务器和这一次不是同一个主服务器。</li>
 <li>短线后重新复制：处于命令传播阶段的主服务器因为网络原因而中断复制，但从服务器通过自动重现连接上了主服务器，并继续复制主服务器。</li>
 </ol>
-<h3 id="图解过程如下"><a href="#图解过程如下" class="headerlink" title="图解过程如下"></a>图解过程如下</h3><p><img src="/images/Master_Slave2.png" alt=""></p>
+<h3 id="图解过程如下"><a href="#图解过程如下" class="headerlink" title="图解过程如下"></a>图解过程如下</h3><p><img src="/images/Master_Slave2.png" alt></p>
 <h3 id="严重缺陷"><a href="#严重缺陷" class="headerlink" title="严重缺陷"></a>严重缺陷</h3><ol>
 <li>主服务器在时间T0到T10086过程中一直处于一致状态。这两个服务器的数据是一样的。</li>
 <li>从服务器断开重连后，只需要主服务器的K10087，K10088，K10089三个命令即可，但是主服务器却返回了一个新的RDB文件，如果RDB文件很大，必将导致严重的内存问题。</li>
@@ -349,7 +351,7 @@
 <p>PSYNC命令具有完全同步和部分重同步功能。</p>
 <p>完全同步和旧版的同步是一样的。</p>
 <p>部分重同步主要是用于断线后的重复制情况：当从服务器断开重新连接后，如果条件允许，主服务器将断开期间的写命令发给从服务器，从服务器执行断开期间的写命令完成同步，将数据库更新到和主服务器一致。</p>
-<p><img src="/images/Master_Slave3.png" alt=""></p>
+<p><img src="/images/Master_Slave3.png" alt></p>
 <h3 id="部分重同步的实现"><a href="#部分重同步的实现" class="headerlink" title="部分重同步的实现"></a>部分重同步的实现</h3><ol>
 <li>主服务器的复制偏移量和从服务器的复制偏移量。</li>
 <li>主服务器的复制积压缓冲区（队列，默认1MB）。</li>
@@ -453,7 +455,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -464,9 +466,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -573,7 +573,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

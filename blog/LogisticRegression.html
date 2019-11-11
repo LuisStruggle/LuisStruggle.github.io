@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="机器学习,算法,原理,逻辑回归,LR," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="机器学习,算法,原理,逻辑回归,LR,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,11 +85,13 @@
 
 
 <meta name="description" content="一. 前言逻辑（Logistic）回归是分类算法中最基础也是最重要的手段，因此，掌握其内在原理是非常必要的。逻辑回归虽然名字里带“回归”，但是它实际上是一种分类方法，主要用于两分问题 （即结果要么是0，要么是1）。在介绍逻辑回归之前，我们需要回顾一些数学基础内容。">
+<meta name="keywords" content="机器学习,算法,原理,逻辑回归,LR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逻辑回归原理">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/LogisticRegression.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="一. 前言逻辑（Logistic）回归是分类算法中最基础也是最重要的手段，因此，掌握其内在原理是非常必要的。逻辑回归虽然名字里带“回归”，但是它实际上是一种分类方法，主要用于两分问题 （即结果要么是0，要么是1）。在介绍逻辑回归之前，我们需要回顾一些数学基础内容。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-ebca80a6384cdb38.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-aa8cb023e7315c13.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-440680a67d2f45a6.png">
@@ -112,7 +114,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-3bfd150af7a9a7af.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-37246c59f26c3809.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10902146-f1d5050ff60d9e51.png">
-<meta property="og:updated_time" content="2018-08-02T07:05:43.108Z">
+<meta property="og:updated_time" content="2018-08-02T07:05:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归原理">
 <meta name="twitter:description" content="一. 前言逻辑（Logistic）回归是分类算法中最基础也是最重要的手段，因此，掌握其内在原理是非常必要的。逻辑回归虽然名字里带“回归”，但是它实际上是一种分类方法，主要用于两分问题 （即结果要么是0，要么是1）。在介绍逻辑回归之前，我们需要回顾一些数学基础内容。">
@@ -137,7 +139,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/LogisticRegression.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/LogisticRegression.html">
 
   <title> 逻辑回归原理 | 奋斗的青春 </title>
 </head>
@@ -168,7 +170,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -195,7 +197,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -205,7 +207,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -215,7 +217,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -225,7 +227,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -235,7 +237,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -297,7 +299,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -341,23 +343,23 @@
         <h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p>逻辑（Logistic）回归是分类算法中最基础也是最重要的手段，因此，掌握其内在原理是非常必要的。逻辑回归虽然名字里带“回归”，但是它实际上是一种分类方法，主要用于<strong>两分问题</strong> （即结果要么是0，要么是1）。<br>在介绍逻辑回归之前，我们需要回顾一些数学基础内容。</p>
 <a id="more"></a>
 <h4 id="1-最大似然估计"><a href="#1-最大似然估计" class="headerlink" title="1. 最大似然估计"></a>1. 最大似然估计</h4><p>1.什么是最大似然估计<br>通俗理解来说，就是整体概率分布已知，利用已知的样本结果信息，反推最具有可能（最大概率）导致这些样本结果出现的分布模型的参数值！<br>举个栗子：假如国民收入符合正态分布，概率密度如下图。现在手里有一部分调查样本数据，根据这些样本数据，反推正态分布概率密度中的参数值，就是最大似然估计解决的问题。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-ebca80a6384cdb38.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-ebca80a6384cdb38.png" alt></p>
 <p>2.最大似然估计的一般过程<br>首先要知道整体的 <strong>分布模型</strong> ，比如随便一个分布，概率密度p(x)，参数是θ<br>其次要有一些 <strong>样本数据</strong> ，假设为D</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-aa8cb023e7315c13.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-aa8cb023e7315c13.png" alt></p>
 <p>样本D同时发生的联合概率密度（不是条件概率，只是强调参数是θ）</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-440680a67d2f45a6.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-440680a67d2f45a6.png" alt></p>
 <p>似然函数就是这个联合概率密度，定义为L，自变量是θ</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-0c0546b10cf2c8ed.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-0c0546b10cf2c8ed.png" alt></p>
 <p><strong>极大似然估计法原理就是固定样本观测值，挑选参数θ，使得似然函数L取得最大值。</strong><br>所以，现在问题转化成了寻找使L取最大值的θ，即为目标参数，</p>
 <ul>
 <li>当未知参数只有一个时，我们可以对L求导，令导数为0取极值，解出θ。</li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-cc922bf673c3e4b0.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-cc922bf673c3e4b0.png" alt></p>
 <ul>
 <li>当未知参数有多个时，我们可以对L求偏导，令偏导数为0，得到方程组解出参数。  </li>
 </ul>
 <p>举个例子：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-4677c14fff517b1f.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-4677c14fff517b1f.png" alt></p>
 <p>好，至此我们总结一下最大似然估计的一般步骤：</p>
 <ul>
 <li>写出似然函数</li>
@@ -372,38 +374,38 @@
 <li>想办法使得代价函数最小并求得回归参数</li>
 </ul>
 <p>1.寻找预测函数<br>假设有一个二分类问题，输出为y∈{0,1}，而线性回归模型产生的预测值为（w是参数向量）</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-91c7cc4cd4a720f1.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-91c7cc4cd4a720f1.png" alt></p>
 <p>我们希望有一个理想的函数来帮我们实现z值到0/1值的转化。 于是我们找到了sigmoid函数</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-3ec3935d32b6d851.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-3ec3935d32b6d851.png" alt></p>
 <p>图像是</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-d69d2f20a24b7532.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-d69d2f20a24b7532.png" alt></p>
 <p>于是，我们非常自然的把sigmoid计算得到的值作为预测点为类别1的概率。概率大于0.5归类为1，小于0.5归类为0。至此，我们得到了预测函数模型</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-e1484c138924b7e5.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-e1484c138924b7e5.png" alt></p>
 <p>这里面， <strong>φ(z)</strong> 表示的是类别取1的概率大小，那类别取0的概率大小j就是 <strong>1-φ(z)</strong></p>
 <p>2.构造代价函数<br>按照线性回归的思路，如果利用误差平方和来当代价函数，得到</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-be3253b583598700.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-be3253b583598700.png" alt></p>
 <p>但是，我们此时的 <strong>预测函数模型φ</strong> 并 <strong>不是线性</strong> 的，如果把φ带入代价函数，得到的 <strong>J</strong> 是类似于下图的非凸函数，它有很多极值，使用梯度下降会很难找到代价函数最小的情况，所以这样构建代价函数并不合适。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-e1b2937baec08c4e.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-e1b2937baec08c4e.png" alt></p>
 <p>我们可以换一个思路，最大似然估计该登场了。我们根据预测函数构造一个它的分布的概率密度，利用已知的样本反推参数。<br>根据上一步我们得到的预测函数，可以知道概率如下：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-44b72d44ba8e2dea.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-44b72d44ba8e2dea.png" alt></p>
 <p>我们将这2个式子合并，得到概率公式：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-92b418cf8dcffdea.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-92b418cf8dcffdea.png" alt></p>
 <p>由最大似然估计可知，联合概率就是：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-c2c796e107f87660.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-c2c796e107f87660.png" alt></p>
 <p>最大似然估计的目标是找到参数W使得L(w)最大，那么我们对L加一个负号，是不是就可以得到代价函数，也就是找到参数W使得-L(w)最小。不过，这并不重要，我们的目的只是求参数w而已。为了简化计算，我们对L(w)取对数</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-899b666386995b23.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-899b666386995b23.png" alt></p>
 <p>最后得到代价函数</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-d4dcbb1875380d10.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-d4dcbb1875380d10.png" alt></p>
 <p>3.求解参数<br>这里可以使用梯度下降法求解参数，具体做法已经在之前的线性回归中讲过，这里求解方式雷同，不在赘述。如果是使用计算库求解的话，可是使用 <strong>BFGS</strong> 与<br><strong>L-BFGS</strong> 来代替梯度下降法，这2种算法收敛速度更快，且可以自适应选择学习效率α，不必手动设置。</p>
 <h4 id="2-边界判定"><a href="#2-边界判定" class="headerlink" title="2. 边界判定"></a>2. 边界判定</h4><p>让我们回到最开始，再来回顾一下我们的逻辑回归算法。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-e7e6b7e8686504fc.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-e7e6b7e8686504fc.png" alt></p>
 <p>开始我们假设了一个线性模型，然后将线性模型带入了sigmoid函数，得到了逻辑回归模型。由sigmoid函数的图像，我们不难得出这样的结论：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-3f63544fd8d9172e.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-3f63544fd8d9172e.png" alt></p>
 <p>那么现在假设线性模型如下，且已求出参数[-3,1,1]。则当-3+x_1+x_2≥0，即x_1+x_2≥3时，模型将预测 y=1。  </p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-3bfd150af7a9a7af.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-3bfd150af7a9a7af.png" alt></p>
 <p>如果从一开始就不是线性模型呢？下图就是曲线模型，且参数是[-1,0,0,1,1]</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-37246c59f26c3809.png" alt=""></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10902146-f1d5050ff60d9e51.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-37246c59f26c3809.png" alt></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10902146-f1d5050ff60d9e51.png" alt></p>
 <p>所以我想说的是： <strong>决定决策边界的不是训练集，而是假设本身和参数，训练集只是用来拟合求参数。</strong></p>
 <h3 id="三-逻辑回归特点"><a href="#三-逻辑回归特点" class="headerlink" title="三. 逻辑回归特点"></a>三. 逻辑回归特点</h3><ul>
 <li>逻辑回归的数学模型和求解都相对比较简洁，实现相对简单。</li>
@@ -507,7 +509,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -518,9 +520,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -627,7 +627,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

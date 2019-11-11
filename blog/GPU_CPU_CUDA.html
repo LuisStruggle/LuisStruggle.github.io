@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,45 +63,44 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="GPU,CPU,CUDA,cuDNN," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="GPU,CPU,CUDA,cuDNN,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess）
-CPU虽然有多核，但">
+<meta name="description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess） CPU虽然有多核，但">
+<meta name="keywords" content="GPU,CPU,CUDA,cuDNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CPU、GPU、CUDA，CuDNN 简介">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/GPU_CPU_CUDA.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess）
-CPU虽然有多核，但">
+<meta property="og:description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess） CPU虽然有多核，但">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/20161228111841667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20161228195113023?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20161230105726677?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20161230160758862?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://img-blog.csdn.net/20161230162245477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-08-15T14:46:31.521Z">
+<meta property="og:updated_time" content="2018-08-15T14:46:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPU、GPU、CUDA，CuDNN 简介">
-<meta name="twitter:description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess）
-CPU虽然有多核，但">
+<meta name="twitter:description" content="一、CPU和GPU的区别1，CPU (Central Processing Unit) 即中央处理器2，GPU (Graphics Processing Unit) 即图形处理器3，GPGPU全称General Purpose GPU，即通用计算图形处理器。其中第一个“GP”通用目的（GeneralPurpose）而第二个“GP”则表示图形处理（GraphicProcess） CPU虽然有多核，但">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20161228111841667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -123,7 +122,7 @@ CPU虽然有多核，但">
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/GPU_CPU_CUDA.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/GPU_CPU_CUDA.html">
 
   <title> CPU、GPU、CUDA，CuDNN 简介 | 奋斗的青春 </title>
 </head>
@@ -154,7 +153,7 @@ CPU虽然有多核，但">
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -181,7 +180,7 @@ CPU虽然有多核，但">
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -191,7 +190,7 @@ CPU虽然有多核，但">
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -201,7 +200,7 @@ CPU虽然有多核，但">
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -211,7 +210,7 @@ CPU虽然有多核，但">
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -221,7 +220,7 @@ CPU虽然有多核，但">
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -283,7 +282,7 @@ CPU虽然有多核，但">
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -337,7 +336,7 @@ CPU虽然有多核，但">
 <h1 id="二、CUDA"><a href="#二、CUDA" class="headerlink" title="二、CUDA"></a>二、CUDA</h1><p>CUDA(Compute Unified Device Architecture)，是英伟达公司推出的一种基于新的并行编程模型和指令集架构的通用计算架构，它能利用英伟达GPU的并行计算引擎，比CPU更高效的解决许多复杂计算任务。</p>
 <p>使用CUDA的好处就是透明。根据摩尔定律GPU的晶体管数量不断增多，硬件结构必然是不断的在发展变化，没有必要每次都为不同的硬件结构重新编码，而CUDA就是提供了一种可扩展的编程模型，使得已经写好的CUDA代码可以在任意数量核心的GPU上运行。如下图所示，只有运行时，系统才知道物理处理器的数量。<br><img src="https://img-blog.csdn.net/20161228195113023?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
 <h1 id="三、CuDNN"><a href="#三、CuDNN" class="headerlink" title="三、CuDNN"></a>三、CuDNN</h1><p>NVIDIA cuDNN是用于深度神经网络的GPU加速库。它强调性能、易用性和低内存开销。NVIDIA cuDNN可以集成到更高级别的机器学习框架中，如加州大学伯克利分校的流行CAFFE软件。简单的，插入式设计可以让开发人员专注于设计和实现神经网络模型，而不是调整性能，同时还可以在GPU上实现高性能现代并行计算。</p>
-<p><a href="http://pan.baidu.com/s/1c0GjUdq" target="_blank" rel="external">cuDNN 用户手册（英文）</a></p>
+<p><a href="http://pan.baidu.com/s/1c0GjUdq" target="_blank" rel="noopener">cuDNN 用户手册（英文）</a></p>
 <p>CuDNN支持的算法</p>
 <ol>
 <li>卷积操作、相关操作的前向和后向过程。</li>
@@ -353,7 +352,7 @@ CPU虽然有多核，但">
 <li>Tensor转换函数，其中一个Tensor就是一个四维的向量。</li>
 </ol>
 <p><img src="https://img-blog.csdn.net/20161230105726677?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmFuZ2ppbl9rbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>Baseline Caffe与用NVIDIA Titan Z 加速cuDNN的Caffe做比较</p>
-<h1 id="四、CUDA编程"><a href="#四、CUDA编程" class="headerlink" title="四、CUDA编程"></a>四、CUDA编程</h1><p>参考自 <a href="http://bbs.csdn.net/topics/390798229" target="_blank" rel="external">一篇不错的CUDA入门博客</a></p>
+<h1 id="四、CUDA编程"><a href="#四、CUDA编程" class="headerlink" title="四、CUDA编程"></a>四、CUDA编程</h1><p>参考自 <a href="http://bbs.csdn.net/topics/390798229" target="_blank" rel="noopener">一篇不错的CUDA入门博客</a></p>
 <p>开发人员可以通过调用CUDA的API，来进行并行编程，达到高性能计算目的。NVIDIA公司为了吸引更多的开发人员，对CUDA进行了编程语言扩展，如CUDA C/C++,CUDA Fortran语言。注意CUDA C/C++可以看作一个新的编程语言，因为NVIDIA配置了相应的编译器nvcc,CUDA Fortran一样。</p>
 <p>如果粗暴的认为C语言工作的对象是CPU和内存条（接下来,称为主机内存），那么CUDA C工作的的对象就是GPU及GPU上的内存（接下来,称为设备内存），且充分利用了GPU多核的优势及降低了并行编程的难度。一般通过C语言把数据从外界读入，再分配数据，给CUDA C，以便在GPU上计算，然后再把计算结果返回给C语言，以便进一步工作，如进一步处理及显示，或重复此过程。</p>
 <h2 id="主要概念与名称"><a href="#主要概念与名称" class="headerlink" title="主要概念与名称"></a>主要概念与名称</h2><ol>
@@ -558,7 +557,7 @@ cudaEventDestroy( stop )；
 <li>当线程块的数量为GPU中处理数量的2倍时，将达到最优性能。</li>
 <li>核函数执行的第一个计算就是计算输入数据的偏移。每个线程的起始偏移都是0到线程数量减1之间的某个值。然后，对偏移的增量为已启动线程的总数。</li>
 </ol>
-<p>来源：<a href="https://blog.csdn.net/fangjin_kl/article/details/53906874" target="_blank" rel="external">https://blog.csdn.net/fangjin_kl/article/details/53906874</a></p>
+<p>来源：<a href="https://blog.csdn.net/fangjin_kl/article/details/53906874" target="_blank" rel="noopener">https://blog.csdn.net/fangjin_kl/article/details/53906874</a></p>
 
       
     </div>
@@ -654,7 +653,7 @@ cudaEventDestroy( stop )；
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -665,9 +664,7 @@ cudaEventDestroy( stop )；
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -774,7 +771,7 @@ cudaEventDestroy( stop )；
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

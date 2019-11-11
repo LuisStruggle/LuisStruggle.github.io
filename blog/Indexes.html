@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,21 +63,21 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="MySql,InnoDB,MyISAM,索引," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="MySql,InnoDB,MyISAM,索引,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
@@ -85,17 +85,19 @@
 
 
 <meta name="description" content="聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
+<meta name="keywords" content="MySql,InnoDB,MyISAM,索引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="聚族索引和非聚族索引">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Indexes.html">
 <meta property="og:site_name" content="奋斗的青春">
 <meta property="og:description" content="聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-d53a5ce9cecf22f3.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-5244179cc19a1c21.PNG">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-5772dddedb909374.PNG">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-ee09c38aeb148cd0.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/10154499-75ad3e0e24d55317.png">
-<meta property="og:updated_time" content="2019-03-31T11:44:12.339Z">
+<meta property="og:updated_time" content="2019-03-31T11:44:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聚族索引和非聚族索引">
 <meta name="twitter:description" content="聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因">
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Indexes.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Indexes.html">
 
   <title> 聚族索引和非聚族索引 | 奋斗的青春 </title>
 </head>
@@ -151,7 +153,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -178,7 +180,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -188,7 +190,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -198,7 +200,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -208,7 +210,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -218,7 +220,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -280,7 +282,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -324,14 +326,14 @@
         <p>聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据<br>非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因</p>
 <a id="more"></a>
 <p>澄清一个概念：innodb中，在聚簇索引之上创建的索引称之为辅助索引，辅助索引访问数据总是需要二次查找，非聚簇索引都是辅助索引，像复合索引、前缀索引、唯一索引，辅助索引叶子节点存储的不再是行的物理位置，而是主键值</p>
-<h2 id="何时使用聚簇索引与非聚簇索引"><a href="#何时使用聚簇索引与非聚簇索引" class="headerlink" title="何时使用聚簇索引与非聚簇索引"></a>何时使用聚簇索引与非聚簇索引</h2><p><img src="https://upload-images.jianshu.io/upload_images/10154499-d53a5ce9cecf22f3.png" alt=""></p>
+<h2 id="何时使用聚簇索引与非聚簇索引"><a href="#何时使用聚簇索引与非聚簇索引" class="headerlink" title="何时使用聚簇索引与非聚簇索引"></a>何时使用聚簇索引与非聚簇索引</h2><p><img src="https://upload-images.jianshu.io/upload_images/10154499-d53a5ce9cecf22f3.png" alt></p>
 <h2 id="聚簇索引具有唯一性"><a href="#聚簇索引具有唯一性" class="headerlink" title="聚簇索引具有唯一性"></a>聚簇索引具有唯一性</h2><p>由于聚簇索引是将数据跟索引结构放到一块，因此一个表仅有一个聚簇索引</p>
 <h2 id="一个误区：把主键自动设为聚簇索引"><a href="#一个误区：把主键自动设为聚簇索引" class="headerlink" title="一个误区：把主键自动设为聚簇索引"></a>一个误区：把主键自动设为聚簇索引</h2><p><strong>聚簇索引默认是主键</strong> ，如果表中没有定义主键，InnoDB 会选择一个 <strong>唯一的非空索引</strong> 代替。如果没有这样的索引，InnoDB 会 <strong>隐式定义一个主键</strong> 来作为聚簇索引。InnoDB 只聚集在同一个页面中的记录。包含相邻健值的页面可能相距甚远。<strong>如果你已经设置了主键为聚簇索引，必须先删除主键，然后添加我们想要的聚簇索引，最后恢复设置主键即可</strong> 。</p>
 <p>此时其他索引只能被定义为非聚簇索引。这个是最大的误区。有的主键还是无意义的自动增量字段，那样的话Clustered index对效率的帮助，完全被浪费了。</p>
 <p>刚才说到了，聚簇索引性能最好而且具有唯一性，所以非常珍贵，必须慎重设置。<strong>一般要根据这个表最常用的SQL查询方式来进行选择，某个字段作为聚簇索引，或组合聚簇索引</strong> ，这个要看实际情况。</p>
 <p>记住我们的 <strong>最终目的</strong> 就是 <strong>在相同结果集情况下，尽可能减少逻辑IO</strong> 。</p>
-<h2 id="结合图再仔细点看"><a href="#结合图再仔细点看" class="headerlink" title="结合图再仔细点看"></a>结合图再仔细点看</h2><p><img src="https://upload-images.jianshu.io/upload_images/10154499-5244179cc19a1c21.PNG" alt=""></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10154499-5772dddedb909374.PNG" alt=""></p>
+<h2 id="结合图再仔细点看"><a href="#结合图再仔细点看" class="headerlink" title="结合图再仔细点看"></a>结合图再仔细点看</h2><p><img src="https://upload-images.jianshu.io/upload_images/10154499-5244179cc19a1c21.PNG" alt></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10154499-5772dddedb909374.PNG" alt></p>
 <ol>
 <li>InnoDB使用的是聚簇索引，将 <strong>主键组织到一棵B+树</strong> 中，而 <strong>行数据就储存在叶子节点</strong> 上，若使用”where id = 14”这样的条件查找主键，则 <strong>按照B+树的检索算法即可查找到对应的叶节点，之后获得行数据</strong> 。</li>
 <li>若 <strong>对Name列进行条件搜索，则需要两个步骤</strong> ： <strong>第一步在辅助索引B+树中检索Name，到达其叶子节点获取对应的主键</strong> 。第二步 <strong>使用主键在主索引B+树种再执行一次B+树检索操作，最终到达叶子节点即可获取整行数据</strong> 。（ <strong>重点在于通过其他键需要建立辅助索引</strong> ）</li>
@@ -350,9 +352,9 @@
 <li><strong>维护索引很昂贵，特别是插入新行或者主键被更新导至要分页(page split)的时候</strong> 。建议在大量插入新行后，选在负载较低的时间段，通过OPTIMIZE TABLE优化表，因为必须被移动的行数据可能造成碎片。使用独享表空间可以弱化碎片</li>
 <li>表因为使用UUId（随机ID）作为主键，使数据存储稀疏，这就会出现聚簇索引有可能有比全表扫面更慢，</li>
 </ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/10154499-ee09c38aeb148cd0.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10154499-ee09c38aeb148cd0.png" alt></p>
 <p>所以建议使用int的auto_increment作为主键</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/10154499-75ad3e0e24d55317.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/10154499-75ad3e0e24d55317.png" alt></p>
 <p>主键的值是顺序的，所以 InnoDB 把每一条记录都存储在上一条记录的后面。当达到页的最大填充因子时（InnoDB 默认的最大填充因子是页大小的<br>15/16，留出部分空间用于以后修改），下一条记录就会写入新的页中。一旦数据按照这种顺序的方式加载，主键页就会近似于被顺序的记录填满（二级索引页可能是不一样的）</p>
 <ol>
 <li>如果主键比较大的话，那辅助索引将会变的更大，因为 <strong>辅助索引的叶子存储的是主键值；过长的主键值，会导致非叶子节点占用占用更多的物理空间</strong></li>
@@ -456,7 +458,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -467,9 +469,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -576,7 +576,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

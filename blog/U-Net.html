@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,44 +63,43 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="卷积网络,U-Net,语义分割," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="卷积网络,U-Net,语义分割,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="简介
-成功训练一个深度网络需要大量已标注的训练样本。在这篇论文中，我们提出了一个新的网络和训练策略。为了更有效的利用标注数据，我们使用数据扩张的方法(data augmentation)。我们的网络由两部分组成：一个收缩路径(contracting path)来获取上下文信息以及一个对称的扩张路径(expanding path)用以精确定位。我们使用这个网络获得了赢得了ISBI cell trac">
+<meta name="description" content="简介 成功训练一个深度网络需要大量已标注的训练样本。在这篇论文中，我们提出了一个新的网络和训练策略。为了更有效的利用标注数据，我们使用数据扩张的方法(data augmentation)。我们的网络由两部分组成：一个收缩路径(contracting path)来获取上下文信息以及一个对称的扩张路径(expanding path)用以精确定位。我们使用这个网络获得了赢得了ISBI cell trac">
+<meta name="keywords" content="卷积网络,U-Net,语义分割">
 <meta property="og:type" content="article">
 <meta property="og:title" content="U-Net（Convolutional Networks for Biomedical Image Segmentation）">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/U-Net.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="简介
-成功训练一个深度网络需要大量已标注的训练样本。在这篇论文中，我们提出了一个新的网络和训练策略。为了更有效的利用标注数据，我们使用数据扩张的方法(data augmentation)。我们的网络由两部分组成：一个收缩路径(contracting path)来获取上下文信息以及一个对称的扩张路径(expanding path)用以精确定位。我们使用这个网络获得了赢得了ISBI cell trac">
-<meta property="og:image" content="https://luisstruggle.github.io/../images/U-NET.jpg">
+<meta property="og:description" content="简介 成功训练一个深度网络需要大量已标注的训练样本。在这篇论文中，我们提出了一个新的网络和训练策略。为了更有效的利用标注数据，我们使用数据扩张的方法(data augmentation)。我们的网络由两部分组成：一个收缩路径(contracting path)来获取上下文信息以及一个对称的扩张路径(expanding path)用以精确定位。我们使用这个网络获得了赢得了ISBI cell trac">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://luisstruggle.github.io/images/U-NET.jpg">
 <meta property="og:image" content="https://img-blog.csdn.net/20171117205646090">
 <meta property="og:image" content="https://img-blog.csdn.net/20171117205702159">
-<meta property="og:updated_time" content="2018-09-14T12:54:11.755Z">
+<meta property="og:updated_time" content="2018-09-14T12:54:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="U-Net（Convolutional Networks for Biomedical Image Segmentation）">
-<meta name="twitter:description" content="简介
-成功训练一个深度网络需要大量已标注的训练样本。在这篇论文中，我们提出了一个新的网络和训练策略。为了更有效的利用标注数据，我们使用数据扩张的方法(data augmentation)。我们的网络由两部分组成：一个收缩路径(contracting path)来获取上下文信息以及一个对称的扩张路径(expanding path)用以精确定位。我们使用这个网络获得了赢得了ISBI cell trac">
-<meta name="twitter:image" content="https://luisstruggle.github.io/../images/U-NET.jpg">
+<meta name="twitter:description" content="简介 成功训练一个深度网络需要大量已标注的训练样本。在这篇论文中，我们提出了一个新的网络和训练策略。为了更有效的利用标注数据，我们使用数据扩张的方法(data augmentation)。我们的网络由两部分组成：一个收缩路径(contracting path)来获取上下文信息以及一个对称的扩张路径(expanding path)用以精确定位。我们使用这个网络获得了赢得了ISBI cell trac">
+<meta name="twitter:image" content="https://luisstruggle.github.io/images/U-NET.jpg">
 
 
 
@@ -121,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/U-Net.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/U-Net.html">
 
   <title> U-Net（Convolutional Networks for Biomedical Image Segmentation） | 奋斗的青春 </title>
 </head>
@@ -152,7 +151,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -179,7 +178,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -189,7 +188,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -199,7 +198,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -209,7 +208,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -219,7 +218,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -281,7 +280,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -325,12 +324,12 @@
         <p><strong>简介</strong></p>
 <p>成功训练一个深度网络需要大量已标注的训练样本。在这篇论文中，我们提出了一个新的网络和训练策略。为了更有效的利用标注数据，我们使用数据扩张的方法(data augmentation)。我们的网络由两部分组成：一个收缩路径(contracting path)来获取上下文信息以及一个对称的扩张路径(expanding path)用以精确定位。我们使用这个网络获得了赢得了ISBI cell tracking challenge 2015.不仅如此，这个网络非常的快，对一个512*512的图像，使用一块GPU只需要不到一秒的时间。</p>
 <a id="more"></a>
-<p>网络获取地址(基于caffe)：<a href="http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net." target="_blank" rel="external">http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net.</a></p>
+<p>网络获取地址(基于caffe)：<a href="http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net." target="_blank" rel="noopener">http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net.</a></p>
 <p><strong>一、介绍</strong></p>
 <p>[1]通过预测每个像素点的类别来对医学图像进行分割。首先，这个网络可以完成定位工作。其次，由于预测时要切patch，所以训练数据量远大于训练图像的数量。这个网络以绝对优势赢得了ISBI<br>2012的EM分割挑战赛（EM segmentation challenge）。</p>
 <p>这个网络有两个很明显的缺点：<br>1.要分别预测每一个patch的类别，patch之间的重叠导致每次预测都要重复计算同一个点。<br>2.这个网络需要在 局部准确性和获取整体上下文信息之间取舍。</p>
 <p>在这篇文章中，我们建立了一个更加优雅的框架，通常被称为“全卷积网络”（fully convolutional<br>network）[2]。我们修改并拓展了这个框架，使其可以仅使用少量训练图片就可以工作，获得更高的分割准确率。网络如下图所示：</p>
-<p><img src="../images/U-NET.jpg" alt=""></p>
+<p><img src="../images/U-NET.jpg" alt></p>
 <p>fcn(fully convolutional natwork)的思想是：修改一个普通的逐层收缩的网络，用上采样(up sampling)(？？反卷积)操作代替网络后部的池化(pooling)操作。因此，这些层增加了输出的分辨率。为了使用局部的信息，在网络收缩过程（路径）中产生的高分辨率特征(high<br>resolution features) ，被连接到了修改后网络的上采样的结果上。在此之后，一个卷积层基于这些信息综合得到更精确的结果。</p>
 <p>与fcn(fully convolutional natwork)不同的是，我们的网络在上采样部分依然有大量的特征通道(feature channels)，这使得网络可以将环境信息向更高的分辨率层(higher resolution layers)传播。结果是，扩张路径基本对称于收缩路径。网络不存在任何全连接层(fully connected layers)，并且，只使用每个卷积的有效部分，例如，分割图(segmentation map)只包含这样一些像素点，这些像素点的完整上下文都出现在输入图像中。为了预测图像边界区域的像素点，我们采用镜像图像的方式补全缺失的环境像素。这个tiling方法在使用网络分割大图像时是非常有用的，因为如果不这么做，GPU显存会限制图像分辨率。</p>
 <p>我们的训练数据太少，因此我们采用弹性形变的方式增加数据。这可以让模型学习得到形变不变性。这对医学图像分割是非常重要的，因为组织的形变是非常常见的情况，并且计算机可以很有效的模拟真实的形变。在[3]中指出了在无监督特征学习中，增加数据以获取不变性的重要性。</p>
@@ -341,9 +340,9 @@
 <p>我们采用随机梯度下降法训练。</p>
 <p>为了最大限度的使用GPU显存，比起输入一个大的batch size，我们更倾向于大量输入tiles。我们使用了很高的momentum（0.99）。</p>
 <p>最后一层使用交叉熵函数与softmax。（交叉熵函数如下所示）</p>
-<p><img src="https://img-blog.csdn.net/20171117205646090" alt="">  </p>
+<p><img src="https://img-blog.csdn.net/20171117205646090" alt>  </p>
 <p>为了使某些像素点更加重要，我们在公式中引入了w(x)。我们对每一张标注图像预计算了一个权重图，来补偿训练集中每类像素的不同频率，使网络更注重学习相互接触的细胞之间的小的分割边界。我们使用形态学操作计算分割边界。权重图计算公式如下：</p>
-<p><img src="https://img-blog.csdn.net/20171117205702159" alt="">  </p>
+<p><img src="https://img-blog.csdn.net/20171117205702159" alt>  </p>
 <p>wc是用于平衡类别频率的权重图，d1代表到最近细胞的边界的距离，d2代表到第二近的细胞的边界的距离。基于经验我们设定w0=10，σ≈5像素。</p>
 <p>网络中权重的初始化：我们的网络的权重由高斯分布初始化，分布的标准差为(N/2)^0.5,N为每个神经元的输入节点数量。例如，对于一个上一层是64通道的3<em>3卷积核来说，N=9</em>64。  </p>
 <p><strong>四、数据增加</strong></p>
@@ -441,7 +440,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -452,9 +451,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -561,7 +558,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

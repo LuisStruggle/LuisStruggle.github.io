@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,41 +63,40 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Spring,Spring Cloud,微服务," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Spring,Spring Cloud,微服务,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="1、Spring boot 是 Spring （AOP和IOC）的一套快速配置脚手架，可以基于spring boot 快速开发单个微服务；
-Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cloud是多个Spring boot微服务的集合，当然不是简单的集合，那么就涉及到微服务的七大原则：">
+<meta name="description" content="1、Spring boot 是 Spring （AOP和IOC）的一套快速配置脚手架，可以基于spring boot 快速开发单个微服务； Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cloud是多个Spring boot微服务的集合，当然不是简单的集合，那么就涉及到微服务的七大原则：">
+<meta name="keywords" content="Spring,Spring Cloud,微服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud 了解">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Spring_Cloud.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="1、Spring boot 是 Spring （AOP和IOC）的一套快速配置脚手架，可以基于spring boot 快速开发单个微服务；
-Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cloud是多个Spring boot微服务的集合，当然不是简单的集合，那么就涉及到微服务的七大原则：">
+<meta property="og:description" content="1、Spring boot 是 Spring （AOP和IOC）的一套快速配置脚手架，可以基于spring boot 快速开发单个微服务； Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cloud是多个Spring boot微服务的集合，当然不是简单的集合，那么就涉及到微服务的七大原则：">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://luisstruggle.github.io/images/Spring_Cloud.png">
-<meta property="og:updated_time" content="2019-05-31T02:26:16.810Z">
+<meta property="og:updated_time" content="2019-05-31T02:26:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud 了解">
-<meta name="twitter:description" content="1、Spring boot 是 Spring （AOP和IOC）的一套快速配置脚手架，可以基于spring boot 快速开发单个微服务；
-Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cloud是多个Spring boot微服务的集合，当然不是简单的集合，那么就涉及到微服务的七大原则：">
+<meta name="twitter:description" content="1、Spring boot 是 Spring （AOP和IOC）的一套快速配置脚手架，可以基于spring boot 快速开发单个微服务； Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cloud是多个Spring boot微服务的集合，当然不是简单的集合，那么就涉及到微服务的七大原则：">
 <meta name="twitter:image" content="https://luisstruggle.github.io/images/Spring_Cloud.png">
 
 
@@ -119,7 +118,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Spring_Cloud.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Spring_Cloud.html">
 
   <title> Spring Cloud 了解 | 奋斗的青春 </title>
 </head>
@@ -150,7 +149,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -177,7 +176,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -187,7 +186,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -197,7 +196,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -207,7 +206,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -217,7 +216,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -279,7 +278,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -349,7 +348,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
 <p>断路器——Netflix Hystrix； 作用：断路器，保护系统，控制故障范围。</p>
 <p>服务网关——Netflix Zuul； 作用：api网关，路由，负载均衡等多种作用</p>
 <p>分布式配置——Spring Cloud Config ； 作用：配置管理；</p>
-<p><img src="/images/Spring_Cloud.png" alt=""></p>
+<p><img src="/images/Spring_Cloud.png" alt></p>
 <p>3、spring boot使用了默认大于配置的理念，很多集成方案已经帮你选择好了，能不配置就不配置，Spring Cloud很大的一部分是基于Spring<br>boot来实现。</p>
 <p>4、Spring boot可以离开Spring Cloud独立使用开发项目，但是Spring Cloud离不开Spring boot，属于依赖的关系。</p>
 
@@ -445,7 +444,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -456,9 +455,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -565,7 +562,7 @@ Spring Cloud是一个基于Spring Boot实现的云应用开发工具；Spring Cl
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>

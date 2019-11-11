@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -63,37 +63,35 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="数字签名,数字证书,https," />
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="数字签名,数字证书,https,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
 
 
 
 
 
 
-<meta name="description" content="非对称加密加密我了解的不多，只知道有这么两种算法：对称加密和非对称加密。
-对称加密：加密和解密的密钥一样，比如用123加密就是用123解密，但是实际中密码都是普通数据在互联网传输的，这样一点密码被中间人截取并破解，加密直接被攻破。
-非对称加密：把密钥分为公钥和私钥，公钥是公开的所有人都可以认领，私钥是保密的只有一个人知道。假设A要发送一封Email给B，他不想让任何其他人在传输中看到Email的内">
+<meta name="description" content="非对称加密加密我了解的不多，只知道有这么两种算法：对称加密和非对称加密。 对称加密：加密和解密的密钥一样，比如用123加密就是用123解密，但是实际中密码都是普通数据在互联网传输的，这样一点密码被中间人截取并破解，加密直接被攻破。 非对称加密：把密钥分为公钥和私钥，公钥是公开的所有人都可以认领，私钥是保密的只有一个人知道。假设A要发送一封Email给B，他不想让任何其他人在传输中看到Email的内">
+<meta name="keywords" content="数字签名,数字证书,https">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数字签名">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Digital_Signature.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="非对称加密加密我了解的不多，只知道有这么两种算法：对称加密和非对称加密。
-对称加密：加密和解密的密钥一样，比如用123加密就是用123解密，但是实际中密码都是普通数据在互联网传输的，这样一点密码被中间人截取并破解，加密直接被攻破。
-非对称加密：把密钥分为公钥和私钥，公钥是公开的所有人都可以认领，私钥是保密的只有一个人知道。假设A要发送一封Email给B，他不想让任何其他人在传输中看到Email的内">
+<meta property="og:description" content="非对称加密加密我了解的不多，只知道有这么两种算法：对称加密和非对称加密。 对称加密：加密和解密的密钥一样，比如用123加密就是用123解密，但是实际中密码都是普通数据在互联网传输的，这样一点密码被中间人截取并破解，加密直接被攻破。 非对称加密：把密钥分为公钥和私钥，公钥是公开的所有人都可以认领，私钥是保密的只有一个人知道。假设A要发送一封Email给B，他不想让任何其他人在传输中看到Email的内">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4943911-697a85b6cafa5c07.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4943911-9d6bfc9fe32b5d59.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4943911-051acca03db99fd1.png">
@@ -102,12 +100,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4943911-06341576bd2e028c.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4943911-c440dc260f97596d.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4943911-1b85c92721aa3b6b.png">
-<meta property="og:updated_time" content="2019-05-19T04:55:58.602Z">
+<meta property="og:updated_time" content="2019-05-19T04:56:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数字签名">
-<meta name="twitter:description" content="非对称加密加密我了解的不多，只知道有这么两种算法：对称加密和非对称加密。
-对称加密：加密和解密的密钥一样，比如用123加密就是用123解密，但是实际中密码都是普通数据在互联网传输的，这样一点密码被中间人截取并破解，加密直接被攻破。
-非对称加密：把密钥分为公钥和私钥，公钥是公开的所有人都可以认领，私钥是保密的只有一个人知道。假设A要发送一封Email给B，他不想让任何其他人在传输中看到Email的内">
+<meta name="twitter:description" content="非对称加密加密我了解的不多，只知道有这么两种算法：对称加密和非对称加密。 对称加密：加密和解密的密钥一样，比如用123加密就是用123解密，但是实际中密码都是普通数据在互联网传输的，这样一点密码被中间人截取并破解，加密直接被攻破。 非对称加密：把密钥分为公钥和私钥，公钥是公开的所有人都可以认领，私钥是保密的只有一个人知道。假设A要发送一封Email给B，他不想让任何其他人在传输中看到Email的内">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/4943911-697a85b6cafa5c07.png">
 
 
@@ -129,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="https://luisstruggle.github.io/blog/Digital_Signature.html"/>
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Digital_Signature.html">
 
   <title> 数字签名 | 奋斗的青春 </title>
 </head>
@@ -160,7 +156,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">奋斗的青春</span>
       <span class="logo-line-after"><i></i></span>
@@ -187,7 +183,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -197,7 +193,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -207,7 +203,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -217,7 +213,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -227,7 +223,7 @@
         <li class="menu-item menu-item-commonweal">
           <a href="/404.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             公益
           </a>
@@ -289,7 +285,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -343,7 +339,7 @@
 <ul>
 <li>对文件本身加密可能是个耗时过程，比如这封Email足够大，那么私钥加密整个文件以及拿到文件后的解密无疑是巨大的开销。<br>数字签名可以解决这个问题：<br>1.A先对这封Email执行哈希运算得到hash值简称“摘要”，取名h1<br>2.然后用自己私钥对摘要加密，生成的东西叫“数字签名”<br>3.把数字签名加在Email正文后面，一起发送给B<br>（当然，为了防止邮件被窃听你可以用继续公钥加密，这个不属于数字签名范畴）<br>4.B收到邮件后用A的公钥对数字签名解密，成功则代表Email确实来自A，失败说明有人冒充<br>5.B对邮件正文执行哈希运算得到hash值，取名h2<br>6.B 会对比第4步数字签名的hash值h1和自己运算得到的h2，一致则说明邮件未被篡改。</li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-697a85b6cafa5c07.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-697a85b6cafa5c07.png" alt></p>
 <p>看完这个过程，是不是觉得数字签名不过如此。其实就是利用算法（不一定是非对称算法）对原文hash值加密，然后附着到原文的一段数据。数字签名的作用就是验证数据来源以及数据完整性！解密过程则称为数字签名验证。<br>不过先别着急，我在梳理数字签名流程时候有下面几点疑惑，不知你也是否一样？</p>
 <ol>
 <li><p>如果中间人同时篡改了Email正文和数字签名，那B收到邮件无法察觉啊。<br>答案：数字签名的生成需要对方私钥，所以数字签名很难被伪造。万一私钥泄漏了呢，不好意思，你私钥都能弄丢了那这篇文章当我白写。（私钥绝对保密不参与传输）</p>
@@ -355,11 +351,11 @@
 <ol>
 <li>首先A去找”证书中心”（certificate authority，简称CA），为公钥做认证。证书中心用自己的私钥，对A的公钥和一些相关信息一起加密，生成”数字证书”（Digital Certificate）：</li>
 </ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-9d6bfc9fe32b5d59.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-9d6bfc9fe32b5d59.png" alt></p>
 <ol>
 <li>A在邮件正文下方除了数字签名，另外加上这张数字证书</li>
 </ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-051acca03db99fd1.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-051acca03db99fd1.png" alt></p>
 <ol>
 <li>B收到Email后用CA的公钥解密这份数字证书，拿到A的公钥，然后验证数字签名，后面流程就和图1的流程一样了，不再赘述。<br>和数字签名一样我在梳理这个流程时有下面几点疑惑：</li>
 </ol>
@@ -372,13 +368,13 @@
 </li>
 </ul>
 <h4 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h4><p>上面一直在说虚拟场景，下文举个实际例子看看数字签名+数字证书如何验证文件的来源，以及文件的完整性。比如下载文件：我们开发中一般是服务端给文件信息加上md5,客户端下载完成后校验md5来判断文件是否损坏，这个其实就是简单的校验机制，而很多正规企业比如google都会给官方软件签署数字签名和证书，而windows已经预置了很多CA根证书：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-f9869670cead8ad6.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-f9869670cead8ad6.png" alt></p>
 <p>然后看下我之前从网上下载的Chrome.exe，右键属性，通过鼠标点击一步验证：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-cc284c4566efcd7e.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-cc284c4566efcd7e.png" alt></p>
 <p>Google<br>Inc就是google从CA中心申请的数字证书。这样看来，这个软件确实来源于google官方，并且文件完整。接下来我干点坏事，用notepad打开这个exe文件并且篡改里面的内容（修改二进制数据，09<br>改为33），保存：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-06341576bd2e028c.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-06341576bd2e028c.png" alt></p>
 <p>再看下数字签名还正常吗？</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-c440dc260f97596d.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-c440dc260f97596d.png" alt></p>
 <p>文件被篡改导致数字签名无效，数字证书没有问题。</p>
 <h4 id="https简单介绍"><a href="#https简单介绍" class="headerlink" title="https简单介绍"></a>https简单介绍</h4><p>数字签名和数字证书可以用于文件，当然也能用于html网页数据。本人没有https相关开发经验，故不做深入探讨只是简单介绍下。</p>
 <ul>
@@ -390,7 +386,7 @@
 <li>无法保证数据传输不被窃听</li>
 </ol>
 <p>而https就是专门解决这三个问题，https使用数字签名+数字证书解决了前2个问题，很多大型网站比如baidu.com都会采用https协议，网址左侧会出现绿色加锁标识：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4943911-1b85c92721aa3b6b.png" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4943911-1b85c92721aa3b6b.png" alt></p>
 <p>点击可以查看证书，另外浏览器都会内置CA根证书，来对这些网站的服务器证书进行校验。<br>然后，再用SSL协议对传输通道加密，保证数据传输不被窃听，这个SSL加密原理分为很多步骤不在本文讨论范围。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>全文比较深入地探讨了非对称加密，数字签名和数字证书的原理，最后引出https的简单介绍，如有差错尽请指正。</p>
 
@@ -486,7 +482,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -497,9 +493,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/tx.jpg"
-               alt="LuisStruggle" />
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
           <p class="site-author-name" itemprop="name">LuisStruggle</p>
           <p class="site-description motion-element" itemprop="description">Learning and communication</p>
         </div>
@@ -606,7 +600,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2012 - 
   <span itemprop="copyrightYear">2019</span>
