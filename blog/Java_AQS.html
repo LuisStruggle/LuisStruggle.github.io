@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Java,Lock,AQS,Synchronizer,">
+  <meta name="keywords" content="Java,AQS,Lock,Synchronizer,">
 
 
 
@@ -85,7 +85,7 @@
 
 
 <meta name="description" content="AQS是AbstractQueuedSynchronizer的简称。AQS提供了一种实现阻塞锁和一系列依赖FIFO等待队列的同步器的框架，如下图所示。AQS为一系列同步器依赖于一个单独的原子变量（state）的同步器提供了一个非常有用的基础。子类们必须定义改变state变量的protected方法，这些方法定义了state是如何被获取或释放的。鉴于此，本类中的其他方法执行所有的排队和阻塞机制。子类">
-<meta name="keywords" content="Java,Lock,AQS,Synchronizer">
+<meta name="keywords" content="Java,AQS,Lock,Synchronizer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java的AQS">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Java_AQS.html">
@@ -843,9 +843,9 @@ protected final boolean compareAndSetState(int expect, int update) {
           
             <a href="/tags/Java/" rel="tag">#Java</a>
           
-            <a href="/tags/Lock/" rel="tag">#Lock</a>
-          
             <a href="/tags/AQS/" rel="tag">#AQS</a>
+          
+            <a href="/tags/Lock/" rel="tag">#Lock</a>
           
             <a href="/tags/Synchronizer/" rel="tag">#Synchronizer</a>
           
