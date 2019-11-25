@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Kafka,用户行为,日志,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本文来自网易云社区 背景 随着互联网的不断发展，用户所产生的行为数据被越来越多的网站重视，那么什么是用户行为呢？所谓的用户行为主要由五种元素组成：时间、地点、人物、行为、行为对应的内容。为什么要做用户的行为分析？因为只有做了用户行为分析才能知道用户画像、才能知道用户在网站上的各种浏览、点击、购买背后的商业真相，从而给企业带来商业价值。">
+<meta name="keywords" content="Kafka,用户行为,日志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于 Kafka 的服务端用户行为日志采集">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/User_Behavior.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="本文来自网易云社区 背景 随着互联网的不断发展，用户所产生的行为数据被越来越多的网站重视，那么什么是用户行为呢？所谓的用户行为主要由五种元素组成：时间、地点、人物、行为、行为对应的内容。为什么要做用户的行为分析？因为只有做了用户行为分析才能知道用户画像、才能知道用户在网站上的各种浏览、点击、购买背后的商业真相，从而给企业带来商业价值。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://nos.netease.com/cloud-website-bucket/20180903141909d3222deb-d097-4145-872e-0497fca76c7d.png">
+<meta property="og:image" content="https://nos.netease.com/cloud-website-bucket/2018090314195638001ab1-8a54-4e04-93cc-c49bd5cc0a26.png">
+<meta property="og:image" content="https://nos.netease.com/cloud-website-bucket/201809031420067b60f937-9fb0-4451-b469-0a339cd05f0a.png">
+<meta property="og:updated_time" content="2019-11-25T03:06:25.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于 Kafka 的服务端用户行为日志采集">
+<meta name="twitter:description" content="本文来自网易云社区 背景 随着互联网的不断发展，用户所产生的行为数据被越来越多的网站重视，那么什么是用户行为呢？所谓的用户行为主要由五种元素组成：时间、地点、人物、行为、行为对应的内容。为什么要做用户的行为分析？因为只有做了用户行为分析才能知道用户画像、才能知道用户在网站上的各种浏览、点击、购买背后的商业真相，从而给企业带来商业价值。">
+<meta name="twitter:image" content="https://nos.netease.com/cloud-website-bucket/20180903141909d3222deb-d097-4145-872e-0497fca76c7d.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/User_Behavior.html">
+
+  <title> 基于 Kafka 的服务端用户行为日志采集 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                基于 Kafka 的服务端用户行为日志采集
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-11-15T11:01:31+08:00" content="2019-11-15">
+              2019-11-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文来自<a href="https://sq.163yun.com/blog?tag=M_tg_168_71" target="_blank" rel="noopener">网易云社区</a></p>
+<p><strong>背景</strong></p>
+<p>随着互联网的不断发展，用户所产生的行为数据被越来越多的网站重视，那么什么是用户行为呢？所谓的用户行为主要由五种元素组成：时间、地点、人物、行为、行为对应的内容。为什么要做用户的行为分析？因为只有做了用户行为分析才能知道用户画像、才能知道用户在网站上的各种浏览、点击、购买背后的商业真相，从而给企业带来商业价值。</p>
+<a id="more"></a>
+<p>网易美学是一个供用户发现和分享美妆及护肤的社区。既然是一个社区，其中的用户行为分析扮演着举足轻重的角色。对应网易美学来说，用户行为主要有以下几个应用场景：</p>
+<ul>
+<li><p>推荐系统。目前的推荐是基于用户的行为，然后运用不同的算法计算出用户应该展现的推荐数据。</p>
+</li>
+<li><p>拉新。对于一个产品来说，不断的获取新用户是其中一个目标，有更多的新用户使用产品，就意味着该产品能够得到更多人的认可。</p>
+</li>
+<li><p>转化率。一个用户从注册到各个页面的浏览等行为组成一个漏斗模型，漏斗的每个模型可以看到用户的留存状况。</p>
+</li>
+<li><p>留存率。一个产品不但能让更多的新用户使用，也要保证老的用户不流失。</p>
+</li>
+<li><p>促活率。所谓的促活率，就是让老用户经常使用该产品，让用户喜欢上这个平台。</p>
+</li>
+</ul>
+<p><strong>埋点技术</strong></p>
+<p>用户的行为对于一个互联网产品来说很重要，因此如何采集用户的行为就变得非常至关重要了。对用户的行为采集可以通过埋点的方式实现，埋点主要有以下几种方式：</p>
+<ul>
+<li><p>前端埋点。在某个控件操作发生时通过预先写好的代码来发数据的代码埋点。</p>
+</li>
+<li><p>客户端埋点。即 app 使用一些 sdk 对用户的行为进行收集然后批量发送到一个收集平台。</p>
+</li>
+<li><p>服务端埋点。服务端埋点就是通过拦截用户的请求接口，对用户的一些行为信息进行采集。</p>
+</li>
+</ul>
+<p><strong>服务端日志采集</strong></p>
+<p>下面我详细介绍下网易美学的服务端日志采集系统使用的技术，总体架构，部署图，运作流程以及配置相关信息。</p>
+<ol>
+<li>技术选型</li>
+</ol>
+<p>服务端日志采集主要通过在 Controller 的接口中进行埋点，然后通过 AOP 技术、Kafka 消息系统以及 logback 对用户行为进行采集。</p>
+<p>之所以使用 AOP 技术是因为 AOP 的以下重要特定：</p>
+<ul>
+<li><p>代码的侵入性小。对于业务代码的侵入性小，只需要在 Controller 的接口上添加注解，然后在其他模块对用户行为进行采集。</p>
+</li>
+<li><p>重用性。对于相同作用的代码可以进行重用。</p>
+</li>
+<li><p>扩展性。能够很好的对系统进行扩展。</p>
+</li>
+</ul>
+<p>由于使用异步方式对用户行为信息进行收集，因此需要使用消息中间件。目前消息中间件非常多，比较流行的有 ActiveMQ、ZeroMQ、RabbitMQ、Kafka 等。每个消息中间件都有各种的优势劣势，之所以使用 Kafka 消息中间件，是因为以下几点因素：</p>
+<ul>
+<li><p>高性能。每秒钟可以处理数以千计生产者生成的消息。</p>
+</li>
+<li><p>高扩展性。可以通过简单的增加服务器横向扩展 Kafka 集群的容量。</p>
+</li>
+<li><p>分布式。消息来自数以千计的服务，使用分布式来解决单机处理海量数据的瓶颈。</p>
+</li>
+<li><p>持久性。Kafka 中的消息可以持久化到硬盘上，这样可以防止数据的丢失。</p>
+</li>
+</ul>
+<p>因为用户的行为数据最终是以日志的形式持久化的，因此使用 logback 对日志持久化到日志服务器中。</p>
+<ol>
+<li>总体架构</li>
+</ol>
+<p><img src="https://nos.netease.com/cloud-website-bucket/20180903141909d3222deb-d097-4145-872e-0497fca76c7d.png" alt> </p>
+<p>图 1 总体架构图</p>
+<p>服务端日志采集系统主要由两个工程组成：beauty-bi-core 和 beauty-bi-service。由于网易美学的使用 dubbo 框架，因此有服务提供方和服务消费方。beauty-bi-core 被 web、wap 和 mainsite 服务消费方依赖。此外，beauty-bi-service 也依赖于 beauty-bi-core，主要是依赖于其中的一些实体类及工具类。</p>
+<p>beauty-bi-core 工程为 Kafka 消息的生产者，主要封装实现切面的具体逻辑，其主要职责如下：</p>
+<ul>
+<li><p>解析用户请求的 Request 信息：从 Request 中提取用户的基本信息，如设备型号、用户的供应商、ip、设备的分辨率、设备平台、设备的操作系统、设备 id、app 渠道等。</p>
+</li>
+<li><p>接口对应的参数：通过切面可以提取接口的参数值，从而知道用户的业务信息。</p>
+</li>
+<li><p>应用层返回的结果信息：因为切面使用 AfterReturning 方式，因此可以获取用层的返回结果，从返回结果中可以提取有用的信息。</p>
+</li>
+<li><p>用户的基本信息：用户的 id 信息。</p>
+</li>
+<li><p>信息格式化：将信息转化成 JSON 字符串。</p>
+</li>
+<li><p>发送消息：将最终需要发送的消息放入本地阻塞队列中，通过另一个线程异步从阻塞队列中获取消息并发送到 Kafka Broker 中。</p>
+</li>
+</ul>
+<p>beauty-bi-service 工程为 Kafka 消息的消费者，其主要职责如下：</p>
+<ul>
+<li><p>实时从 Kafka 中拉取最新的数据。</p>
+</li>
+<li><p>将 JSON 字符串转化成，方便进一步对用信息进行加工。</p>
+</li>
+<li><p>对用户的 ip 进行解析，获取 ip 对应的地区以及经纬度信息。</p>
+</li>
+<li><p>将加工好的最终信息持久化到 log 文件中。</p>
+</li>
+</ul>
+<ol>
+<li>部署图</li>
+</ol>
+<p><img src="https://nos.netease.com/cloud-website-bucket/2018090314195638001ab1-8a54-4e04-93cc-c49bd5cc0a26.png" alt></p>
+<p>图 2 部署图</p>
+<p>  上图为网易美学与日志系统系统相关的部署图，App、Wap 和 Mainsite 服务器集群分别对应不同终端的应用。Kafka 集群使用杭研的集群，目前有 10 个 Broker。日志服务器有两台，通过 Kafka 的均衡策略对日志进行消费。</p>
+<ol>
+<li>日志采集的流程</li>
+</ol>
+<p>日志采集流程图如下所示：</p>
+<p><img src="https://nos.netease.com/cloud-website-bucket/201809031420067b60f937-9fb0-4451-b469-0a339cd05f0a.png" alt> </p>
+<p>图 3 日志打点流程图</p>
+<p>上图为消息生产者和消息消费者共同组成的流程图。</p>
+<p>消息生产者的具体步骤如下：</p>
+<ul>
+<li><p>通过切面拦截用户的请求。</p>
+</li>
+<li><p>从切面中提取请求头的基本信息，如设备信息，cookie 信息，ip 信息等。</p>
+</li>
+<li><p>提取请求的接口参数信息。</p>
+</li>
+<li><p>从接口返回值中提取相关信息，如 id，pvid 等。</p>
+</li>
+<li><p>将提取的信息封装成 JSON 字符串，放到阻塞队列中，假如阻塞队列溢出会有三次重试机制。</p>
+</li>
+<li><p>异步线程从本地阻塞队列中获取数据，并将信息组装发送到 Kafka 的 Broker 中，此时消息生产者结束。</p>
+</li>
+</ul>
+<p>消息消费者的具体步骤如下：</p>
+<ul>
+<li><p>实时从 Kafka Broker 中批量拉取消息。</p>
+</li>
+<li><p>将拉取的消息转化成对象。</p>
+</li>
+<li><p>解析 ip 对应的国家、省份、城市、经纬度信息。</p>
+</li>
+<li><p>对不同业务场景的信息进一步解析。</p>
+</li>
+<li><p>将日志信息转化成 JSON 字符串，持久化到 log 文件中。</p>
+</li>
+</ul>
+<ol>
+<li>相关配置</li>
+</ol>
+<ul>
+<li><p>application-XXX.properties：该配置放 Kafka 的相关属性，包括 topic、groupId、server 等信息。</p>
+</li>
+<li><p>beauty-log-msg.xml：该配置放在 app-web，mainsite-web，wap-web 的 src/main/resources 目录下，主要是初始化 kafka 生产者的信息。</p>
+</li>
+<li><p>beauty-bi-service.xml：该配置放在 beauty-bi-service 工程的 src/main/resources 目录下，主要用于加载 kafka 消费者的配置信息，并且启动 kafka 消费者服务。</p>
+</li>
+<li><p>logback.xml：该配置放在 beauty-bi-service 工程的 src/main/resources 目录下，主要用于声明日志文件存放的目录，需要持久化的日志的 package 路径，以及日志持久化的格式。</p>
+</li>
+<li><p>ip_conf.txt：该配置放在 beauty-bi-service 工程的 src/main/resources 目录下，用于解析 ip 对应的地域、经纬度等信息。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kafka/" rel="tag">#Kafka</a>
+          
+            <a href="/tags/用户行为/" rel="tag">#用户行为</a>
+          
+            <a href="/tags/日志/" rel="tag">#日志</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Markdown_Webpage.html" rel="next" title="网页转Markdown的几个方法">
+                <i class="fa fa-chevron-left"></i> 网页转Markdown的几个方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">84</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">188</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
