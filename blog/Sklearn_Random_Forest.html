@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="本文由 简悦 SimpRead 转码， 原文地址 https://blog.csdn.net/u012102306/article/details/52228516 本篇不是介绍 RF 的，关于 RF 网上有很多通俗易懂的解释西瓜书与统计学习方法等很多教材中的解释也都足够本篇仅针对如何使用 sklearn 中的 RandomForestClassifier 作记录    一、代码怎么写12345">
+<meta name="description" content="一、代码怎么写1234567class sklearn.ensemble.RandomForestClassifier(n_estimators=10, crite-rion=’gini’, max_depth=None,  min_samples_split=2, min_samples_leaf=1,  min_weight_fraction_leaf=0.0,  max_features=’">
 <meta name="keywords" content="sklearn,随机深林,算法参数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sklearn中随机森林算法参数详解">
 <meta property="og:url" content="https://luisstruggle.github.io/blog/Sklearn_Random_Forest.html">
 <meta property="og:site_name" content="奋斗的青春">
-<meta property="og:description" content="本文由 简悦 SimpRead 转码， 原文地址 https://blog.csdn.net/u012102306/article/details/52228516 本篇不是介绍 RF 的，关于 RF 网上有很多通俗易懂的解释西瓜书与统计学习方法等很多教材中的解释也都足够本篇仅针对如何使用 sklearn 中的 RandomForestClassifier 作记录    一、代码怎么写12345">
+<meta property="og:description" content="一、代码怎么写1234567class sklearn.ensemble.RandomForestClassifier(n_estimators=10, crite-rion=’gini’, max_depth=None,  min_samples_split=2, min_samples_leaf=1,  min_weight_fraction_leaf=0.0,  max_features=’">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-09T13:24:01.281Z">
+<meta property="og:updated_time" content="2020-01-09T13:29:27.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sklearn中随机森林算法参数详解">
-<meta name="twitter:description" content="本文由 简悦 SimpRead 转码， 原文地址 https://blog.csdn.net/u012102306/article/details/52228516 本篇不是介绍 RF 的，关于 RF 网上有很多通俗易懂的解释西瓜书与统计学习方法等很多教材中的解释也都足够本篇仅针对如何使用 sklearn 中的 RandomForestClassifier 作记录    一、代码怎么写12345">
+<meta name="twitter:description" content="一、代码怎么写1234567class sklearn.ensemble.RandomForestClassifier(n_estimators=10, crite-rion=’gini’, max_depth=None,  min_samples_split=2, min_samples_leaf=1,  min_weight_fraction_leaf=0.0,  max_features=’">
 
 
 
@@ -317,10 +317,8 @@
       
 
       
-        <blockquote>
-<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://blog.csdn.net/u012102306/article/details/52228516" target="_blank" rel="noopener">https://blog.csdn.net/u012102306/article/details/52228516</a> 本篇不是介绍 RF 的，关于 RF 网上有很多通俗易懂的解释<br>西瓜书与统计学习方法等很多教材中的解释也都足够<br>本篇仅针对如何使用 sklearn 中的 RandomForestClassifier 作记录  </p>
-</blockquote>
-<h1 id="一、代码怎么写"><a href="#一、代码怎么写" class="headerlink" title="一、代码怎么写"></a>一、代码怎么写</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.ensemble.RandomForestClassifier(<span class="attribute">n_estimators</span>=10, <span class="attribute">crite-rion</span>=’gini’, <span class="attribute">max_depth</span>=None,  </span><br><span class="line"><span class="attribute">min_samples_split</span>=2, <span class="attribute">min_samples_leaf</span>=1,  </span><br><span class="line"><span class="attribute">min_weight_fraction_leaf</span>=0.0,  </span><br><span class="line"><span class="attribute">max_features</span>=’auto’,  </span><br><span class="line"><span class="attribute">max_leaf_nodes</span>=None, <span class="attribute">bootstrap</span>=<span class="literal">True</span>,  </span><br><span class="line"><span class="attribute">oob_score</span>=<span class="literal">False</span>, <span class="attribute">n_jobs</span>=1, <span class="attribute">ran-dom_state</span>=None, <span class="attribute">verbose</span>=0,  </span><br><span class="line"><span class="attribute">warm_start</span>=<span class="literal">False</span>, <span class="attribute">class_weight</span>=None)</span><br></pre></td></tr></table></figure>
+        <h1 id="一、代码怎么写"><a href="#一、代码怎么写" class="headerlink" title="一、代码怎么写"></a>一、代码怎么写</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.ensemble.RandomForestClassifier(<span class="attribute">n_estimators</span>=10, <span class="attribute">crite-rion</span>=’gini’, <span class="attribute">max_depth</span>=None,  </span><br><span class="line"><span class="attribute">min_samples_split</span>=2, <span class="attribute">min_samples_leaf</span>=1,  </span><br><span class="line"><span class="attribute">min_weight_fraction_leaf</span>=0.0,  </span><br><span class="line"><span class="attribute">max_features</span>=’auto’,  </span><br><span class="line"><span class="attribute">max_leaf_nodes</span>=None, <span class="attribute">bootstrap</span>=<span class="literal">True</span>,  </span><br><span class="line"><span class="attribute">oob_score</span>=<span class="literal">False</span>, <span class="attribute">n_jobs</span>=1, <span class="attribute">ran-dom_state</span>=None, <span class="attribute">verbose</span>=0,  </span><br><span class="line"><span class="attribute">warm_start</span>=<span class="literal">False</span>, <span class="attribute">class_weight</span>=None)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h1 id="二、关于参数"><a href="#二、关于参数" class="headerlink" title="二、关于参数"></a>二、关于参数</h1><h2 id="其中关于决策树的参数："><a href="#其中关于决策树的参数：" class="headerlink" title="其中关于决策树的参数："></a><strong>其中关于决策树的参数：</strong></h2><p><strong>criterion</strong>: ”gini” or “entropy”(default=”gini”) 是计算属性的 gini(基尼不纯度) 还是 entropy(信息增益)，来选择最合适的节点。</p>
 <p><strong>splitter</strong>: ”best” or “random”(default=”best”) 随机选择属性还是选择不纯度最大的属性，建议用默认。</p>
 <p><strong>max_features</strong>: 选择最适属性时划分的特征不能超过此值。</p>
