@@ -1,0 +1,709 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="sklearn,pca,降维,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="PCA 是无监督数据降维方式，目的是将一个高维数据集转换为一个低维数据集。如今我们的数据集往往有成百上千维的特征，但并不是所有的特征都很重要，通过降维，去除那些不重要的特征。数据维度的降低了，同时计算机的运算效率也得到了提升。在人工智能技术刚起步的时候，人们关注的焦点在于算法的准确性，通过不断优化算法中的计算参数，来提高运算结果的准确率。今天，随着存储与通信技术的发展，数据规模变得空前的庞大，所以">
+<meta name="keywords" content="sklearn,pca,降维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sklearn中的pca降维">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Sklearn_PCA_Dimension_Reduction.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="PCA 是无监督数据降维方式，目的是将一个高维数据集转换为一个低维数据集。如今我们的数据集往往有成百上千维的特征，但并不是所有的特征都很重要，通过降维，去除那些不重要的特征。数据维度的降低了，同时计算机的运算效率也得到了提升。在人工智能技术刚起步的时候，人们关注的焦点在于算法的准确性，通过不断优化算法中的计算参数，来提高运算结果的准确率。今天，随着存储与通信技术的发展，数据规模变得空前的庞大，所以">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/15946750-f7586858a6dd58c5.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/15946750-4bd33861292865d0.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/15946750-38596e03a7a90109.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/15946750-e4a934fdd490f8d6.png">
+<meta property="og:updated_time" content="2020-01-09T11:31:06.439Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sklearn中的pca降维">
+<meta name="twitter:description" content="PCA 是无监督数据降维方式，目的是将一个高维数据集转换为一个低维数据集。如今我们的数据集往往有成百上千维的特征，但并不是所有的特征都很重要，通过降维，去除那些不重要的特征。数据维度的降低了，同时计算机的运算效率也得到了提升。在人工智能技术刚起步的时候，人们关注的焦点在于算法的准确性，通过不断优化算法中的计算参数，来提高运算结果的准确率。今天，随着存储与通信技术的发展，数据规模变得空前的庞大，所以">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/15946750-f7586858a6dd58c5.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Sklearn_PCA_Dimension_Reduction.html">
+
+  <title> Sklearn中的pca降维 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Sklearn中的pca降维
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-12-04T21:12:45+08:00" content="2019-12-04">
+              2019-12-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>PCA 是无监督数据降维方式，目的是将一个高维数据集转换为一个低维数据集。如今我们的数据集往往有成百上千维的特征，但并不是所有的特征都很重要，通过降维，去除那些不重要的特征。数据维度的降低了，同时计算机的运算效率也得到了提升。在人工智能技术刚起步的时候，人们关注的焦点在于算法的准确性，通过不断优化算法中的计算参数，来提高运算结果的准确率。今天，随着存储与通信技术的发展，数据规模变得空前的庞大，所以运算效率变成了我们不得不考虑的问题。</p>
+<a id="more"></a>
+<p>假如我们有一份医患数据集，该数据集有许多患者特征，如：年龄、性别、身高、体重、职业、家庭住址、联系方式、身份证号、银行卡号、血压、血糖、心率、视力等一些列特征。这份数据集涉及到了患者的诸多隐私，是不能随便向外公开的。传统的方法是对该数据集进行匿名化处理，如将患者姓名用一串数字表示。但是在今天，通过多方面的数据匹配，仍然可以匹配出具体的患者。这时候数据降维技术就可以派上用场了，假设在降维之前，我们每一位患者有 20 个特征，我们的目标是把数据降到两维。这里降维不是去掉其中 18 个特征，保留剩下的两个特征，而是通过对 20 个特征进行压缩，将数据压缩成 2 维。降维前这 20 个特征，每一个都有其具体的实际含义，降维后的这两个特征是不可解释的，此时我们任何人都看不出来它的实际含义。如果我们要公开一些涉及到个人信息安全的数据集，那么在公开之前，就必须对数据集做处理。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/15946750-f7586858a6dd58c5.jpg" alt></p>
+<p>infor security.jpg</p>
+<p>之前我们讨论过 PCA 降维，整个过程我们采用的是 Python 的 Numpy 库（线性代数中的矩阵计算）来进行的，整个过程如下：  </p>
+<ol>
+<li>数据的标准化处理 - 去均值  </li>
+<li>计算协方差矩阵  </li>
+<li>计算特征向量与特征值  </li>
+<li>根据特征值的大小，选择前 k 个特征向量组成一个新的特征矩阵  </li>
+<li>原始数据与新的特征矩阵相乘</li>
+</ol>
+<p>机器学习 sklearn 库直接为我们提供了 PCA 模块，我们可直接调用该模块对原始数据进行处理，更加简单方便。下面我们对 PCA 算法进行一个详细的说明。<br><strong>PCA 的 API 文档</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sklearn.decomposition.PCA(<span class="attribute">n_components</span>=None, </span><br><span class="line"><span class="attribute">copy</span>=<span class="literal">True</span>, <span class="attribute">whiten</span>=<span class="literal">False</span>, <span class="attribute">svd_solver</span>=’auto’,</span><br><span class="line"> <span class="attribute">tol</span>=0.0, <span class="attribute">iterated_power</span>=’auto’, <span class="attribute">random_state</span>=None)</span><br></pre></td></tr></table></figure>
+<p>PCA 算法中的参数说明，这里对官方的英文文档做一个翻译：</p>
+<ul>
+<li>n_components：要保留的成分数量，其值类型可以设为整型，浮点型，字符串。如果不指定该值，n_components == min(n_samples, n_features)；如果 n_components == ‘mle’，并且 svd_solver == ‘full’，则使用 Minka’s MLE 方法估计维度。当 0 &lt; n_components &lt; 1 时，并且 svd_solver == ‘full’时，方差值必须大于 n_components，如果 n_components == ‘arpack’，则 n_components 必须严格的等于特征与样本数之间的最小值。</li>
+<li>copy：默认为 True 值</li>
+<li>whiten: 默认为 False</li>
+<li>svd_solver：字符型数值，默认为 auto，其余可选值有：full,arpack,randomized。算法根据数据的规模以及 n_components 来自动选择合适的参数。</li>
+</ul>
+<p><strong>PCA 的算法属性</strong></p>
+<ul>
+<li>components_：特征变换空间（特征矩阵），根据我们指定的 n_components = k 的值，选择方差最大的 k 个值所对应的的特征向量组成的特征矩阵。</li>
+<li>explained<em>variance</em>：n_components 所对应的的方差。</li>
+<li>explained_variance<em>ratio</em>：不同特征方差的占比。</li>
+<li>singular<em>values</em> : 特征值，与前面的特征向量 conponents_是一一对应的。</li>
+</ul>
+<p><strong>样例的演示</strong><br>我们使用 sklearn 自带的数据集 boston（波士顿地区房价数据集），该数据集有 506 个样本，13 个特征，像房屋面积，区位，卧室数量等等以及价格（标签值）。pca 是一种无监督降维算法，所以我们不使用价格数据。下面是 pca 的代码实现过程：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">from</span> <span class="string">sklearn.decomposition</span> <span class="string">import</span> <span class="string">PCA</span></span><br><span class="line"><span class="string">from</span> <span class="string">sklearn.preprocessing</span> <span class="string">import</span> <span class="string">StandardScaler</span></span><br><span class="line"><span class="string">from</span> <span class="string">sklearn</span> <span class="string">import</span> <span class="string">datasets</span></span><br><span class="line"></span><br><span class="line"><span class="string">boston_house_price</span> <span class="string">=</span> <span class="string">datasets.load_boston()#导入boston房价数据集</span></span><br><span class="line"><span class="string">X</span> <span class="string">=</span> <span class="string">boston_house_price</span> <span class="string">.data#获取特征数据</span></span><br><span class="line"><span class="comment">#第一步，对数据进行标准化处理</span></span><br><span class="line"><span class="string">X_std</span> <span class="string">=</span> <span class="string">StandardScaler().fit_transform(X)</span></span><br><span class="line"><span class="comment">#实例化PCA</span></span><br><span class="line"><span class="string">pca</span> <span class="string">=</span> <span class="string">PCA(n_components</span> <span class="string">=</span> <span class="number">3</span><span class="string">)</span></span><br><span class="line"><span class="comment">#训练数据</span></span><br><span class="line"><span class="string">pca.fit(X_std)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用PCA的属性查看特征值</span></span><br><span class="line"><span class="string">pca.singular_values_</span></span><br><span class="line"><span class="string">array([55.6793095</span> <span class="string">,</span> <span class="number">26.93022859</span><span class="string">,</span> <span class="number">25.07516773</span><span class="string">])</span></span><br><span class="line"><span class="comment">#使用PCA的属性查看特征值对应的特征向量</span></span><br><span class="line"><span class="string">pca.components_</span></span><br><span class="line"><span class="string">array([[</span> <span class="number">0.2509514</span> <span class="string">,</span> <span class="number">-0.25631454</span><span class="string">,</span>  <span class="number">0.34667207</span><span class="string">,</span>  <span class="number">0.00504243</span><span class="string">,</span>  <span class="number">0.34285231</span><span class="string">,</span></span><br><span class="line">        <span class="number">-0.18924257</span><span class="string">,</span>  <span class="number">0.3136706</span> <span class="string">,</span> <span class="number">-0.32154387</span><span class="string">,</span>  <span class="number">0.31979277</span><span class="string">,</span>  <span class="number">0.33846915</span><span class="string">,</span></span><br><span class="line">         <span class="number">0.20494226</span><span class="string">,</span> <span class="number">-0.20297261</span><span class="string">,</span>  <span class="number">0.30975984</span><span class="string">],</span></span><br><span class="line">       <span class="string">[-0.31525237,</span> <span class="number">-0.3233129</span> <span class="string">,</span>  <span class="number">0.11249291</span><span class="string">,</span>  <span class="number">0.45482914</span><span class="string">,</span>  <span class="number">0.21911553</span><span class="string">,</span></span><br><span class="line">         <span class="number">0.14933154</span><span class="string">,</span>  <span class="number">0.31197778</span><span class="string">,</span> <span class="number">-0.34907</span>   <span class="string">,</span> <span class="number">-0.27152094</span><span class="string">,</span> <span class="number">-0.23945365</span><span class="string">,</span></span><br><span class="line">        <span class="number">-0.30589695</span><span class="string">,</span>  <span class="number">0.23855944</span><span class="string">,</span> <span class="number">-0.07432203</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">0.24656649</span><span class="string">,</span>  <span class="number">0.29585782</span><span class="string">,</span> <span class="number">-0.01594592</span><span class="string">,</span>  <span class="number">0.28978082</span><span class="string">,</span>  <span class="number">0.12096411</span><span class="string">,</span></span><br><span class="line">         <span class="number">0.59396117</span><span class="string">,</span> <span class="number">-0.01767481</span><span class="string">,</span> <span class="number">-0.04973627</span><span class="string">,</span>  <span class="number">0.28725483</span><span class="string">,</span>  <span class="number">0.22074447</span><span class="string">,</span></span><br><span class="line">        <span class="number">-0.32344627</span><span class="string">,</span> <span class="number">-0.3001459</span> <span class="string">,</span> <span class="number">-0.26700025</span><span class="string">]])</span></span><br><span class="line"><span class="comment">#对原始的数据集进行转换</span></span><br><span class="line"><span class="string">new_data</span> <span class="string">=</span> <span class="string">X.dot(pca.components_.T)</span></span><br><span class="line"><span class="string">print(new_data[:10])#打印出转换后的前十行数据做一个观察</span></span><br><span class="line"><span class="string">array([[</span> <span class="number">38.89018107</span><span class="string">,</span>  <span class="number">32.93532391</span><span class="string">,</span> <span class="number">-51.87396066</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">33.02343232</span><span class="string">,</span>  <span class="number">54.79866941</span><span class="string">,</span> <span class="number">-71.20799688</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">26.53873512</span><span class="string">,</span>  <span class="number">48.76840918</span><span class="string">,</span> <span class="number">-67.85363879</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">12.75698667</span><span class="string">,</span>  <span class="number">47.78351826</span><span class="string">,</span> <span class="number">-72.33882223</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">15.65240562</span><span class="string">,</span>  <span class="number">50.77871883</span><span class="string">,</span> <span class="number">-73.70920814</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">17.71686561</span><span class="string">,</span>  <span class="number">51.4336294</span> <span class="string">,</span> <span class="number">-73.35783472</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">51.22331968</span><span class="string">,</span>  <span class="number">29.63835929</span><span class="string">,</span> <span class="number">-51.11003359</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">62.1527616</span> <span class="string">,</span>  <span class="number">38.52240664</span><span class="string">,</span> <span class="number">-53.72636333</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">68.87661773</span><span class="string">,</span>  <span class="number">36.34017288</span><span class="string">,</span> <span class="number">-53.90249412</span><span class="string">],</span></span><br><span class="line">       <span class="string">[</span> <span class="number">60.21849172</span><span class="string">,</span>  <span class="number">32.80458593</span><span class="string">,</span> <span class="number">-50.06565433</span><span class="string">]])</span></span><br><span class="line"><span class="comment">#此时的数据，我们就不知道它具体代表的什么含义了</span></span><br></pre></td></tr></table></figure>
+<p><strong>图形化 PCA 降维前后的数据对比</strong><br>我们用 sklearn 中 iris 花数据集来举例，该数据集有四个特征，花萼长度、花萼宽度、花瓣长度、花瓣宽度，下面是画图过程的代码实现。  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/15946750-4bd33861292865d0.jpg" alt></p>
+<p>iris.jpg</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d import Axes3D</span><br><span class="line"><span class="keyword">from</span> sklearn import datasets</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line"><span class="comment"># import some data to play with</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, :2]  # we only take the first two features.</span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line">x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5</span><br><span class="line">y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5</span><br><span class="line"></span><br><span class="line">plt.figure(2, figsize=(8, 6))</span><br><span class="line">plt.clf()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the training points</span></span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], <span class="attribute">c</span>=y, <span class="attribute">cmap</span>=plt.cm.Set1,</span><br><span class="line">            <span class="attribute">edgecolor</span>=<span class="string">'k'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Sepal length'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal width'</span>)</span><br><span class="line"></span><br><span class="line">plt.xlim(x_min, x_max)</span><br><span class="line">plt.ylim(y_min, y_max)</span><br><span class="line">plt.xticks(())</span><br><span class="line">plt.yticks(())</span><br><span class="line"></span><br><span class="line"><span class="comment"># To getter a better understanding of interaction of the dimensions</span></span><br><span class="line"><span class="comment"># plot the first three PCA dimensions</span></span><br><span class="line">fig = plt.figure(1, figsize=(8, 6))</span><br><span class="line">ax = Axes3D(fig, <span class="attribute">elev</span>=-150, <span class="attribute">azim</span>=110)</span><br><span class="line">X_reduced = PCA(<span class="attribute">n_components</span>=3).fit_transform(iris.data)</span><br><span class="line">ax.scatter(X_reduced[:, 0], X_reduced[:, 1], X_reduced[:, 2], <span class="attribute">c</span>=y,</span><br><span class="line">           <span class="attribute">cmap</span>=plt.cm.Set1, <span class="attribute">edgecolor</span>=<span class="string">'k'</span>, <span class="attribute">s</span>=40)</span><br><span class="line">ax.set_title(<span class="string">"First three PCA directions"</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">"1st eigenvector"</span>)</span><br><span class="line">ax.w_xaxis.set_ticklabels([])</span><br><span class="line">ax.set_ylabel(<span class="string">"2nd eigenvector"</span>)</span><br><span class="line">ax.w_yaxis.set_ticklabels([])</span><br><span class="line">ax.set_zlabel(<span class="string">"3rd eigenvector"</span>)</span><br><span class="line">ax.w_zaxis.set_ticklabels([])</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>降维前，我们选取了 iris 数据集中的两个特征 sepal length（花萼长度）和 sepal width（花萼宽度）来绘制数据分布，由图可以看出，数据集中有三种花，但是三者相互混杂，难以区分清楚。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/15946750-38596e03a7a90109.png" alt></p>
+<p>original data.png</p>
+<p>iris 数据集本有 4 个特征，这时我们采用 pca 算法，将 4 维数据变化为 3 维。从图中的结果可以看出，经过变换后，三种类别区分的更加清楚了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/15946750-e4a934fdd490f8d6.png" alt></p>
+<p>pca data.png</p>
+<p><strong>PCA 降维小结</strong>  </p>
+<ol>
+<li>实现过程有两种：Python 的 Numpy 库；SKlearn 的 PCA 模块，两者的计算结果是相同的。  </li>
+<li>数据降维的结果不一定都是好的，所以在解决实际问题，要同时计算降维前与降维后的结果，进行比较。  </li>
+<li>降维后的数据是不可解释的，但不影响最终的计算结果。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sklearn/" rel="tag">#sklearn</a>
+          
+            <a href="/tags/pca/" rel="tag">#pca</a>
+          
+            <a href="/tags/降维/" rel="tag">#降维</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Model_Evaluation_Method.html" rel="next" title="机器学习算法模型评价方法">
+                <i class="fa fa-chevron-left"></i> 机器学习算法模型评价方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">192</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
