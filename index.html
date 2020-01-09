@@ -259,6 +259,143 @@
             
               
                 
+                <a class="post-title-link" href="/blog/Sklearn_Random_Forest.html" itemprop="url">
+                  Sklearn中随机森林算法参数详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-01-10T20:28:35+08:00" content="2020-01-10">
+              2020-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://blog.csdn.net/u012102306/article/details/52228516" target="_blank" rel="noopener">https://blog.csdn.net/u012102306/article/details/52228516</a> 本篇不是介绍 RF 的，关于 RF 网上有很多通俗易懂的解释<br>西瓜书与统计学习方法等很多教材中的解释也都足够<br>本篇仅针对如何使用 sklearn 中的 RandomForestClassifier 作记录  </p>
+</blockquote>
+<h1 id="一、代码怎么写"><a href="#一、代码怎么写" class="headerlink" title="一、代码怎么写"></a>一、代码怎么写</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.ensemble.RandomForestClassifier(<span class="attribute">n_estimators</span>=10, <span class="attribute">crite-rion</span>=’gini’, <span class="attribute">max_depth</span>=None,  </span><br><span class="line"><span class="attribute">min_samples_split</span>=2, <span class="attribute">min_samples_leaf</span>=1,  </span><br><span class="line"><span class="attribute">min_weight_fraction_leaf</span>=0.0,  </span><br><span class="line"><span class="attribute">max_features</span>=’auto’,  </span><br><span class="line"><span class="attribute">max_leaf_nodes</span>=None, <span class="attribute">bootstrap</span>=<span class="literal">True</span>,  </span><br><span class="line"><span class="attribute">oob_score</span>=<span class="literal">False</span>, <span class="attribute">n_jobs</span>=1, <span class="attribute">ran-dom_state</span>=None, <span class="attribute">verbose</span>=0,  </span><br><span class="line"><span class="attribute">warm_start</span>=<span class="literal">False</span>, <span class="attribute">class_weight</span>=None)</span><br></pre></td></tr></table></figure>
+<h1 id="二、关于参数"><a href="#二、关于参数" class="headerlink" title="二、关于参数"></a>二、关于参数</h1><h2 id="其中关于决策树的参数："><a href="#其中关于决策树的参数：" class="headerlink" title="其中关于决策树的参数："></a><strong>其中关于决策树的参数：</strong></h2><p><strong>criterion</strong>: ”gini” or “entropy”(default=”gini”) 是计算属性的 gini(基尼不纯度) 还是 entropy(信息增益)，来选择最合适的节点。</p>
+<p><strong>splitter</strong>: ”best” or “random”(default=”best”) 随机选择属性还是选择不纯度最大的属性，建议用默认。</p>
+<p><strong>max_features</strong>: 选择最适属性时划分的特征不能超过此值。</p>
+<p>当为整数时，即最大特征数；当为小数时，训练集特征数 * 小数；</p>
+<p>if “auto”, then max_features=sqrt(n_features).</p>
+<p>If “sqrt”, thenmax_features=sqrt(n_features).</p>
+<p>If “log2”, thenmax_features=log2(n_features).</p>
+<p>If None, then max_features=n_features.</p>
+<p><strong>max_depth</strong>: (default=None) 设置树的最大深度，默认为 None，这样建树时，会使每一个叶节点只有一个类别，或是达到 min_samples_split。</p>
+<p><strong>min_samples_split</strong>: 根据属性划分节点时，每个划分最少的样本数。  </p>
+<p><strong>min_samples_leaf</strong>: 叶子节点最少的样本数。</p>
+<p><strong>max_leaf_nodes</strong>: (default=None) 叶子树的最大样本数。</p>
+<p><strong>min_weight_fraction_leaf</strong>: (default=0) 叶子节点所需要的最小权值</p>
+<p><strong>verbose</strong>:(default=0) 是否显示任务进程  </p>
+<h2 id="关于随机森林特有的参数："><a href="#关于随机森林特有的参数：" class="headerlink" title="关于随机森林特有的参数："></a>关于随机森林特有的参数：</h2><h2 id="n-estimators-10：决策树的个数，越多越好，但是性能就会越差，至少-100-左右（具体数字忘记从哪里来的了）可以达到可接受的性能和误差率。"><a href="#n-estimators-10：决策树的个数，越多越好，但是性能就会越差，至少-100-左右（具体数字忘记从哪里来的了）可以达到可接受的性能和误差率。" class="headerlink" title="n_estimators=10：决策树的个数，越多越好，但是性能就会越差，至少 100 左右（具体数字忘记从哪里来的了）可以达到可接受的性能和误差率。 "></a>n_estimators=10：决策树的个数，越多越好，但是性能就会越差，至少 100 左右（具体数字忘记从哪里来的了）可以达到可接受的性能和误差率。 </h2><h2 id="bootstrap-True：是否有放回的采样。"><a href="#bootstrap-True：是否有放回的采样。" class="headerlink" title="bootstrap=True：是否有放回的采样。  "></a>bootstrap=True：是否有放回的采样。  </h2><p><strong>oob_score=False</strong>：oob（out of band，带外）数据，即：在某次决策树训练中没有被 bootstrap 选中的数据。多单个模型的参数训练，我们知道可以用 cross validation（cv）来进行，但是特别消耗时间，而且对于随机森林这种情况也没有大的必要，所以就用这个数据对决策树模型进行验证，算是一个简单的交叉验证。性能消耗小，但是效果不错。  </p>
+<p><strong>n_jobs=1</strong>：并行 job 个数。这个在 ensemble 算法中非常重要，尤其是 bagging（而非 boosting，因为 boosting 的每次迭代之间有影响，所以很难进行并行化），因为可以并行从而提高性能。1 = 不并行；n：n 个并行；-1：CPU 有多少 core，就启动多少 job</p>
+<p><strong>warm_start=False</strong>：热启动，决定是否使用上次调用该类的结果然后增加新的。  </p>
+<p><strong>class_weight=None</strong>：各个 label 的权重。  </p>
+<h2 id="进行预测可以有几种形式："><a href="#进行预测可以有几种形式：" class="headerlink" title="进行预测可以有几种形式："></a>进行预测可以有几种形式：</h2><p><strong>predict_proba(x)：</strong>给出带有概率值的结果。每个点在所有 label 的概率和为 1.  </p>
+<p><strong>predict(x)：</strong>直接给出预测结果。内部还是调用的 predict_proba()，根据概率的结果看哪个类型的预测值最高就是哪个类型。  </p>
+<p><strong>predict_log_proba(x)：</strong>和 predict_proba 基本上一样，只是把结果给做了 log() 处理。  </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/blog/F1_Score_Precision_Recall.html" itemprop="url">
                   评价指标——F1 Score与Precision-Recall的平衡
                 </a>
@@ -707,131 +844,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/Model_Evaluation_Method.html" itemprop="url">
-                  机器学习算法模型评价方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2019-11-26T08:30:31+08:00" content="2019-11-26">
-              2019-11-26
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习篇/" itemprop="url" rel="index">
-                    <span itemprop="name">学习篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://www.jianshu.com/p/b4d40760156c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" target="_blank" rel="noopener">https://www.jianshu.com/p/b4d40760156c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation</a></p>
-</blockquote>
-<h2 id="第五章-模型评价方法"><a href="#第五章-模型评价方法" class="headerlink" title="第五章 模型评价方法"></a>第五章 模型评价方法</h2><h3 id="5-1-模型的评价方法介绍"><a href="#5-1-模型的评价方法介绍" class="headerlink" title="5.1 模型的评价方法介绍"></a>5.1 模型的评价方法介绍</h3><p>5.1.1~5 accuracy，precision，recall，F1-score，ROC 曲线</p>
-<p>分别画图举例，要说出应用场景，例如什么情况用什么评价标准。</p>
-<ul>
-<li>混淆矩阵</li>
-<li>accuracy（准确率）</li>
-<li>precision（精准度），recall（召回率），F1-score（宏观，微观）</li>
-<li>ROC 曲线图</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/Model_Evaluation_Method.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -875,7 +887,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">89</span>
+              <span class="site-state-item-count">90</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -892,7 +904,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">198</span>
+                <span class="site-state-item-count">200</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
