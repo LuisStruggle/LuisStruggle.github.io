@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://nos.netease.com/cloud-website-bucket/20180903141909d3222deb-d097-4145-872e-0497fca76c7d.png">
 <meta property="og:image" content="https://nos.netease.com/cloud-website-bucket/2018090314195638001ab1-8a54-4e04-93cc-c49bd5cc0a26.png">
 <meta property="og:image" content="https://nos.netease.com/cloud-website-bucket/201809031420067b60f937-9fb0-4451-b469-0a339cd05f0a.png">
-<meta property="og:updated_time" content="2019-11-25T03:06:25.081Z">
+<meta property="og:updated_time" content="2020-01-09T11:41:52.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于 Kafka 的服务端用户行为日志采集">
 <meta name="twitter:description" content="本文来自网易云社区 背景 随着互联网的不断发展，用户所产生的行为数据被越来越多的网站重视，那么什么是用户行为呢？所谓的用户行为主要由五种元素组成：时间、地点、人物、行为、行为对应的内容。为什么要做用户的行为分析？因为只有做了用户行为分析才能知道用户画像、才能知道用户在网站上的各种浏览、点击、购买背后的商业真相，从而给企业带来商业价值。">
@@ -379,7 +379,8 @@
 <li>总体架构</li>
 </ol>
 <p><img src="https://nos.netease.com/cloud-website-bucket/20180903141909d3222deb-d097-4145-872e-0497fca76c7d.png" alt> </p>
-<p>图 1 总体架构图</p>
+<center>图1 总体架构图</center>
+
 <p>服务端日志采集系统主要由两个工程组成：beauty-bi-core 和 beauty-bi-service。由于网易美学的使用 dubbo 框架，因此有服务提供方和服务消费方。beauty-bi-core 被 web、wap 和 mainsite 服务消费方依赖。此外，beauty-bi-service 也依赖于 beauty-bi-core，主要是依赖于其中的一些实体类及工具类。</p>
 <p>beauty-bi-core 工程为 Kafka 消息的生产者，主要封装实现切面的具体逻辑，其主要职责如下：</p>
 <ul>
@@ -411,14 +412,16 @@
 <li>部署图</li>
 </ol>
 <p><img src="https://nos.netease.com/cloud-website-bucket/2018090314195638001ab1-8a54-4e04-93cc-c49bd5cc0a26.png" alt></p>
-<p>图 2 部署图</p>
-<p>  上图为网易美学与日志系统系统相关的部署图，App、Wap 和 Mainsite 服务器集群分别对应不同终端的应用。Kafka 集群使用杭研的集群，目前有 10 个 Broker。日志服务器有两台，通过 Kafka 的均衡策略对日志进行消费。</p>
+<center>图2 部署图</center>
+
+<p>上图为网易美学与日志系统系统相关的部署图，App、Wap 和 Mainsite 服务器集群分别对应不同终端的应用。Kafka 集群使用杭研的集群，目前有 10 个 Broker。日志服务器有两台，通过 Kafka 的均衡策略对日志进行消费。</p>
 <ol>
 <li>日志采集的流程</li>
 </ol>
 <p>日志采集流程图如下所示：</p>
 <p><img src="https://nos.netease.com/cloud-website-bucket/201809031420067b60f937-9fb0-4451-b469-0a339cd05f0a.png" alt> </p>
-<p>图 3 日志打点流程图</p>
+<center>图3 日志打点流程图</center>
+
 <p>上图为消息生产者和消息消费者共同组成的流程图。</p>
 <p>消息生产者的具体步骤如下：</p>
 <ul>
