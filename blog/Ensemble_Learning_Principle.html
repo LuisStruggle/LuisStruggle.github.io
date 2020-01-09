@@ -1,0 +1,689 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="集成学习,原理,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="一、集成学习的概述 集成学习 (ensemble learning) 本身不是一个单独的机器学习算法，而是通过构建并结合多个机器学习器来完成学习任务。集成学习可以用于分类问题集成，回归问题集成，特征选取集成，异常点检测集成等等。本文就对集成学习的原理做一个总结。 集成学习解决的两个问题：一是如何选择若干个弱学习器，二是如何将这些弱学习器通过结合策略结合起来。">
+<meta name="keywords" content="集成学习,原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集成学习的原理">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Ensemble_Learning_Principle.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="一、集成学习的概述 集成学习 (ensemble learning) 本身不是一个单独的机器学习算法，而是通过构建并结合多个机器学习器来完成学习任务。集成学习可以用于分类问题集成，回归问题集成，特征选取集成，异常点检测集成等等。本文就对集成学习的原理做一个总结。 集成学习解决的两个问题：一是如何选择若干个弱学习器，二是如何将这些弱学习器通过结合策略结合起来。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/13959117-991f252e672e9a94.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/13959117-a71564a1b7ac3b43.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/13959117-21111f29a9fe7375.png">
+<meta property="og:updated_time" content="2020-01-09T12:20:20.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="集成学习的原理">
+<meta name="twitter:description" content="一、集成学习的概述 集成学习 (ensemble learning) 本身不是一个单独的机器学习算法，而是通过构建并结合多个机器学习器来完成学习任务。集成学习可以用于分类问题集成，回归问题集成，特征选取集成，异常点检测集成等等。本文就对集成学习的原理做一个总结。 集成学习解决的两个问题：一是如何选择若干个弱学习器，二是如何将这些弱学习器通过结合策略结合起来。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/13959117-991f252e672e9a94.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Ensemble_Learning_Principle.html">
+
+  <title> 集成学习的原理 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                集成学习的原理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-12-27T16:45:12+08:00" content="2019-12-27">
+              2019-12-27
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一、集成学习的概述</p>
+<p>集成学习 (ensemble learning) 本身不是一个单独的机器学习算法，而是通过构建并结合多个机器学习器来完成学习任务。集成学习可以用于分类问题集成，回归问题集成，特征选取集成，异常点检测集成等等。本文就对集成学习的原理做一个总结。</p>
+<p>集成学习解决的两个问题：一是如何选择若干个弱学习器，二是如何将这些弱学习器通过结合策略结合起来。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/13959117-991f252e672e9a94.png" alt></p>
+<a id="more"></a>
+<p>二、怎么得到个体弱学习器呢？</p>
+<p>第一种就是所有的个体学习器都是一个种类的，或者说是同质的。比如都是决策树个体学习器，或者都是神经网络个体学习器。</p>
+<p>第二种是所有的个体学习器不全是一个种类的，或者说是异质的。比如我们有一个分类问题，对训练集采用支持向量机个体学习器，逻辑回归个体学习器和朴素贝叶斯个体学习器来学习，再通过某种结合策略来确定最终的分类强学习器。</p>
+<p>对于集成算法一般会使用同质的学习器。最常用的是 CART 决策树和神经网络。同时我们按照各个学习器之间是否存在相互依赖关系来确定两种集成算法：第一个是个体学习器之间存在强依赖关系，一系列个体学习器基本都需要串行生成，代表算法是 boosting 系列算法，第二个是个体学习器之间不存在强依赖关系，一系列个体学习器可以并行生成，代表算法是 bagging 和随机森林（Random Forest）系列算法。</p>
+<p>二、集成学习的两类算法</p>
+<p>1.boosting 的算法原理图示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/13959117-a71564a1b7ac3b43.png" alt="Boosting"></p>
+<p>boosting 的工作原理：基于初始带权重的训练集训练出弱学习器 1，基于学习误差率来更新样本的权重，即增大误分类样本的权重，使得在后面更加关注误分类点高的数据。基于更新后训练集训练弱学习器 2，如此循环训练。如果设置的迭代次数为 T，那么当 n=T 时结束训练。最后通过一定的结合策略形成强学习器。</p>
+<p>boosting 算法里最著名的两个算法是 Adaboost 和提升树（boost tree）, 提升树中最常用的是梯度提升树（Gradient Boosting Tree）。</p>
+<p>注：此时训练集就是一个，但是在不断迭代的过程中不断更新。</p>
+<p>2.bagging 算法原理图：    </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/13959117-21111f29a9fe7375.png" alt="Bagging"></p>
+<p>bagging 算法的原理：不同于 boosting，各个学习器之间没有相互依赖关系。如果设置的迭代次数 n_estimators=T, 那么需要从训练集样本中随机取样 T 次且并行地训练 T 个学习器。最后将训练好的学习器按照相应策略结合得到强学习器。这里采用的随机取样的方式自助采样法（Bootstap sampling），有放回的取样，所以有的数据被采样 m 次但是有的数据一次都没有取到，对于这样的数据我们称之为 OOB。之后会介绍 OOB 可以用来估计模型的泛化能力，相当于交叉验证。</p>
+<p>随机森林 时 bagging 算法的特化进阶。特化是指随机森林的弱学习器都是决策树 CART  ；进阶  是指不仅进行训练集的随机采样而且进行特征的随机选择（这样可以达到降维的目的并且能给特征进行重要性 importance 的评分）  </p>
+<p>三、集成学习的结合策略</p>
+<ol>
+<li><p>平均法</p>
+</li>
+<li><p>投票法</p>
+</li>
+<li><p>学习法</p>
+</li>
+</ol>
+<p>两节的方法都是对弱学习器的结果做平均或者投票，相对比较简单，但是可能学习误差较大，于是就有了学习法这种方法，对于学习法，代表方法是 stacking，当使用 stacking 的结合策略时， 我们不是对弱学习器的结果做简单的逻辑处理，而是再加上一层学习器，也就是 说，我们将训练集弱学习器的学习结果作为输入，将训练集的输出作为输出，重新训练一个学习器来得到最终结果。</p>
+<p>在这种情况下，我们将弱学习器称为初级学习器，将用于结合的学习器称为次级学习器。对于测试集，我们首先用初级学习器预测一次，得到次级学习器的输入样本，再用次级学习器预测一次，得到最终的预测结果。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/集成学习/" rel="tag">#集成学习</a>
+          
+            <a href="/tags/原理/" rel="tag">#原理</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Sklearn_Cross_Validation.html" rel="next" title="Sklearn中的交叉验证">
+                <i class="fa fa-chevron-left"></i> Sklearn中的交叉验证
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">88</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">195</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
