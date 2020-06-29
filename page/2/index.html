@@ -259,6 +259,124 @@
             
               
                 
+                <a class="post-title-link" href="/blog/F1_Score_Precision_Recall.html" itemprop="url">
+                  评价指标——F1 Score与Precision-Recall的平衡
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-01-04T17:23:08+08:00" content="2020-01-04">
+              2020-01-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>本篇主要内容：F1 Score，Precision-Recall 的平衡，P-R 曲线</p>
+</blockquote>
+<h2 id="F1-Score"><a href="#F1-Score" class="headerlink" title="F1 Score"></a>F1 Score</h2><p>上篇我们提到，精准率和召回率这两个指标有时精准率低一些有时召回率低一些，有时可能都低。那么实际中用哪个指标比较好呢？这一般和应用场景有关，对于有些场景，我们更注重精准率，比如股票预测，假设预测的是一个二分类问题：股票会升还是降，显然为了利润我们关注的是升（即上升为类 1），为什么这种情况下精准率指标更好呢？因为精准率是所有分类为 1 的预测中有多少是正确的，对本例也就是预测未来股票上升有多少是对的，这更复合我们的利润最大决策。而召回率是实际上升的股票中我们预测对了多少，基于风险投资理念，有很多股票会上升的时刻，我们就算落掉一些也是没有关系的，没有投资进去也就没有损失，更重要的是我们的决策中有多少能赚钱，所以在这种场景下，精准率更好。  </p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/F1_Score_Precision_Recall.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/blog/Ensemble_Learning_Principle.html" itemprop="url">
                   集成学习的原理
                 </a>
@@ -714,123 +832,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/User_Behavior.html" itemprop="url">
-                  基于 Kafka 的服务端用户行为日志采集
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2019-11-15T11:01:31+08:00" content="2019-11-15">
-              2019-11-15
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习篇/" itemprop="url" rel="index">
-                    <span itemprop="name">学习篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本文来自<a href="https://sq.163yun.com/blog?tag=M_tg_168_71" target="_blank" rel="noopener">网易云社区</a></p>
-<p><strong>背景</strong></p>
-<p>随着互联网的不断发展，用户所产生的行为数据被越来越多的网站重视，那么什么是用户行为呢？所谓的用户行为主要由五种元素组成：时间、地点、人物、行为、行为对应的内容。为什么要做用户的行为分析？因为只有做了用户行为分析才能知道用户画像、才能知道用户在网站上的各种浏览、点击、购买背后的商业真相，从而给企业带来商业价值。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/User_Behavior.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -874,7 +875,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">94</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -891,7 +892,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">206</span>
+                <span class="site-state-item-count">208</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

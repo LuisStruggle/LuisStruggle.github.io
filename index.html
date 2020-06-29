@@ -259,6 +259,122 @@
             
               
                 
+                <a class="post-title-link" href="/blog/RabbitMQ_Principle.html" itemprop="url">
+                  RabbitMQ的原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-04-26T16:13:51+08:00" content="2020-04-26">
+              2020-04-26
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在这篇短文里，我们会介绍什么是 <a href="http://www.javaguides.net/p/rabbitmq-java-tutorial-with-examples.html" target="_blank" rel="noopener">RabbitMQ</a>，它是如何工作的以及 <a href="http://www.javaguides.net/p/rabbitmq-java-tutorial-with-examples.html" target="_blank" rel="noopener">RabbitMQ</a> 的核心概念。</p>
+<p>RabbitMQ 是一个开源的消息代理软件。它接收生产者发布的消息并发送给消费者。它扮演中间商的角色，可以用来降低 web 服务器因发送消息带来的负载以及延时。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/RabbitMQ_Principle.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/blog/Redis_Client.html" itemprop="url">
                   Redis客户端
                 </a>
@@ -698,124 +814,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/F1_Score_Precision_Recall.html" itemprop="url">
-                  评价指标——F1 Score与Precision-Recall的平衡
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2020-01-04T17:23:08+08:00" content="2020-01-04">
-              2020-01-04
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习篇/" itemprop="url" rel="index">
-                    <span itemprop="name">学习篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本篇主要内容：F1 Score，Precision-Recall 的平衡，P-R 曲线</p>
-</blockquote>
-<h2 id="F1-Score"><a href="#F1-Score" class="headerlink" title="F1 Score"></a>F1 Score</h2><p>上篇我们提到，精准率和召回率这两个指标有时精准率低一些有时召回率低一些，有时可能都低。那么实际中用哪个指标比较好呢？这一般和应用场景有关，对于有些场景，我们更注重精准率，比如股票预测，假设预测的是一个二分类问题：股票会升还是降，显然为了利润我们关注的是升（即上升为类 1），为什么这种情况下精准率指标更好呢？因为精准率是所有分类为 1 的预测中有多少是正确的，对本例也就是预测未来股票上升有多少是对的，这更复合我们的利润最大决策。而召回率是实际上升的股票中我们预测对了多少，基于风险投资理念，有很多股票会上升的时刻，我们就算落掉一些也是没有关系的，没有投资进去也就没有损失，更重要的是我们的决策中有多少能赚钱，所以在这种场景下，精准率更好。  </p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/F1_Score_Precision_Recall.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -859,7 +857,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-count">94</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -876,7 +874,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">206</span>
+                <span class="site-state-item-count">208</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
