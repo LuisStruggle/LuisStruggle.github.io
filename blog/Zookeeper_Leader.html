@@ -1,0 +1,806 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Zookeeper,领导者,选举原理,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本文由 简悦 SimpRead 转码， 原文地址 mp.weixin.qq.com  人类选举的基本原理正常情况下，选举是一定要投票的。 我们应该都经历过投票，在投票时我们可能会将票投给和我们关系比较好的人，如果你和几个候选人都比较熟，这种情况下你会将选票投给你认为能力比较强的人，如果你和几个候选人都不熟，并且你自己也是候选人的话，这时你应该会认为你是这些候选人里面最厉害的那个人，大家都应该选你">
+<meta name="keywords" content="Zookeeper,领导者,选举原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zookeeper 快速领导者选举原理">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Zookeeper_Leader.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="本文由 简悦 SimpRead 转码， 原文地址 mp.weixin.qq.com  人类选举的基本原理正常情况下，选举是一定要投票的。 我们应该都经历过投票，在投票时我们可能会将票投给和我们关系比较好的人，如果你和几个候选人都比较熟，这种情况下你会将选票投给你认为能力比较强的人，如果你和几个候选人都不熟，并且你自己也是候选人的话，这时你应该会认为你是这些候选人里面最厉害的那个人，大家都应该选你">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkOBf2Fdwg42SeOePcFmKeyqaStia0CTmuzas4XtiaQR8EexLQu9PIlnlAA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkONhnJjF88sfmGpvC3TnEJhQU5n9piaGvMd8vibegicfge6vcWBgVibGe3Rw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkOmOpMzPLkpl5jMGfNhZ5rsxeKuzPtMO3PpXlWL2KIStXibpsoXAqabvw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkO2toBAkadbgL9TLfaq9hiauEU58aefEDX3iaSNibQc1QyBRiaEF2bvRKcQA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkOZUBvZib5P7zNiaIhOQLTrAJ1h6Afesgr7CZ9pe813U6AYcWRHnaAFaUQ/640?wx_fmt=png">
+<meta property="og:updated_time" content="2020-06-29T09:01:48.254Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zookeeper 快速领导者选举原理">
+<meta name="twitter:description" content="本文由 简悦 SimpRead 转码， 原文地址 mp.weixin.qq.com  人类选举的基本原理正常情况下，选举是一定要投票的。 我们应该都经历过投票，在投票时我们可能会将票投给和我们关系比较好的人，如果你和几个候选人都比较熟，这种情况下你会将选票投给你认为能力比较强的人，如果你和几个候选人都不熟，并且你自己也是候选人的话，这时你应该会认为你是这些候选人里面最厉害的那个人，大家都应该选你">
+<meta name="twitter:image" content="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkOBf2Fdwg42SeOePcFmKeyqaStia0CTmuzas4XtiaQR8EexLQu9PIlnlAA/640?wx_fmt=png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Zookeeper_Leader.html">
+
+  <title> Zookeeper 快速领导者选举原理 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Zookeeper 快速领导者选举原理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-06-18T16:58:38+08:00" content="2020-06-18">
+              2020-06-18
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://mp.weixin.qq.com/s/z73f6rQXYvh2byfkO8tMoA" target="_blank" rel="noopener">mp.weixin.qq.com</a></p>
+</blockquote>
+<h2 id="人类选举的基本原理"><a href="#人类选举的基本原理" class="headerlink" title="人类选举的基本原理"></a>人类选举的基本原理</h2><p>正常情况下，选举是一定要投票的。</p>
+<p>我们应该都经历过投票，在投票时我们可能会将票投给和我们关系比较好的人，如果你和几个候选人都比较熟，这种情况下你会将选票投给你认为能力比较强的人，如果你和几个候选人都不熟，并且你自己也是候选人的话，这时你应该会认为你是这些候选人里面最厉害的那个人，大家都应该选你，这时你就会去和别人交流以获得别人的投票，但是很有可能在交流的过程中，你发现了比你更厉害的人，这时你如果脸皮不是那么厚的话，你应该会改变你的决定，去投你觉得更厉害的人，最终你将得到在你心中认为最厉害的人，且将票投给他，选票将会放在投票中，最后从投票箱中进行统计，获得票数最多的人当选。</p>
+<a id="more"></a>
+<p>在这样一个选举过程中我们提炼出四个基本概念：</p>
+<ol>
+<li><p>个人能力：投我认为能力最强的人，这是投票的基本规则</p>
+</li>
+<li><p>改票：能力最强的人是逐渐和其他人沟通之后的结果，类似改票，先投给 A，但是后来发现 B 更厉害，则改为投 B</p>
+</li>
+<li><p>投票箱：所有人公用一个投票箱</p>
+</li>
+<li><p>领导者：获得投票数最多的人为领导者</p>
+</li>
+</ol>
+<h2 id="Zookeeper-选举的基本原理"><a href="#Zookeeper-选举的基本原理" class="headerlink" title="Zookeeper 选举的基本原理"></a>Zookeeper 选举的基本原理</h2><p>Zookeeper 集群模式下才需要选举。</p>
+<p>Zookeeper 的选举和人类的选举逻辑类似，Zookeeper 需要实现上面人类选举的四个基本概念；</p>
+<ol>
+<li><p>个人能力：Zookeeper 是一个数据库，集群中节点的数据越新就代表此节点能力越强，而在 Zookeeper 中可以通事务 id(zxid) 来表示数据的新旧，一个节点最新的 zxid 越大则该节点的数据越新。所以 Zookeeper 选举时会根据 zxid 的大小来作为投票的基本规则。</p>
+</li>
+<li><p>改票：Zookeeper 集群中的某一个节点在开始进行选举时，首先认为自己的数据是最新的，会先投自己一票，并且把这张选票发送给其他服务器，这张选票里包含了两个重要信息：<strong>zxid</strong> 和 <strong>sid</strong>，sid 表示这张选票投的服务器 id，zxid 表示这张选票投的服务器上最大的事务 id，同时也会接收到其他服务器的选票，接收到其他服务器的选票后，可以根据选票信息中的 zxid 来与自己当前所投的服务器上的最大 zxid 来进行比较，如果其他服务器的选票中的 zxid 较大，则表示自己当前所投的机器数据没有接收到的选票所投的服务器上的数据新，所以本节点需要改票，改成投给和刚刚接收到的选票一样。</p>
+</li>
+<li><p>投票箱：Zookeeper 集群中会有很多节点，和人类选举不一样，Zookeeper 集群并不会单独去维护一个投票箱应用，而是在每个节点内存里利用一个数组来作为投票箱。每个节点里都有一个投票箱，节点会将自己的选票以及从其他服务器接收到的选票放在这个投票箱中。因为集群节点是相互交互的，并且选票的 PK 规则是一致的，所以每个节点里的这个投票箱所存储的选票都会是一样的，这样也可以达到公用一个投票箱的目的。</p>
+</li>
+<li><p>领导者：Zookeeper 集群中的每个节点，开始进行领导选举后，会不断的接收其他节点的选票，然后进行选票 PK，将自己的选票修改为投给数据最新的节点，这样就保证了，每个节点自己的选票代表的都是自己暂时所认为的数据最新的节点，再因为其他服务器的选票都会存储在投票箱内，所以可以根据投票箱里去统计是否有超过一半的选票和自己选择的是同一个节点，都认为这个节点的数据最新，一旦整个集群里超过一半的节点都认为某一个节点上的数据最新，则该节点就是领导者。</p>
+</li>
+</ol>
+<p>通过对四个概念的在 Zookeeper 中的解析，也同时介绍了一下 Zookeeper 领导者选举的基本原理，只是说选举过程中还有更多的细节需要我们了解，下面我结合源码来给大家详细的分析一下 Zookeeper 的快速领导者选举原理。</p>
+<h2 id="领导者选举入口"><a href="#领导者选举入口" class="headerlink" title="领导者选举入口"></a>领导者选举入口</h2><p>ZooKeeperServer 表示单机模式中的一个 zkServer。QuoruPeer 表示集群模式中的一个 zkServer。QuoruPeer 类定义如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">QuorumPeer</span> <span class="keyword">extends</span> <span class="title">ZooKeeperThread</span> <span class="title">implements</span> <span class="title">QuorumStats</span>.<span class="title">Provider</span></span></span><br></pre></td></tr></table></figure>
+<p>定义表明 QuorumPeer 是一个 ZooKeeperThread，表示是一个线程。当集群中的某一个台 zkServer 启动时 QuorumPeer 类的 start 方法将被调用。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        loadDataBase(); <span class="comment">// 1</span></span><br><span class="line">        cnxnFactory.start(); <span class="comment">// 2</span></span><br><span class="line">        startLeaderElection(); <span class="comment">// 3 </span></span><br><span class="line">        <span class="keyword">super</span>.start();  <span class="comment">// 4</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>zkServer 中有一个内存数据库对象 ZKDatabase， zkServer 在启动时需要将已被持久化的数据加载进内存中，也就是加载至 ZKDatabase。</p>
+</li>
+<li><p>这一步会开启一个线程来接收客户端请求，但是需要注意，这一步执行完后虽然成功开启了一个线程，并且也可以接收客户端线程，但是因为现在 zkServer 还没有经过初始化，实际上把请求拒绝掉，知道 zkServer 初始化完成才能正常的接收请求。</p>
+</li>
+<li><p>这个方法名很有误导性，这个方法并没有真正的开始领导选举，而是进行一些初始化</p>
+</li>
+<li><p>继续启动，包括进行领导者选举、zkServer 初始化。</p>
+</li>
+</ol>
+<h2 id="领导者选举策略"><a href="#领导者选举策略" class="headerlink" title="领导者选举策略"></a>领导者选举策略</h2><p>上文 QuorumPeer 类的 startLeaderElection 会进行领导者选举初始化。首先，领导者选举在 Zookeeper 中有 3 种实现：<img src="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkOBf2Fdwg42SeOePcFmKeyqaStia0CTmuzas4XtiaQR8EexLQu9PIlnlAA/640?wx_fmt=png" alt>其中 LeaderElection、AuthFastLeaderElection 已经被标为过期，不建议使用，所以现在用的都是<strong>快速领导者选举 FastLeaderElection，</strong>我们着重来介绍 FastLeaderElection。</p>
+<h2 id="快速领导者选举"><a href="#快速领导者选举" class="headerlink" title="快速领导者选举"></a>快速领导者选举</h2><p>快速领导者选举实现架构如下图：<img src="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkONhnJjF88sfmGpvC3TnEJhQU5n9piaGvMd8vibegicfge6vcWBgVibGe3Rw/640?wx_fmt=png" alt></p>
+<h3 id="传输层初始化"><a href="#传输层初始化" class="headerlink" title="传输层初始化"></a>传输层初始化</h3><p>从架构图我们可以发现，快速领导者选举实现架构分为两层：<strong>应用层</strong>和<strong>传输层</strong>。所以初始化核心就是初始化传输层。</p>
+<p>初始化步骤：</p>
+<ol>
+<li><p>初始化 QuorumCnxManager</p>
+</li>
+<li><p>初始化 QuorumCnxManager.Listener</p>
+</li>
+<li><p>运行 QuorumCnxManager.Listener</p>
+</li>
+<li><p>运行 QuorumCnxManager</p>
+</li>
+<li><p>返回 FastLeaderElection 对象</p>
+</li>
+</ol>
+<h4 id="QuorumCnxManager-介绍"><a href="#QuorumCnxManager-介绍" class="headerlink" title="QuorumCnxManager 介绍"></a>QuorumCnxManager 介绍</h4><p>QuorumCnxManager 就是传输层实现，QuorumCnxManager 中几个重要的属性：</p>
+<ul>
+<li><p>ConcurrentHashMap&lt;long, arrayblockingqueue</p>
+<p> <strong>queueSendMap</strong></p>
+</li>
+<li><p>ConcurrentHashMap</p>
+<p> <strong>senderWorkerMap</strong></p>
+</li>
+<li><p>ArrayBlockingQueue</p>
+<p> <strong>recvQueue</strong></p>
+</li>
+<li>QuorumCnxManager.Listener</li>
+</ul>
+<p>传输层的每个 zkServer 需要发送选票信息给其他服务器，这些选票信息来至应用层，在传输层中将会按服务器 id 分组保存在 <strong>queueSendMap</strong> 中。</p>
+<p>传输层的每个 zkServer 需要发送选票信息给其他服务器，SendWorker 就是封装了 Socket 的发送器，而 <strong>senderWorkerMap</strong> 就是用来记录其他服务器 id 以及对应的 SendWorker 的。</p>
+<p>传输层的每个 zkServer 将接收其他服务器发送的选票信息，这些选票会保存在 <strong>recvQueue</strong> 中，以提供给应用层使用。</p>
+<p>QuorumCnxManager.Listener 负责开启 socket 监听。</p>
+<p>细化后的架构图如下：<img src="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkOmOpMzPLkpl5jMGfNhZ5rsxeKuzPtMO3PpXlWL2KIStXibpsoXAqabvw/640?wx_fmt=png" alt></p>
+<h4 id="服务器之间连接问题"><a href="#服务器之间连接问题" class="headerlink" title="服务器之间连接问题"></a>服务器之间连接问题</h4><p>在集群启动时，一台服务器需要去连另外一台服务器，从而建立 Socket 用来进行选票传输。那么如果现在 A 服务器去连 B 服务器，同时 B 服务器也去连 A 服务器，那么就会导致建立了两条 Socket，我们知道 Socket 是双向的，Socket 的双方是可以相互发送和接收数据的，那么现在 A、B 两台服务器建立两条 Socket 是没有意义的，所以 ZooKeeper 在实现时做了限制，只允许<strong>服务器 ID 较大者去连服务器 ID 较小者，小 ID 服务器去连大 ID 服务器会被拒绝</strong>，伪代码如下<strong>：</strong></p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">if</span> (对方服务器id &lt; 本服务器id) &#123;</span><br><span class="line">    <span class="selector-tag">closeSocket</span>(sock); <span class="comment">// 关闭这条socket</span></span><br><span class="line">    <span class="selector-tag">connectOne</span>(sid);   <span class="comment">// 由本服务器去连对方服务器</span></span><br><span class="line">&#125; <span class="selector-tag">else</span> &#123;</span><br><span class="line">    <span class="comment">// 继续建立连接</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="SendWorker、RecvWorker-介绍"><a href="#SendWorker、RecvWorker-介绍" class="headerlink" title="SendWorker、RecvWorker 介绍"></a>SendWorker、RecvWorker 介绍</h4><p>上文介绍到了 SendWorker，它是 zkServer 用来向其他服务器发送选票信息的。类结构如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SendWorker</span> <span class="keyword">extends</span> <span class="title">ZooKeeperThread</span> </span>&#123;</span><br><span class="line">    <span class="type">Long</span> sid;</span><br><span class="line">    <span class="type">Socket</span> sock;</span><br><span class="line">    <span class="type">RecvWorker</span> recvWorker;</span><br><span class="line">    volatile boolean running = <span class="literal">true</span>;</span><br><span class="line">    <span class="type">DataOutputStream</span> dout;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它封装了 socket 并且是一个线程，实际上 SendWorker 的底层实现是：SendWorker 线程会不停的从 <strong>queueSendMap</strong> 中获取选票信息然后发送到 Socket 上。基于同样的思路，我们还需要一个线程从 Socket 上获取数据然后添加到 <strong>recvQueue</strong> 中，这就是 <strong>RecvWorker</strong> 的功能。</p>
+<p>所以架构可以演化为下图，通过这个架构，选举应用层直接从 recvQueue 中获取选票，或者选票添加到 queueSendMap 中既可以完成选票发送：<img src="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkO2toBAkadbgL9TLfaq9hiauEU58aefEDX3iaSNibQc1QyBRiaEF2bvRKcQA/640?wx_fmt=png" alt></p>
+<h3 id="应用层初始化"><a href="#应用层初始化" class="headerlink" title="应用层初始化"></a>应用层初始化</h3><h4 id="FastLeaderElection-类介绍"><a href="#FastLeaderElection-类介绍" class="headerlink" title="FastLeaderElection 类介绍"></a>FastLeaderElection 类介绍</h4><p>FastLeaderElection 类是快速领导者选举实现的核心类，这个类有三个重要的属性：</p>
+<ul>
+<li><p>LinkedBlockingQueue&lt;<strong>ToSend</strong>&gt; <strong>sendqueue</strong>;</p>
+</li>
+<li><p>LinkedBlockingQueue&lt;<strong>Notification</strong>&gt; <strong>recvqueue</strong>;</p>
+</li>
+<li><p>Messenger <strong>messenger</strong>;</p>
+</li>
+</ul>
+<ul>
+<li><p>Messenger.WorkerSender</p>
+</li>
+<li><p>Messenger.WorkerReceiver</p>
+</li>
+</ul>
+<p>服务器在进行领导者选举时，在发送选票时也会同时接受其他服务器的选票，FastLeaderElection 类也提供了和传输层类似的实现，将待发送的选票放在 <strong>sendqueue</strong> 中，由 <strong>Messenger.WorkerSender</strong> 发送到传输层 <strong>queueSendMap</strong> 中。同样，由 <strong>Messenger.WorkerReceiver</strong> 负责从传输层获取数据并放入 <strong>recvqueue</strong> 中。</p>
+<p>这样在应用层了，只需要将待发送的选票信息添加到 <strong>sendqueue</strong> 中即可完成选票信息发送，或者从 <strong>recvqueue</strong> 中获取元素即可得到选票信息。</p>
+<p>在构造 FastLeaderElection 对象时，会对 <strong>sendqueue、recvqueue</strong> 队列进行初始化，并且运行 <strong>Messenger.WorkerSender</strong> 与 <strong>Messenger.WorkerReceiver</strong> 线程。</p>
+<p>此时架构图如下：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/Zg93iapYic55H0qc9tReFPgkDnCjFTqzkOZUBvZib5P7zNiaIhOQLTrAJ1h6Afesgr7CZ9pe813U6AYcWRHnaAFaUQ/640?wx_fmt=png" alt></p>
+<p>到这里，QuorumPeer 类的 startLeaderElection 方法已经执行完成，完成了传输层和应用层的初始化。</p>
+<h3 id="快速领导者选举实现"><a href="#快速领导者选举实现" class="headerlink" title="快速领导者选举实现"></a>快速领导者选举实现</h3><p>QuorumPeer 类的 start 方法前三步分析完，接下来我们来看看第四步：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super.start()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>QuorumPeer 类是一个 ZooKeeperThread 线程，上述代码实际就是运行一个线程，相当于运行 QuorumPeer 类中的 run 方法，这个方法也是集群模式下 Zkserver 启动最核心的方法。</p>
+<p>总结一下 QuorumPeer 类的 start 方法：</p>
+<ol>
+<li><p>加载持久化数据到内存</p>
+</li>
+<li><p>初始化领导者选举策略</p>
+</li>
+<li><p>初始化快速领导者选举传输层</p>
+</li>
+<li><p>初始化快速领导者选举应用层</p>
+</li>
+<li><p>开启主线程</p>
+</li>
+</ol>
+<p>主线程开启之后，QuorumPeer 类的 start 方法即执行完成，这时回到上层代码可以看到主线程会被 join 住：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">quorumPeer</span><span class="selector-class">.start</span>(); <span class="comment">// 开启线程</span></span><br><span class="line"><span class="selector-tag">quorumPeer</span><span class="selector-class">.join</span>(); <span class="comment">// join线程</span></span><br></pre></td></tr></table></figure>
+<p>接下来我们着重来分析一下主线程内的逻辑。</p>
+<h4 id="主线程"><a href="#主线程" class="headerlink" title="主线程"></a>主线程</h4><p>在主线程里，会有一个主循环 (Main loop)，主循环伪代码如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (服务是否正在运行) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (当前服务器状态) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">LOOKING:</span></span><br><span class="line">            <span class="comment">// 领导者选举</span></span><br><span class="line">            setCurrentVote(makeLEStrategy().lookForLeader());</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">OBSERVING:</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 初始化为观察者</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                LOG.warn(<span class="string">"Unexpected exception"</span>,e );                        </span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                observer.shutdown();</span><br><span class="line">                setPeerState(ServerState.LOOKING);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">FOLLOWING:</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 初始化为跟随者</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                LOG.warn(<span class="string">"Unexpected exception"</span>,e);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                follower.shutdown();</span><br><span class="line">                setPeerState(ServerState.LOOKING);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">LEADING:</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 初始化为领导者</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                LOG.warn(<span class="string">"Unexpected exception"</span>,e);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                leader.shutdown(<span class="string">"Forcing shutdown"</span>);</span><br><span class="line">                setPeerState(ServerState.LOOKING);</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个伪代码实际上<strong>非常非常重要，大家细心的多看几遍。**</strong> 根据伪代码可以看到，当服务器状态为 LOOKING 时会进行领导者选举，所以我们着重来看领导者选举。</p>
+<h4 id="lookForLeader"><a href="#lookForLeader" class="headerlink" title="lookForLeader"></a>lookForLeader</h4><p>当服务器状态为 LOOKING 时会调用 FastLeaderElection 类的 lookForLeader 方法，这就是领导者选举的应用层。</p>
+<h5 id="1-初始化一个投票箱"><a href="#1-初始化一个投票箱" class="headerlink" title="1. 初始化一个投票箱"></a>1. 初始化一个投票箱</h5><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;<span class="keyword">Long</span>, Vote&gt; recvset = <span class="keyword">new</span> HashMap&lt;<span class="keyword">Long</span>, Vote&gt;();</span><br></pre></td></tr></table></figure>
+<h5 id="2-更新选票，将票投给自己"><a href="#2-更新选票，将票投给自己" class="headerlink" title="2. 更新选票，将票投给自己"></a>2. 更新选票，将票投给自己</h5><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">updateProposal(<span class="name">getInitId</span>(), getInitLastLoggedZxid(), getPeerEpoch())<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-发送选票"><a href="#3-发送选票" class="headerlink" title="3. 发送选票"></a>3. 发送选票</h5><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sendNotifications()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-不断获取其他服务器的投票信息，直到选出-Leader"><a href="#4-不断获取其他服务器的投票信息，直到选出-Leader" class="headerlink" title="4. 不断获取其他服务器的投票信息，直到选出 Leader"></a>4. 不断获取其他服务器的投票信息，直到选出 Leader</h5><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ((self.getPeerState() == ServerState.LOOKING) &amp;&amp; (!<span class="keyword">stop</span>))&#123;</span><br><span class="line">    <span class="comment">// 从recvqueue中获取接收到的投票信息</span></span><br><span class="line">    Notification n = recvqueue.poll(notTimeout, TimeUnit.MILLISECONDS);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (获得的投票为空) &#123;</span><br><span class="line">        <span class="comment">// 连接其他服务器</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 处理投票</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-连接其他服务器"><a href="#5-连接其他服务器" class="headerlink" title="5. 连接其他服务器"></a>5. 连接其他服务器</h5><p>因为在这一步之前，都只进行了服务器的初始化，并没有真正的去与其他服务器建立连接，所以在这里建立连接。</p>
+<h5 id="6-处理投票"><a href="#6-处理投票" class="headerlink" title="6. 处理投票"></a>6. 处理投票</h5><p>判断接收到的投票所对应的服务器的状态，也就是投此票的服务器的状态：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (n.state) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">LOOKING:</span></span><br><span class="line">        <span class="comment">// PK选票、过半机制验证等</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">OBSERVING:</span></span><br><span class="line">        <span class="comment">// 观察者节点不应该发起投票，直接忽略</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">FOLLOWING:</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">LEADING:</span></span><br><span class="line">        <span class="comment">// 如果接收到跟随者或领导者节点的选票，则可以认为当前集群已经存在Leader了，直接return，退出lookForLeader方法。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="7-PK-选票"><a href="#7-PK-选票" class="headerlink" title="7. PK 选票"></a>7. PK 选票</h5><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (接收到的投票的选举周期 &gt; 本服务器当前的选举周期) &#123;</span><br><span class="line">    <span class="comment">// 修改本服务器的选举周期为接收到的投票的选举周期</span></span><br><span class="line">    <span class="comment">// 清空本服务器的投票箱（表示选举周期落后，重新开始投票）</span></span><br><span class="line">    <span class="comment">// 比较接收到的选票所选择的服务器与本服务器的数据谁更新，本服务器将选票投给数据较新者</span></span><br><span class="line">    <span class="comment">// 发送选票</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(接收到的投票的选举周期 &lt; 本服务器当前的选举周期)&#123;</span><br><span class="line">    <span class="comment">// 接收到的投票的选举周期落后了，本服务器直接忽略此投票</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(选举周期一致) &#123;</span><br><span class="line">    <span class="comment">// 比较接收到的选票所选择的服务器与本服务器当前所选择的服务器的数据谁更新，本服务器将选票投给数据较新者</span></span><br><span class="line">    <span class="comment">// 发送选票</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="8-过半机制验证"><a href="#8-过半机制验证" class="headerlink" title="8. 过半机制验证"></a>8. 过半机制验证</h5><p>本服务器的选票经过不停的 PK 会将票投给数据更新的服务器，PK 完后，将接收到的选票以及本服务器自己所投的选票放入投票箱中，然后从投票箱中统计出与本服务器当前所投服务器一致的选票数量，判断该选票数量是否超过集群中所有跟随者的一半（选票数量 &gt; 跟随者数量 / 2），如果满足这个过半机制就选出了一个<strong>准 Leader。**</strong></p>
+<h5 id="9-最终确认"><a href="#9-最终确认" class="headerlink" title="9. 最终确认"></a>9. 最终确认</h5><p>选出<strong>准 Leader</strong> 之后，再去获取其他服务器的选票，如果获取到的选票所代表的服务器的数据比准 Leader 更新，则准 Leader 卸职，继续选举。如果没有准 Leader 更新，则继续获取投票，直到没有获取到选票，则选出了最终的 Leader。Leader 确定后，其他服务器的角色也确定好了。</p>
+<h2 id="领导选举完成后"><a href="#领导选举完成后" class="headerlink" title="领导选举完成后"></a>领导选举完成后</h2><p>上文<strong>主线程小节</strong>有一段非常重要的伪代码，这段伪代码达到了一个非常重要的功能，就是：</p>
+<blockquote>
+<p>ZooKeeper 集群在进行领导者选举的过程中不能对外提供服务</p>
+</blockquote>
+<p>根据伪代码我们可以发现，只有当集群中服务器的角色确定了之后，while 才会进行下一次循环，当进入下一次循环后，就会根据服务器的角色进入到对应的初始化逻辑，初始化完成之后才能对外提供服务。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Zookeeper/" rel="tag">#Zookeeper</a>
+          
+            <a href="/tags/领导者/" rel="tag">#领导者</a>
+          
+            <a href="/tags/选举原理/" rel="tag">#选举原理</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/EADDRINUSE.html" rel="next" title="Error: listen EADDRINUSE: address already in use">
+                <i class="fa fa-chevron-left"></i> Error: listen EADDRINUSE: address already in use
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">97</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">216</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#人类选举的基本原理"><span class="nav-number">1.</span> <span class="nav-text">人类选举的基本原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zookeeper-选举的基本原理"><span class="nav-number">2.</span> <span class="nav-text">Zookeeper 选举的基本原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#领导者选举入口"><span class="nav-number">3.</span> <span class="nav-text">领导者选举入口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#领导者选举策略"><span class="nav-number">4.</span> <span class="nav-text">领导者选举策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速领导者选举"><span class="nav-number">5.</span> <span class="nav-text">快速领导者选举</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传输层初始化"><span class="nav-number">5.1.</span> <span class="nav-text">传输层初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#QuorumCnxManager-介绍"><span class="nav-number">5.1.1.</span> <span class="nav-text">QuorumCnxManager 介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器之间连接问题"><span class="nav-number">5.1.2.</span> <span class="nav-text">服务器之间连接问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SendWorker、RecvWorker-介绍"><span class="nav-number">5.1.3.</span> <span class="nav-text">SendWorker、RecvWorker 介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用层初始化"><span class="nav-number">5.2.</span> <span class="nav-text">应用层初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FastLeaderElection-类介绍"><span class="nav-number">5.2.1.</span> <span class="nav-text">FastLeaderElection 类介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速领导者选举实现"><span class="nav-number">5.3.</span> <span class="nav-text">快速领导者选举实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主线程"><span class="nav-number">5.3.1.</span> <span class="nav-text">主线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lookForLeader"><span class="nav-number">5.3.2.</span> <span class="nav-text">lookForLeader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-初始化一个投票箱"><span class="nav-number">5.3.2.1.</span> <span class="nav-text">1. 初始化一个投票箱</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-更新选票，将票投给自己"><span class="nav-number">5.3.2.2.</span> <span class="nav-text">2. 更新选票，将票投给自己</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-发送选票"><span class="nav-number">5.3.2.3.</span> <span class="nav-text">3. 发送选票</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-不断获取其他服务器的投票信息，直到选出-Leader"><span class="nav-number">5.3.2.4.</span> <span class="nav-text">4. 不断获取其他服务器的投票信息，直到选出 Leader</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-连接其他服务器"><span class="nav-number">5.3.2.5.</span> <span class="nav-text">5. 连接其他服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-处理投票"><span class="nav-number">5.3.2.6.</span> <span class="nav-text">6. 处理投票</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-PK-选票"><span class="nav-number">5.3.2.7.</span> <span class="nav-text">7. PK 选票</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-过半机制验证"><span class="nav-number">5.3.2.8.</span> <span class="nav-text">8. 过半机制验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-最终确认"><span class="nav-number">5.3.2.9.</span> <span class="nav-text">9. 最终确认</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#领导选举完成后"><span class="nav-number">6.</span> <span class="nav-text">领导选举完成后</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
