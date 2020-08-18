@@ -259,6 +259,246 @@
             
               
                 
+                <a class="post-title-link" href="/blog/Kafka_Install.html" itemprop="url">
+                  Kafka 安装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-07-21T19:22:02+08:00" content="2020-07-21">
+              2020-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://www.jianshu.com/p/aca69eca282e" target="_blank" rel="noopener">www.jianshu.com</a></p>
+</blockquote>
+<p>作为三大 MQ 队列服务的 Kafka 我们不会默认，Kafka 一般用来堆积海量日志</p>
+<h2 id="Kafka-中有以下一些概念。"><a href="#Kafka-中有以下一些概念。" class="headerlink" title="Kafka 中有以下一些概念。"></a>Kafka 中有以下一些概念。</h2><p>Broker：任何正在运行中的 Kafka 示例都称为 Broker。<br>Topic：Topic 其实就是一个传统意义上的消息队列。<br>Partition：即分区。一个 Topic 将由多个分区组成，每个分区将存在独立的持久化文件，任何一个 Consumer 在分区上的消费一定是顺序的；当一个 Consumer 同时在多个分区上消费时，Kafka 不能保证总体上的强顺序性（对于强顺序性的一个实现是 Exclusive Consumer，即独占消费，一个队列同时只能被一个 Consumer 消费，并且从该消费开始消费某个消息到其确认才算消费完成，在此期间任何 Consumer 不能再消费）。<br>Producer：消息的生产者。<br>Consumer：消息的消费者。<br>Consumer Group：即消费组。一个消费组是由一个或者多个 Consumer 组成的，对于同一个 Topic，不同的消费组都将能消费到全量的消息，而同一个消费组中的 Consumer 将竞争每个消息（在多个 Consumer 消费同一个 Topic 时，Topic 的任何一个分区将同时只能被一个 Consumer 消费）。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/Kafka_Install.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/Kubernetes_catalog.html" itemprop="url">
+                  Kubernetes 学习资源
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-07-02T19:05:20+08:00" content="2020-07-02">
+              2020-07-02
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://www.jianshu.com/p/e8d589d78737" target="_blank" rel="noopener">www.jianshu.com</a></p>
+</blockquote>
+<p><a href="https://www.jianshu.com/p/412eb88e0a16" target="_blank" rel="noopener">容器编排 介绍</a></p>
+<p><a href="https://www.jianshu.com/p/9480509833bc" target="_blank" rel="noopener">Kubernetes 介绍</a></p>
+<p><a href="https://www.jianshu.com/p/5caa39ebce1b" target="_blank" rel="noopener">kubernetes 部署：二进制</a></p>
+<p><a href="https://www.jianshu.com/p/f2442f307f9b" target="_blank" rel="noopener">kubernetes 部署：kubeadm</a></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/blog/Kubernetes_catalog.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/blog/Zookeeper_Leader.html" itemprop="url">
                   Zookeeper 快速领导者选举原理
                 </a>
@@ -588,237 +828,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/RabbitMQ_Principle.html" itemprop="url">
-                  RabbitMQ的原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2020-04-26T16:13:51+08:00" content="2020-04-26">
-              2020-04-26
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习篇/" itemprop="url" rel="index">
-                    <span itemprop="name">学习篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在这篇短文里，我们会介绍什么是 <a href="http://www.javaguides.net/p/rabbitmq-java-tutorial-with-examples.html" target="_blank" rel="noopener">RabbitMQ</a>，它是如何工作的以及 <a href="http://www.javaguides.net/p/rabbitmq-java-tutorial-with-examples.html" target="_blank" rel="noopener">RabbitMQ</a> 的核心概念。</p>
-<p>RabbitMQ 是一个开源的消息代理软件。它接收生产者发布的消息并发送给消费者。它扮演中间商的角色，可以用来降低 web 服务器因发送消息带来的负载以及延时。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/RabbitMQ_Principle.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/blog/Redis_Client.html" itemprop="url">
-                  Redis客户端
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2020-03-19T15:33:12+08:00" content="2020-03-19">
-              2020-03-19
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/工具篇/" itemprop="url" rel="index">
-                    <span itemprop="name">工具篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>因为 Redis 官方只提供了命令行版的 Redis 客户端 redis-cli，以至于我们在使用的时候会比较麻烦，通常要输入一堆命令，而且命令行版的客户端看起来也不够直观，基于以上两个原因我们需要找一个可视化的 Redis 客户端，下面是我这些年使用过的一些 Redis 可视化客户端，分享给大家。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/blog/Redis_Client.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -862,7 +871,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">97</span>
+              <span class="site-state-item-count">99</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -879,7 +888,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">216</span>
+                <span class="site-state-item-count">219</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

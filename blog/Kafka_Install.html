@@ -1,0 +1,680 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,kafka,安装,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本文由 简悦 SimpRead 转码， 原文地址 www.jianshu.com  作为三大 MQ 队列服务的 Kafka 我们不会默认，Kafka 一般用来堆积海量日志 Kafka 中有以下一些概念。Broker：任何正在运行中的 Kafka 示例都称为 Broker。Topic：Topic 其实就是一个传统意义上的消息队列。Partition：即分区。一个 Topic 将由多个分区组成，每个">
+<meta name="keywords" content="学习,kafka,安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka 安装">
+<meta property="og:url" content="https://luisstruggle.github.io/blog/Kafka_Install.html">
+<meta property="og:site_name" content="奋斗的青春">
+<meta property="og:description" content="本文由 简悦 SimpRead 转码， 原文地址 www.jianshu.com  作为三大 MQ 队列服务的 Kafka 我们不会默认，Kafka 一般用来堆积海量日志 Kafka 中有以下一些概念。Broker：任何正在运行中的 Kafka 示例都称为 Broker。Topic：Topic 其实就是一个传统意义上的消息队列。Partition：即分区。一个 Topic 将由多个分区组成，每个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-18T11:30:30.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka 安装">
+<meta name="twitter:description" content="本文由 简悦 SimpRead 转码， 原文地址 www.jianshu.com  作为三大 MQ 队列服务的 Kafka 我们不会默认，Kafka 一般用来堆积海量日志 Kafka 中有以下一些概念。Broker：任何正在运行中的 Kafka 示例都称为 Broker。Topic：Topic 其实就是一个传统意义上的消息队列。Partition：即分区。一个 Topic 将由多个分区组成，每个">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311968968739390000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://luisstruggle.github.io/blog/Kafka_Install.html">
+
+  <title> Kafka 安装 | 奋斗的青春 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">奋斗的青春</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">【求你将我放在你心上如印记，带在你臂上如戳记。因为爱情如死之坚强，嫉恨如阴间之残忍。】 ——  圣经.雅歌 8.6</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Kafka 安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-07-21T19:22:02+08:00" content="2020-07-21">
+              2020-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习篇/" itemprop="url" rel="index">
+                    <span itemprop="name">学习篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://www.jianshu.com/p/aca69eca282e" target="_blank" rel="noopener">www.jianshu.com</a></p>
+</blockquote>
+<p>作为三大 MQ 队列服务的 Kafka 我们不会默认，Kafka 一般用来堆积海量日志</p>
+<h2 id="Kafka-中有以下一些概念。"><a href="#Kafka-中有以下一些概念。" class="headerlink" title="Kafka 中有以下一些概念。"></a>Kafka 中有以下一些概念。</h2><p>Broker：任何正在运行中的 Kafka 示例都称为 Broker。<br>Topic：Topic 其实就是一个传统意义上的消息队列。<br>Partition：即分区。一个 Topic 将由多个分区组成，每个分区将存在独立的持久化文件，任何一个 Consumer 在分区上的消费一定是顺序的；当一个 Consumer 同时在多个分区上消费时，Kafka 不能保证总体上的强顺序性（对于强顺序性的一个实现是 Exclusive Consumer，即独占消费，一个队列同时只能被一个 Consumer 消费，并且从该消费开始消费某个消息到其确认才算消费完成，在此期间任何 Consumer 不能再消费）。<br>Producer：消息的生产者。<br>Consumer：消息的消费者。<br>Consumer Group：即消费组。一个消费组是由一个或者多个 Consumer 组成的，对于同一个 Topic，不同的消费组都将能消费到全量的消息，而同一个消费组中的 Consumer 将竞争每个消息（在多个 Consumer 消费同一个 Topic 时，Topic 的任何一个分区将同时只能被一个 Consumer 消费）。</p>
+<a id="more"></a>
+<h2 id="Kafka-的特性"><a href="#Kafka-的特性" class="headerlink" title="Kafka 的特性"></a>Kafka 的特性</h2><p>高吞吐量、低延迟：kafka 每秒可以处理几十万条消息，它的延迟最低只有几毫秒，每个 topic 可以分多个 partition, consumer group 对 partition 进行 consume 操作；<br>可扩展性：kafka 集群支持热扩展；<br>持久性、可靠性：消息被持久化到本地磁盘，并且支持数据备份防止数据丢失；<br>容错性：允许集群中节点失败（若副本数量为 n, 则允许 n-1 个节点失败）；<br>高并发：支持数千个客户端同时读写；<br>支持实时在线处理和离线处理：可以使用 Storm 这种实时流处理系统对消息进行实时进行处理，同时还可以使用 Hadoop 这种批处理系统进行离线处理；</p>
+<p>现在我们在 Mac 下安装 Kafka</p>
+<p>执行命令:</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">shumingjiandeMacBook-Pro-2:~ shumingjian$ brew install kafka</span><br><span class="line">Please wait for it to finish or terminate it to continue.</span><br><span class="line">=<span class="ruby">=&gt; Downloading <span class="symbol">https:</span></span></span><br><span class="line"></span><br><span class="line"><span class="ruby">==&gt; Pouring kafka-<span class="number">2.1</span>.<span class="number">1</span>.mojave.bottle.tar.gz</span></span><br><span class="line"><span class="ruby">==&gt; Caveats</span></span><br><span class="line"><span class="ruby">To have launchd start kafka now <span class="keyword">and</span> restart at <span class="symbol">login:</span></span></span><br><span class="line"><span class="ruby">brew services start kafka</span></span><br><span class="line"><span class="ruby">Or, <span class="keyword">if</span> you don<span class="string">'t want/need a background service you can just run:</span></span></span><br><span class="line"><span class="ruby">zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties &amp; kafka-server-start /usr/local/etc/kafka/server.properties</span></span><br><span class="line"><span class="ruby">==&gt; Summary</span></span><br><span class="line"><span class="ruby">🍺  /usr/local/Cellar/kafka/<span class="number">2.1</span>.<span class="number">1</span>: <span class="number">162</span> files, <span class="number">52.7</span>MB</span></span><br><span class="line"><span class="ruby">shumingjiandeMacBook-Pro-<span class="number">2</span><span class="symbol">:~</span> shumingjian$</span></span><br></pre></td></tr></table></figure>
+<p>安装完成后我们启动它：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shumingjiandeMacBook-Pro-<span class="number">2</span><span class="symbol">:~</span> shumingjian$ brew services start kafka</span><br><span class="line">==&gt; Successfully started <span class="string">`kafka`</span> (<span class="symbol">label:</span> homebrew.mxcl.kafka)</span><br><span class="line">shumingjiandeMacBook-Pro-<span class="number">2</span><span class="symbol">:~</span> shumingjian$</span><br></pre></td></tr></table></figure>
+<p>进入 Kafka 的 bin 目录:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">shumingjiandeMacBook-<span class="keyword">Pro</span>-2:kafka shumingjian$ <span class="keyword">cd</span> /usr/<span class="keyword">local</span>/Cellar/kafka/2.1.1/libexec/bin</span><br><span class="line">shumingjiandeMacBook-<span class="keyword">Pro</span>-2:bin shumingjian$ <span class="keyword">ls</span></span><br><span class="line">connect-distributed.<span class="keyword">sh</span>          kafka-producer-perf-<span class="keyword">test</span>.<span class="keyword">sh</span></span><br><span class="line">connect-standalone.<span class="keyword">sh</span>           kafka-reassign-partitions.<span class="keyword">sh</span></span><br><span class="line">kafka-acls.<span class="keyword">sh</span>               kafka-replica-verification.<span class="keyword">sh</span></span><br><span class="line">kafka-broker-api-versions.<span class="keyword">sh</span>        kafka-<span class="keyword">run</span>-<span class="keyword">class</span>.<span class="keyword">sh</span></span><br><span class="line">kafka-configs.<span class="keyword">sh</span>            kafka-server-start.<span class="keyword">sh</span></span><br><span class="line">kafka-console-consumer.<span class="keyword">sh</span>       kafka-server-stop.<span class="keyword">sh</span></span><br><span class="line">kafka-console-producer.<span class="keyword">sh</span>       kafka-streams-application-reset.<span class="keyword">sh</span></span><br><span class="line">kafka-consumer-groups.<span class="keyword">sh</span>        kafka-topics.<span class="keyword">sh</span></span><br><span class="line">kafka-consumer-perf-<span class="keyword">test</span>.<span class="keyword">sh</span>     kafka-verifiable-consumer.<span class="keyword">sh</span></span><br><span class="line">kafka-delegation-tokens.<span class="keyword">sh</span>      kafka-verifiable-producer.<span class="keyword">sh</span></span><br><span class="line">kafka-delete-records.<span class="keyword">sh</span>         trogdor.<span class="keyword">sh</span></span><br><span class="line">kafka-dump-<span class="keyword">log</span>.<span class="keyword">sh</span>           zookeeper-security-migration.<span class="keyword">sh</span></span><br><span class="line">kafka-<span class="keyword">log</span>-dirs.<span class="keyword">sh</span>           zookeeper-server-start.<span class="keyword">sh</span></span><br><span class="line">kafka-mirror-maker.<span class="keyword">sh</span>           zookeeper-server-stop.<span class="keyword">sh</span></span><br><span class="line">kafka-preferred-replica-election.<span class="keyword">sh</span> zookeeper-<span class="keyword">shell</span>.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+<p>创建一个 topic(主题)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shumingjiandeMacBook-Pro-2:bin shumingjian$ kafka-topics -<span class="keyword">create</span> -zookeeper localhost:<span class="number">2181</span> -<span class="keyword">replication</span>-factor <span class="number">1</span> -<span class="keyword">partitions</span> <span class="number">1</span> -topic <span class="keyword">test</span></span><br><span class="line">Created topic <span class="string">"test"</span>.</span><br></pre></td></tr></table></figure>
+<p>查看刚刚创建的主题:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shumingjiandeMacBook-<span class="keyword">Pro</span>-2:bin shumingjian$ kafka-topics -<span class="keyword">list</span> -zookeeper localhost:2181</span><br><span class="line"><span class="keyword">test</span></span><br></pre></td></tr></table></figure>
+<p>生产消息</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">shumingjiandeMacBook-Pro-2:bin </span><span class="keyword">shumingjian$ </span>kafka-console-producer -<span class="keyword">broker-list </span>localhost:<span class="number">9092</span> -topic test</span><br><span class="line">&gt;iouiupo</span><br></pre></td></tr></table></figure>
+<p>消费信息</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">shumingjiandeMacBook-Pro-2:bin </span><span class="keyword">shumingjian$ </span>kafka-console-consumer -<span class="keyword">bootstrap-server </span>localhost:<span class="number">9092</span> -topic test -from-<span class="keyword">beginning</span></span><br><span class="line"><span class="keyword">iouiupo</span></span><br></pre></td></tr></table></figure>
+<p>至此 kafka 安装完成</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag">#学习</a>
+          
+            <a href="/tags/kafka/" rel="tag">#kafka</a>
+          
+            <a href="/tags/安装/" rel="tag">#安装</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/Kubernetes_catalog.html" rel="next" title="Kubernetes 学习资源">
+                <i class="fa fa-chevron-left"></i> Kubernetes 学习资源
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/tx.jpg" alt="LuisStruggle">
+          <p class="site-author-name" itemprop="name">LuisStruggle</p>
+          <p class="site-description motion-element" itemprop="description">Learning and communication</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">99</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">219</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LuisStruggle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/easyteam/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v2ex.com/" title="V2EX社区" target="_blank">V2EX社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnodejs.org/" title="Cnode社区" target="_blank">Cnode社区</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-中有以下一些概念。"><span class="nav-number">1.</span> <span class="nav-text">Kafka 中有以下一些概念。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-的特性"><span class="nav-number">2.</span> <span class="nav-text">Kafka 的特性</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LuisStruggle</span>
+</div>
+
+<!--
+<div>
+  <span>Email: 18300767078@163.com</span> | <span>主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">NexT.Pisces</a></span>
+</div>
+-->
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
